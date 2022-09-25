@@ -1,0 +1,98 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+{% for interface in interfaces %}
+auto {{ interface.name }}
+allow-hotplug {{ interface.name }}
+iface {{ interface.name }} inet {{ interface.mode|default('static') }}
+{% if interface.address is defined %}
+    address {{ interface.address }}
+{% endif %}
+{% if interface.netmask is defined %}
+    netmask {{ interface.netmask }}
+{% endif %}
+{% if interface.network is defined %}
+    network {{ interface.network }}
+{% endif %}
+{% if interface.broadcast is defined %}
+    broadcast {{ interface.broadcast }}
+{% endif %}
+{% if interface.gateway is defined %}
+    gateway {{ interface.gateway }}
+{% endif %}
+{% if interface.pre_up is defined %}
+{% for n in interface.pre_up %}
+    pre-up {{ n }}
+{% endfor %}
+{% endif %}
+{% if interface.up is defined %}
+{% for n in interface.up %}
+    up {{ n }}
+{% endfor %}
+{% endif %}
+{% if interface.post_down is defined %}
+    post-down {{ interface.post_down }}
+{% endif %}
+{% if interface.post_up is defined %}
+{% for n in interface.post_up %}
+    post-up {{ n }}
+{% endfor %}
+{% endif %}
+{% if interface.tun_mode is defined %}
+    mode {{ interface.tun_mode }}
+{% endif %}
+{% if interface.bond_master is defined %}
+    bond-master {{ interface.bond_master }}
+{% endif %}
+{% if interface.pointopoint is defined %}
+    pointopoint {{ interface.pointopoint }}
+{% endif %}
+{% if interface.endpoint is defined %}
+    endpoint {{ interface.endpoint }}
+{% endif %}
+{% if interface.local is defined %}
+    local {{ interface.local }}
+{% endif %}
+{% if interface.ttl is defined %}
+    ttl {{ interface.ttl }}
+{% endif %}
+{% if interface.mtu is defined %}
+    mtu {{ interface.mtu }}
+{% endif %}
+{% if interface.dstaddr is defined %}
+    dstaddr {{ interface.dstaddr }}
+{% endif %}
+{% if interface.bond_mode is defined %}
+    bond-mode {{ interface.bond_mode }}
+{% endif %}
+{% if interface.bond_miimon is defined %}
+    bond-miimon {{ interface.bond_miimon }}
+{% endif %}
+{% if interface.bond_xmit_hash_policy is defined %}
+    bond-xmit-hash-policy {{ interface.bond_xmit_hash_policy }}
+{% endif %}
+{% if interface.bond_lacp_rate is defined %}
+    bond-lacp-rate {{ interface.bond_lacp_rate }}
+{% endif %}
+{% if interface.bond_slaves is defined %}
+    bond-slaves {{ interface.bond_slaves }}
+{% endif %}
+{% if interface.vlan_raw_device is defined %}
+    vlan-raw-device {{ interface.vlan_raw_device }}
+{% endif %}
+{% if interface.additional_ips is defined %}
+{% for ip in interface.additional_ips %}
+    up ip addr add {{ip}} dev {{ interface.name }} label {{ interface.name }}:{{loop.index}}
+    down ip addr del {{ip}} dev {{ interface.name }} label {{ interface.name }}:{{loop.index}}
+{% endfor %}
+{% endif %}
+{% if ansible_distribution == 'Ubuntu'%}
+    up /usr/local/bin/arping_all_ips.sh {{ interface.name }}
+{% endif %}
+
+{% endfor %}

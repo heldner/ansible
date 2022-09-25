@@ -1,0 +1,50 @@
+{% for item in mbsync_mboxes %}
+### {{ item.address }} ###
+
+IMAPAccount {{ item.name | regex_replace("\.com","") }}
+  Host {{ item.imap_server }}
+  User {{ item.address }}
+  PassCmd "pass {{ item.pass_name }} | head -n1"
+  SSLVersions TLSv1.2
+  SSLType IMAPS
+{% if item.auth_mechs is defined %}
+  AuthMechs {{ item.auth_mechs }}
+{% endif %}
+
+IMAPStore {{ item.name }}-remote
+  Account {{ item.name }}
+
+MaildirStore {{ item.name }}-local
+  Subfolders Verbatim
+  Path ~/Private/Mail/{{ item.name }}/
+  Inbox ~/Private/Mail/{{ item.name }}/inbox
+
+Channel {{ item.name }}-default
+  Master :{{ item.name }}-remote:
+  Slave :{{ item.name }}-local:
+  Patterns INBOX
+  Expunge Both
+{% if item.mboxes is defined %}
+{% for mbox in item.mboxes %}
+
+Channel {{ item.name }}-{{ mbox.local_box }}
+  Master :{{ item.name }}-remote:\{{ mbox.remote_box }}
+  Slave :{{ item.name }}-local:{{ mbox.local_box }}
+  SyncState *
+  Create Slave
+  Expunge Both
+{% endfor %}
+{% endif %}
+
+Group {{ item.name }}
+  Channel {{ item.name }}-default
+{% if item.mboxes is defined %}
+{% for mbox in item.mboxes %}
+  Channel {{ item.name }}-{{ mbox.local_box }}
+{% endfor %}
+{% endif %}
+{% if not loop.last %}
+
+
+{% endif %}
+{% endfor %}

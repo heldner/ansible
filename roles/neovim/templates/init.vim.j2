@@ -1,0 +1,135 @@
+"Вырубаем режим совместимости с VI:
+set nocompatible
+set hlsearch            "Подсветка результатов поиска
+set colorcolumn=80
+set title
+set ignorecase
+set smartcase
+filetype plugin indent on
+"Включаем распознавание типов файлов и типо-специфичные плагины:
+filetype off
+filetype plugin on
+set smarttab            "insert tabs on the start of a line according to context
+set expandtab           "Ставим табы пробелами
+set softtabstop=3       "4 пробела в табе
+set autoindent          "Автоотступ
+set nu                  "Включаем нумерацию строк
+set mousehide           "Спрятать курсор мыши когда набираем текст
+set mouse=nv            "Включить поддержку мыши
+set novisualbell        "Не мигать
+set t_vb=               "Не пищать! (Опции 'не портить текст', к сожалению, нету)
+set showtabline=0       "Вырубаем черточки на табах
+"set foldcolumn=1        "Колоночка, плюсики для скрытия блоков кода:
+set showcmd             "Показывать незавершенные команды в статусбаре
+set t_Co=256            "Включаем 256 цветов в терминале, мы ведь работаем из иксов?
+set laststatus=2        "Всегда показывать статусную строку
+colorscheme jellybeans   "Цветовая схема
+syntax on                "Включить подсветку синтаксиса
+set termencoding=utf-8   "Кодировка терминала
+"set encoding=utf-8       "Кодировка файлов по умолчанию
+"Возможные кодировки файлов, если файл не в unicode кодировке,
+"то будет использоваться cp1251
+set fileencodings=utf8,cp1251
+"Не выгружать буфер, когда переключаемся на другой
+set hidden
+"Удобное поведение backspace
+set backspace=indent,eol,start whichwrap+=<,>,[,]
+"Переносим на другую строчку, разрываем строки
+set wrap
+set linebreak
+"Вырубаем .swp и ~ (резервные) файлы
+set nobackup
+set noswapfile
+
+"Автоматическое удаление пробелов в конце строки
+autocmd BufWritePre * :%s/\s\+$//e
+"Перед сохранением вырезаем пробелы на концах (только в .py файлах)
+"autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
+
+"Автоподгрузка ~/.vimrc
+"autocmd! bufwritepost {{ neovim_home }}/init.vim source %
+
+" Назначить на Esc выход из терминала
+tnoremap <Esc> <C-\><C-n>
+
+" Путь до python3 использования единых модулей
+let g:python3_host_prog = '/usr/bin/python3'
+
+"использовать системный буффер обмена
+set clipboard=unnamedplus
+
+{% if neovim_plugins is defined and neovim_plugins | length > 0 %}
+"Plug
+call plug#begin('{{ neovim_home }}/plugged')
+{% for plugin in neovim_plugins %}
+Plug '{{ plugin }}'
+{% endfor %}
+call plug#end()
+{% endif %}
+
+" disable auto linter for ansible
+let g:syntastic_ansible_checkers = ['yamllint']
+
+" enable yaml linter
+let g:syntastic_yaml_checkers = ['yamllint']
+
+" autoremove spaces endof line
+autocmd FileType cpp,py,yaml.ansible autocmd BufWritePre <buffer> %s/\s\+$//e
+
+" markdown
+set conceallevel=0
+let g:vim_markdown_folding_disabled = 1
+"let g:vim_markdown_folding_level = 6
+
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" alias Bclose
+command Bc Bclose
+
+" tags
+let g:autotagTagsFile=".tags"
+
+" F-keys
+set pastetoggle=<F2>    "Режим вставки
+
+" cyrilic support
+set langmap=ёйцукенгшщзхъфывапролджэячсмитьбюЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ;`qwertyuiop[]asdfghjkl\\;'zxcvbnm\\,.~QWERTYUIOP{}ASDFGHJKL:\\"ZXCVBNM<>
+
+" external command
+map <F4> :read !/usr/bin/date
+map <F5> :!ipython3 -i -c '\%load %'
+map <F6> :!pry -e "load '%'"
+map <F7> :put =strftime('%F %R')<CR>
+
+" fast buffers navigaion
+nmap <S-k> :bnext<CR>
+nmap <S-j> :bprev<CR>
+
+" vim-airline settings
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'powerlineish'
+let g:airline_left_sep= ''
+let g:airline_right_sep=''
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline#extensions#hunks#enabled = 0
+let g:airline#extensions#hunks#non_zero_only = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline_mode_map = {
+  \ '__' : ' - ',
+  \ 'n'  : ' N ',
+  \ 'i'  : ' I ',
+  \ 'r'  : ' R ',
+  \ 'c'  : ' C ',
+  \ 'v'  : ' V ',
+  \ 'V'  : ' VL',
+  \ '' : ' VB',
+  \ 's'  : ' S ',
+  \ 'S'  : ' S ',
+  \ '' : ' S ',
+  \ }

@@ -1,0 +1,129 @@
+[core]
+  whitespace = trailing-space,space-before-tab
+  editor = /usr/bin/vim
+  pager = less -+FRSX -FRX
+  fetch = +refs/tags/*:refs/tags/*
+
+[branch]
+  autosetupmerge = true
+
+[push]
+  default = current
+
+[http]
+  sslverify = false
+
+[user]
+  name = Stanislav Korolev
+  email = teeroo@yandex.ru
+
+[commit]
+  gpgSign = true
+
+[tag]
+  gpgSign = true
+
+[fetch]
+  prune = true
+
+[alias]
+  br = branch
+  cia = commit --amend
+  ciap = !git commit --amend --no-edit && git push -f
+  chp = cherry-pick
+  co = checkout
+  rs = restore --staged
+  dc = diff --cached
+  df = diff
+  diff = diff --word-diff
+  st = status
+
+  btree = log --all --graph --decorate --oneline --simplify-by-decoration --no-merges --abbrev-commit
+  ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+  lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+  le = log --oneline --decorate
+  lf = log --name-status
+  lg = log -p
+  ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+  lol = log --graph --decorate --pretty=oneline --abbrev-commit
+  loshort = log --pretty=format:'%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  lotree = log --graph --decorate --pretty=oneline --abbrev-commit --all
+  lss = log --show-signature
+  slog = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+
+  # branch activity (last logs on branches)
+  activity = !git log --simplify-by-decoration --decorate --date=relative --date-order $(git branch -a | cut -c 3- | grep -v -- \"->\")
+  refreshorigin = remote prune origin
+
+  dlc = diff --cached HEAD^
+
+  ls = ls-files
+
+  # list aliases
+  la = "!git config -l | grep alias | sort | cut -c 7-"
+
+  # assume modified files as unchanged for not committing
+  assume = update-index --assume-unchanged
+  unassume = update-index --no-assume-unchanged
+  assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+  unassumeall = "!git assumed | xargs git update-index --no-assume-unchanged"
+  assumeall = "!git st -s | awk {'print $2'} | xargs git assume"
+
+  lasttag = describe --tags --abbrev=0
+
+  ours = "!f() { git co --ours $@ && git add $@; }; f"
+  theirs = "!f() { git co --theirs $@ && git add $@; }; f"
+
+  # reset shortcuts
+  r = reset
+  r1 = reset HEAD^
+  # same as r1
+  rollback = reset --soft HEAD^
+  r2 = reset HEAD^^
+  rh = reset --hard
+  rh1 = reset HEAD^ --hard
+  rh2 = reset HEAD^^ --hard
+
+  # stash operations
+  sl = stash list
+  sa = stash apply
+  ss = stash save
+
+  up = pull --ff-only --all -p
+  pull = pull --recurse-submodules
+
+  # show different files for two revisions: 'git files branch1 branch2'
+  files = diff-tree --no-commit-id --name-only -r
+
+  # remove entry from staging area
+  unstage = reset HEAD --
+  # show hash of HEAD
+  actrev = rev-parse HEAD
+
+  # show not pulled commits for current branch
+  incoming = "!git remote update -p; git log ..@{u}"
+  # show not pushed commits for current branch
+  outgoing = log @{u}..
+  # show not pushed commits on all branches
+  outall = log --branches --not --remotes --simplify-by-decoration --decorate --oneline
+
+  # subtree
+  # prune local tags are not on remote origin
+  subt-prunetags=fetch --prune origin +refs/tags/*:refs/tags/*
+
+  # submodule aliasas
+  suboutgoing = submodule foreach git log @{u}..
+  pulllastdevelop =!git co develop && git pull && git submodule foreach git co develop && git submodule foreach git pull
+
+  # show remotes in verbose mode (incl. url)
+  rv = remote -v
+  # track remote branch
+  tr = checkout -t
+
+  daily = "!f() { git config user.email }; f"
+  daily = log --since '1 day ago' --oneline --author s.bechter@netconomy.net
+
+  topcommiters = shortlog -s -n -e
+
+[pull]
+  rebase = false

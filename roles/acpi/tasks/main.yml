@@ -1,0 +1,41 @@
+---
+- name: install acpid
+  package:
+    name:
+      - acpi
+      - acpid
+    state: present
+  tags:
+    - acpi
+  become: true
+
+- name: add dir for scripts
+  file:
+    state: directory
+    path: '{{ item }}'
+    mode: 0755
+  loop:
+    - '{{ scripts_dir }}'
+    - '{{ events_dir }}'
+  tags:
+    - acpi
+  become: true
+
+- name: generate events
+  ansible.builtin.template:
+    src: '{{ item }}'
+    dest: /etc/acpi/events/{{ item | basename | regex_replace('\.j2$', '') }}
+    mode: 0644
+  notify: restart acpi
+  with_fileglob:
+    - ../templates/events/*
+  become: true
+
+- name: copy scripts
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ scripts_dir }}/{{ item | basename }}"
+    mode: 0755
+  with_fileglob:
+    - ../files/actions/*
+  become: true

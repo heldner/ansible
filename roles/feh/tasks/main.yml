@@ -1,0 +1,24 @@
+---
+- block:
+
+    - name: Install feh
+      ansible.builtin.package:
+        state: present
+        name: feh
+      become: true
+
+    - name: Create feh config dir
+      ansible.builtin.file:
+        state: directory
+        path: '{{ ansible_user_dir }}/.config/feh'
+        mode: 0755
+
+    - name: Copy feh config
+      ansible.builtin.copy:
+        src: themes
+        dest: '{{ ansible_user_dir }}/.config/feh/themes'
+        mode: 0644
+
+  tags:
+    - xorg
+    - feh

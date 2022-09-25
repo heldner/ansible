@@ -1,0 +1,10 @@
+---
+- hosts: '{{ target_hosts | default("all") }}'
+  become: '{{ become_sudo | default("no") }}'
+  gather_facts: yes
+  become_method: '{{ become_sudo_method | default("doas") }}'
+  collections:
+    - heldner.things
+      #- ansible.posix
+  roles:
+    - '{{ target_role }}'

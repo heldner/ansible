@@ -1,0 +1,16 @@
+#!/bin/sh
+
+pass_find () {
+    cd "${HOME}/.password-store" && \
+    find . \
+        -regextype posix-awk \
+        -regex ".*gpg$" \
+        -type f \
+    | sed -e 's:\.gpg$::' -e 's:\.\/::'
+}
+
+pass=$(pass_find | dmenu)
+pass "$pass" \
+  | awk '/^login:/ {print $2}' \
+  | xclip -selection clipboard
+

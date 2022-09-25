@@ -1,0 +1,37 @@
+#!/bin/sh
+
+power_led='/sys/devices/platform/thinkpad_acpi/leds/tpacpi::power/brightness'
+need_state="$1"
+new_state=""
+
+curr_state() {
+  res=$(doas cat $power_led)
+  if echo "$res" |grep -qE '(1|0)' ; then
+    echo "$res"
+  else
+    echo 0
+  fi
+}
+
+new_state() {
+  case $(curr_state) in
+    1) new_state=0;;
+    0) new_state=1;;
+  esac
+}
+
+
+check_need_state() {
+  case $need_state in
+    on) new_state=1;;
+    off) new_state=0;;
+  esac
+}
+
+set_state() {
+  new_state
+  [ -n "$need_state" ] && check_need_state
+  echo "$new_state"| sudo tee "$power_led" >/dev/null 2>&1
+}
+
+set_state

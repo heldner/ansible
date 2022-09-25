@@ -1,0 +1,78 @@
+# multishell settings
+PATH=/usr/bin:/bin:/usr/local/bin:/usr/sbin:/sbin:/usr/local/sbin
+
+[ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
+[ -d "$HOME/.krew" ] && PATH="$HOME/.krew/bin:$PATH"
+[ -d "${HOME}/.cargo/bin" ] && PATH="${HOME}/.cargo/bin:$PATH"
+
+if [ -d "$HOME/Projects/gocode" ]; then
+    export GOPATH="${HOME}/Projects/gocode"
+    PATH="${PATH}:${GOPATH}/bin"
+fi
+
+export MPD_HOST="/run/user/1000/mpd.socket"
+
+## openbsd
+if [ "$(uname)" = "OpenBSD" ]; then
+    alias pftop='doas pftop'
+    alias ncmpcpp='ncmpcpp -h localhost'
+    alias banshow='doas pfctl -t ban -T show'
+    MIRROR="openbsd.cs.fau.de"
+    PKG_PATH="http://${MIRROR}/pub/OpenBSD/$(uname -r)/packages/$(machine -a)/"
+    LANG=en_US.UTF-8
+    EDITOR=/usr/local/bin/vim
+    export PKG_PATH LANG
+fi
+
+## debian
+if [ -f /etc/debian_version ] ; then
+    alias sudo='doas'
+    alias ls='ls --color'
+    eval "$(dircolors -b)"
+fi
+
+if [ -z "$TMUX" ] && [ -n "$SSH_CONNECTION" ]; then
+    socket_path="${HOME}/.ssh/auth_sock_$(hostname)"
+    if [ "$SSH_AUTH_SOCK" != "$socket_path" ] ; then
+        ln -sf "$SSH_AUTH_SOCK" "$socket_path"
+        export SSH_AUTH_SOCK=$socket_path
+    fi
+    tmux attach || tmux new
+fi
+
+LANGUAGE=en_US.UTF-8
+EDITOR=vim
+GREP_COLOR='1;32'
+LANG='en_US.UTF-8'
+LESS="--RAW-CONTROL-CHARS --prompt=short"
+LESSOPEN='|gzip -cdfq -- %s'
+PYTHONPATH="./.pip:$PYTHONPATH"
+PELICAN_HOME="${HOME}/Backups/pelican-original"
+HOSTNAME="$(/bin/hostname)"
+export \
+    EDITOR \
+    GREP_COLOR \
+    HOSTNAME \
+    LANG \
+    LANGUAGE \
+    LESS \
+    LESSOPEN \
+    PATH \
+    PELICAN_HOME \
+    PYTHONPATH
+
+# load termcap (5)
+. "${HOME}/.termcap"
+
+GPG_TTY="$(tty)"
+export GPG_TTY
+
+if [ -d "${HOME}/.cargo/env" ]; then
+    . "${HOME}/.cargo/env"
+fi
+
+## ssh keys
+keychain ~/.ssh/id_ed25519 2>/dev/null
+if [ -f "${HOME}/.keychain/${HOSTNAME}-sh" ]; then
+    . "${HOME}/.keychain/${HOSTNAME}-sh" #2>/dev/null
+fi

@@ -1,0 +1,21 @@
+---
+- name: Ensure main and pam packages present
+  apt:
+    state: present
+    pkg:
+    - encfs
+    - libpam-encfs
+  become: true
+
+- name: Ensure templated security pam-encfs
+  template:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+    owner: root
+    mode: 0644
+  loop:
+    - src: pam_encfs.conf.j2
+      dest: '{{ encfs_conf_path }}'
+    - src: fuse.conf.j2
+      dest: /etc/fuse.conf
+  become: true

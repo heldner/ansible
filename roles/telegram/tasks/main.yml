@@ -1,0 +1,17 @@
+---
+- name: Unarchive a telegram archive
+  ansible.builtin.unarchive:
+    src: '{{ telegram_url }}'
+    dest: /opt
+    remote_src: yes
+    owner: root
+    group: root
+    creates: /opt/Telegram/Telegram
+  become: yes
+
+- name: Make link
+  copy:
+    src: telegram
+    mode: 0755
+    dest: "/usr/local/bin/telegram"
+  become: yes

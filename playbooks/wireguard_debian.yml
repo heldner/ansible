@@ -1,0 +1,10 @@
+---
+- hosts: wireguard
+  become: yes
+  gather_facts: yes
+  become_method: doas
+  connection: local
+  collections:
+    - heldner.things
+  roles:
+    - wireguard

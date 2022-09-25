@@ -1,0 +1,9 @@
+#!/bin/sh
+
+actiondir="${HOME}/.dwm/actions"
+
+run_cmd=$(stest -flx "$actiondir" | sort -u | dmenu)
+[ -z "$run_cmd" ] && exit 0
+
+res=$(${actiondir}/${run_cmd} 2>&1)
+[ -n "$res" ] && notify-send "$run_cmd" "$res"

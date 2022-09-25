@@ -1,0 +1,43 @@
+---
+- name: Install pulseaudio
+  ansible.builtin.package:
+    name:
+      - pulseaudio
+      - pulsemixer
+      - pavucontrol
+    state: present
+  become: true
+
+- name: Create pulseaudio configdir
+  ansible.builtin.file:
+    state: directory
+    path: "{{ ansible_user_dir }}/.config/pulse"
+    mode: 0700
+
+- name: Remove unused file
+  ansible.builtin.file:
+    state: absent
+    path: "{{ ansible_user_dir }}/.config/pulse/rtp_stream"
+
+- name: Copy pulseaudio defaul.pa
+  ansible.builtin.copy:
+    src: '{{ item.src }}'
+    dest: "{{ ansible_user_dir + '/.config/pulse/' + item.src }}"
+    mode: '{{ item.mode|d("0644") }}'
+  loop:
+    - src: default.pa
+    - src: daemon.conf
+
+- name: Copy rtp stream script helper
+  ansible.builtin.copy:
+    src: 'rtp_stream'
+    dest: "{{ ansible_user_dir }}/.local/bin/rtp_stream"
+    mode: 0755
+
+- name: Enable and start pulseaudio service
+  ansible.builtin.service:
+    name: pulseaudio
+    scope: user
+    state: started
+    enabled: true
+    daemon_reload: true

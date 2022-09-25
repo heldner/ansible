@@ -1,0 +1,23 @@
+XF86Audio{Lower,Raise}Volume
+  pactl set-sink-volume @DEFAULT_SINK@ {-,+}5%
+
+XF86AudioMute
+  pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+XF86Audio{Prev,Next,Play}
+  mpc -q {prev,next,toggle} > /dev/null
+
+XF86Launch1
+  firefox
+
+XF86ScreenSaver
+  slock
+
+Print
+  ~/.dwm/actions/screenshot
+
+super + a
+  action_menu_run
+
+super + s
+  ~/.dwm/actions/ssh

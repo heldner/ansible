@@ -1,0 +1,18 @@
+#!/bin/sh
+
+USER=dayton
+USER_ID=$(id -u $USER)
+export HOME=/home/$USER
+MBSYNC=/usr/bin/mbsync
+TIMEOUT='45s'
+
+run_mbsync() {
+    if [ -d "/run/user/$USER_ID" ]; then
+        timeout $TIMEOUT "$MBSYNC" -a > /dev/null 2>&1
+    fi
+}
+
+run_mbsync
+
+exit 0
+

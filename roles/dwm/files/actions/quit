@@ -1,0 +1,4 @@
+#!/bin/sh
+loginctl list-sessions \
+  | awk  '/'"$USER"'/ {print $1}' \
+  | xargs loginctl kill-session

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+STATE=$(ifconfig wlan0 | awk 'NR==2 {print $1}')
+
+case $STATE in
+    "UP")
+        sudo ifconfig wlan0 down;;
+    *)
+        sudo ifconfig wlan0 up;;
+esac

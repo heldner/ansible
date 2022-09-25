@@ -1,0 +1,8 @@
+#!/bin/sh
+
+STATE=$(synclient | awk '/TouchpadOff/ {print $3}')
+
+case $STATE in
+  0) synclient TouchpadOff=1 ;;
+  1) synclient TouchpadOff=0 ;;
+esac

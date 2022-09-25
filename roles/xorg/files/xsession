@@ -1,0 +1,13 @@
+#!/bin/sh
+
+DWM="/usr/local/bin/dwm"
+
+if [ ! -f "$DWM" ]; then
+    exec /usr/bin/wmii -r "${HOME}/.wmii/wmiirc_local"
+fi
+
+while true; do
+    date +"%F %T start dwm"
+    $DWM >> ~/.dwm/dwm.log 2>&1
+    sleep 1
+done

@@ -1,0 +1,5 @@
+---
+- name: update banner file
+  copy: src=30-banner dest=/etc/update-motd.d/30-banner
+- name: update motd
+  command: update-motd

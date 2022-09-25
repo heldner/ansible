@@ -1,0 +1,91 @@
+#!/bin/sh
+
+PROCESESS='firefox|firefox-esr'
+MAXCPUUSAGE=8
+SLEEPTIME=30
+LOGFILE="${HOME}/screensaver_disabler.log"
+PIDFILE="/run/user/1000/screensaver_disabler.pid"
+DEBUG=false
+
+log () {
+    [ "$DEBUG" != "true" ] && return
+    msg="$*"
+    date +"%F %T $msg" >> "$LOGFILE"
+}
+
+usage () {
+    echo "screensaver disabler when cpu usage of firefox or plugin-container process is high"
+    echo "Usage: $0 <command>"
+    echo "  <command> may be (start|stop|status)"
+}
+
+status () {
+    if [ -e $PIDFILE ] && pgrep -F $PIDFILE > /dev/null; then
+        echo "$0 running"
+        exit 2
+    fi
+}
+
+monitor_off () {
+    if xset q | grep -q "Monitor.*On"; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+start () {
+    [ "$DEBUG" = "true" ] && cat /dev/null > "$LOGFILE"
+    {
+    while true; do
+        if monitor_off; then
+            log "Monitor is off"
+            sleep $SLEEPTIME
+            continue
+        fi
+        proc_usage=$(top -b -n 1 \
+        | awk -v maxcpu=$MAXCPUUSAGE '
+            /'$PROCESESS'/ {a+=$9}
+            END {print a; if (a > maxcpu) exit 1; else exit 0}')
+        if [ $? -eq 1 ]; then
+            log "sum cpu usage of $PROCESESS: $proc_usage" \
+                "more than $MAXCPUUSAGE" \
+                "force xset dpms on"
+            xset dpms force on; xset s reset
+            xautolock -reset 2> /dev/null
+        else
+            log "sum cpu usage of $PROCESESS: $proc_usage" \
+                "less than $MAXCPUUSAGE" \
+                "do nothing"
+        fi
+        sleep $SLEEPTIME
+    done
+    } &
+    echo $! > $PIDFILE
+}
+
+stop () {
+    if [ -e $PIDFILE ]; then
+        pkill -F $PIDFILE
+        rm $PIDFILE
+    else
+        echo pidfile does not exist
+        exit 1
+    fi
+}
+
+case "$1" in
+    start|'')
+        status
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+        status
+        ;;
+    *)
+        usage
+        ;;
+esac

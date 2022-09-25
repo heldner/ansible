@@ -1,0 +1,3 @@
+---
+- name: reload udev rules
+  shell: /sbin/udevadm control --reload-rules

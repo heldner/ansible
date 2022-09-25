@@ -1,0 +1,10 @@
+---
+- raw: cat /etc/motd
+  register: motd_contents
+
+- shell: echo "motd contains the word hi"
+  when: motd_contents.stdout.find('hi') != -1
+
+- name: install pip version {{ version }}
+  command: pip install pip=={{ version }}
+  when: isFirstRun == 'true'

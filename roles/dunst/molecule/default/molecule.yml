@@ -1,0 +1,19 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: libvirt
+platforms:
+  - name: instance-1
+    cpu: 1
+    cpu_model: "qemu64"
+    qemu_user: libvirt-qemu
+    image_url: "file:///home/vms/CentOS-7-x86_64-GenericCloud-2111.qcow2"
+    disk_size: "10G"
+    ssh_port: 22
+    memory_size: "1" # in GB
+provisioner:
+  name: ansible
+  no_log: false
+verifier:
+  name: ansible

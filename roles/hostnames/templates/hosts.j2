@@ -1,0 +1,16 @@
+127.0.0.1	localhost
+127.0.0.1 localhost.localdomain
+127.0.0.1 local
+{% for host in _host_entries %}
+{{ host.ip }}    {{ host.name }}
+{% endfor %}
+
+
+::1 localhost
+::1 ip6-localhost
+::1 ip6-loopback
+ff00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts

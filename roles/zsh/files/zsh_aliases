@@ -1,0 +1,18 @@
+# run programs
+alias -s {JPG,png,gif,jpg,jpeg}=xdg-open
+alias -s {mp4,avi,mpeg,mkv,mpg,mov,m2v,flv}=mpv
+alias -s pdf='zathura --fork'
+alias -s djvu='zathura --fork'
+alias -s doc='libreoffice --writer'
+alias -s xls='libreoffice --calc'
+alias -s md='vim'
+alias tmux='tmux -2'
+alias mpcplaylist='mpc clear; mpc ls | grep -iv ^radio | mpc add; mpc play'
+alias rsync='rsync -rvu'
+alias history='history -t "%D %T"'
+alias dudisk='du -hx --max-depth=1 . | sort -h'
+alias tailf='tail -F'
+alias wgetr='wget -r -nH -nd -np -R index.html'
+alias grep='grep --color=auto'
+alias unzip='7z x'
+alias clipcopy='xclip -selection clipboard'

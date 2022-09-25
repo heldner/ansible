@@ -1,0 +1,41 @@
+---
+- name: Install zsh
+  ansible.builtin.package:
+    name:
+      - zsh
+      - fzf
+    state: present
+  tags:
+    - zsh
+    - package
+  become: true
+
+- name: Copy zsh confs
+  ansible.builtin.copy:
+    src: '{{item}}'
+    dest: '{{ ansible_env.HOME }}/.{{ item | basename }}'
+    mode: 0644
+  with_fileglob:
+    - ../files/*
+  tags:
+    - zsh
+    - config
+
+- name: Fetch zplug installer
+  ansible.builtin.git:
+    repo: https://github.com/zplug/zplug.git
+    single_branch: true
+    version: master
+    clone: true
+    dest: '{{ ansible_env.HOME }}/.zplug'
+  tags:
+    - zsh
+
+- name: Copy zplugrc
+  ansible.builtin.template:
+    src: 'zplugrc.j2'
+    dest: '{{ ansible_env.HOME }}/.zplugrc'
+    mode: 0644
+  tags:
+    - zsh
+    - config

@@ -1,0 +1,25 @@
+---
+- name: Install dunst
+  ansible.builtin.package:
+    state: present
+    name: dunst
+
+- name: Create config dir
+  ansible.builtin.file:
+    state: directory
+    path: '{{ ansible_user_dir }}/.config/dunst'
+    mode: 0755
+
+- name: Copy dunstrc
+  ansible.builtin.copy:
+    src: dunstrc
+    dest: '{{ ansible_user_dir }}/.config/dunst/dunstrc'
+    mode: 0644
+
+- name: Enable and start dunst service
+  service:
+    name: dunst
+    scope: user
+    state: started
+    enabled: true
+    daemon_reload: true

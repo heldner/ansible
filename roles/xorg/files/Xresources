@@ -1,0 +1,95 @@
+!! Urxvt
+URxvt.font:               -xos4-terminesspowerline-medium-*-*--18-*-*-*-*-*-iso10646-*
+URxvt.scrollBar:          false
+URxvt.print-pipe:         cat >> $(date +"urxvt_%F")
+URxvt.foreground:         white
+URxvt.background:         grey7
+URxvt.cursorColor:        grey70
+URxvt.cursorColor2:       grey20
+URxvt.perl-ext-common:    default,matcher,font-size
+URxvt.url-launcher:       /usr/bin/xdg-open
+URxvt.matcher.button:     1
+URxvt.termName:           xterm-256color
+URxvt.keysym.Home:        \033[1~
+URxvt.keysym.End:         \033[4~
+URxvt.keysym.KP_Home:     \033[1~
+URxvt.keysym.KP_End:      \033[4~
+URxvt.saveLines:          10000
+URxvt.scrollTtyOutput:    false
+URxvt.scrollWithBuffer:   true
+URxvt.scrollTtyKeypress:  true
+
+!! Xterm
+xterm.VT100.Translations:    #override \n\
+        Shift <KeyPress> Home:        insert-selection(CLIPBOARD) \n\
+        <Btn2Up>:                       insert-selection(SELECT, CUT_BUFFER0) \n\
+        ~Shift<BtnUp>:                  select-end(PRIMARY, CUT_BUFFER0) \n\
+        Shift<BtnUp>:                   select-end(CLIPBOARD, CUT_BUFFER1)
+xterm*termName:           xterm-256color
+xterm*font:               -xos4-terminesspowerline-medium-*-*--18-*-*-*-*-*-iso10646-*
+xterm*locale:             true
+xterm*metaSendsEscape:    true
+xterm*dynamicColors:      true
+xterm*utf8:               2
+xterm*eightBitInput:      true
+xterm*saveLines:          5120
+xterm*scrollKey:          true
+xterm*scrollTtyOutput:    false
+xterm*scrollBar:          false
+xterm*rightScrollBar:     false
+xterm*jumpScroll:         false
+xterm*multiScroll:        false
+xterm*toolBar:            false
+xterm*utf8Title:          true
+xterm*background:         grey7
+
+!! ssh-akspass
+ssh-askpass*font:                   -xos4-terminesspowerline-medium-*-*--18-*-*-*-*-*-iso10646-*
+ssh-askpass*title:                  Greetings, my friend!
+ssh-askpass*background:             #222222
+ssh-askpass*foreground:             #ffffff
+ssh-askpass*Button*background:      #405060
+ssh-askpass*Indicator*foreground:   #55a5f6
+ssh-askpass*Indicator*background:   #222222
+ssh-askpass*topShadowColor:         #222222
+ssh-askpass*bottomShadowColor:      #222222
+ssh-askpass*borderWidth:            0
+ssh-askpass*inputTimeout:           15
+
+!! Xft
+Xft.dpi: 108
+Xft.antialias:  true
+
+!! Xautolock
+Xautolock.locker: slock
+Xautolock.time: 10
+Xautolock.notify: 30
+Xautolock.notifier: ~/.local/bin/notify_about_xlock.sh
+Xautolock.detectsleep: true
+
+!! molokai theme
+! black
+*.color0: #1b1918
+*.color8: #766e6b
+! red
+*.color1: #d20072
+*.color9: #ff0090
+! green
+*.color2: #66aa11
+*.color10: #80ff00
+! yellow
+*.color3: #c47f2c
+*.color11: #ffba68
+! blue
+*.color4: #30309b
+*.color12: #5f5fee
+! magenta
+*.color5: #7e40a5
+*.color13: #bb88dd
+! cyan
+*.color6: #3579a8
+*.color14: #4eb4fa
+!! white
+*.color7: #9999aa
+*.color15: #d0d0d0
+!! molokai end

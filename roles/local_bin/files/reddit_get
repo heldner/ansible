@@ -1,0 +1,22 @@
+#!/bin/sh
+
+[ $# -eq 0 ] && exit 1
+
+SUBREDDIT="$1"
+SUB=$(echo "$SUBREDDIT" | sed 's,/$,,')
+BASE_URL='https://www.reddit.com/r'
+OUT_DIR="${HOME}/Pictures/reddit"
+
+run() {
+  curl -H "Accept: application/json" -s \
+    --retry 2 --retry-delay 4 \
+    "${BASE_URL}/${SUB}.json" \
+    | jshon -e data -e children -a -e data -e url -u \
+    | grep '.\(gif\|gifv\|jpe\|jp\|pn\)g$' \
+    | xargs -n 1 curl --output-dir "$OUT_DIR" -O
+}
+
+until run; do
+    echo "retry get $SUBREDDIT"
+    sleep 1
+done

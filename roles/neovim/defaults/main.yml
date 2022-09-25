@@ -1,0 +1,27 @@
+---
+# @var neovim_home:description: директория с конфигами neovim
+neovim_home: "{{ ansible_user_dir + '/.config/nvim' }}"
+neovim_plugins:
+  - airblade/vim-gitgutter
+  - aklt/plantuml-syntax
+  - axvr/org.vim
+  - bling/vim-airline
+  - editorconfig/editorconfig-vim
+  - ekalinin/Dockerfile.vim
+  - ervandew/supertab
+  - fatih/vim-go
+  - hashivim/vim-terraform
+  - jremmen/vim-ripgrep
+  - junegunn/vim-easy-align
+  - kien/ctrlp.vim
+  - martinda/Jenkinsfile-vim-syntax
+  - modille/groovy.vim
+  - mzlogin/vim-markdown-toc
+  - nanotech/jellybeans.vim
+  - pearofducks/ansible-vim
+  - plasticboy/vim-markdown
+  - rbgrouleff/bclose.vim
+  - tpope/vim-fugitive
+  - vbe0201/vimdiscord
+  - vim-airline/vim-airline-themes
+  - vim-syntastic/syntastic

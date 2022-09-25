@@ -1,0 +1,5 @@
+#!/bin/sh -e
+source="$1"
+dest="`echo $1|sed 's/png/jpeg/'`"
+echo $dest
+convert "$source" -format jpg "$dest"

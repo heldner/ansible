@@ -1,0 +1,3 @@
+#!/bin/sh
+export MPD_HOST='/run/user/1000/mpd.socket'
+/usr/bin/mpc -q toggle

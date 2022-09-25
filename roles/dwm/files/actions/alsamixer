@@ -1,0 +1,3 @@
+if ! pgrep -u $USER alsamixer > /dev/null; then
+    urxvtc -e alsamixer &
+fi

@@ -1,0 +1,20 @@
+---
+- name: setup interfaces config
+  template:
+    src: interfaces.j2
+    dest: /etc/network/interfaces
+    mode: 0644
+    owner: root
+    group: root
+  when: interfaces is defined
+  tags: interfaces
+
+- name: copy arping_all_ips.sh script
+  copy:
+    src: arping_all_ips.sh
+    dest: /usr/local/bin/arping_all_ips.sh
+    mode: 0755
+    owner: root
+  tags:
+    - arping
+    - interfaces

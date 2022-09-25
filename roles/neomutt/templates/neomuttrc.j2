@@ -1,0 +1,91 @@
+# каталог для почты
+set folder = {{ mail_home }}
+# тип ящика
+set mbox_type = Maildir
+# курсор в виде '->'
+set arrow_cursor
+# показывать дубликаты, при sort=threads
+set duplicate_threads = yes
+# начало письма при ответе
+set attribution = "%d, %n написал:"
+# сохранять копии исходящих писем
+set copy = yes
+
+# показывать панель со списком директорий справа
+set sidebar_visible
+set sidebar_on_right
+set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
+set mail_check_stats
+
+# путь к спулу почты
+set spoolfile = '{{ mail_home }}/local/inbox'
+# куда сохранять отправленные письма
+set record = +local/sent
+# файл для прочитанных сообщений
+set mbox = +local/inbox
+# черновики
+set postponed = +local/drafts
+
+# редактор писем
+set editor = vim
+# редактор вызываемый по ~v
+set visual = vim
+# прокручивать список по одной строке
+set menu_scroll
+# запрашивать вид пересылаемого письма
+set mime_forward = ask-no
+# в конце письма не переходить на следующее
+set pager_stop
+# запрос перед печатью файла
+set print = ask-yes
+# команда печати
+set print_command = lpr
+# удалять без запроса
+set delete = yes
+set auto_tag = yes
+set metoo = yes
+set pager_format = "%4C %Z %[!%b %e at %I:%M %p] %.20n %s%* -- (%P)"
+unset confirmappend
+mailboxes +local/inbox{{ ' \\' if neomutt_accounts is defined }}
+{% for maildir in (all_maildirs | trim | split('\n') | list) %}
+  {{ maildir }}{{ ' \\' if not loop.last }}
+{% endfor %}
+
+bind index,pager @ compose-to-sender
+set from = '{{ ansible_user_dir }}'
+
+# сортировка писем при просмотре
+set sort = threads
+set sort_aux = reverse-date-received
+set sort_browser = reverse-date
+
+# переключение между ящиками
+{% if neomutt_accounts is defined and neomutt_accounts | length > 0 %}
+{% for account in neomutt_accounts %}
+folder-hook {{ account.name }}/* source {{ neomutt_home }}/account.{{ account.name }}
+{% endfor %}
+{% endif %}
+
+# ctrl+r прочитать все сообщения
+macro index \Cr "TNew\n;WN;$;^T.*\n" "Mark new messages as read"
+
+# назначить на 'm' написать на почту текущему отправителю
+bind pager m compose-to-sender
+
+# ctrl+b для перехода по ссылкам
+macro pager \Cb "|urlview\n" "Follow links with urlview"
+
+# цветовая схема
+source {{ neomutt_home }}/vombatidae.mutt
+
+# просмотр html сообщений
+set mailcap_path = "{{ mail_home }}/.mailcap"
+auto_view text/html
+set implicit_autoview = yes
+alternative_order text/html text/plain text/enriched
+set wait_key = no
+
+# переопределение выхода
+macro   index   q       '<change-folder>?<toggle-mailboxes>'
+macro   index   Q       '<exit><quit>'
+macro   browser q       '<exit><quit>'

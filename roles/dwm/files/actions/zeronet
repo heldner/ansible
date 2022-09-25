@@ -1,0 +1,33 @@
+#!/bin/sh
+
+act="$1"
+iwcmd='iwctl station wlan0'
+netname=zeronet
+
+scan_on () {
+  $iwcmd scan on
+}
+
+connect () {
+  $iwcmd connect $netname
+}
+
+disconnect () {
+  $iwcmd disconnect $netname
+}
+
+notify () {
+  "${WMII_ACTIONS}/wifistatus"
+}
+
+case "$act" in
+  off)
+    disconnect ;;
+  *)
+    scan_on
+    until connect; do
+      sleep 1
+    done
+    notify
+  ;;
+esac

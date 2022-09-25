@@ -1,0 +1,14 @@
+---
+- name: install resolvconf
+  apt:
+    name: resolvconf
+    state: present
+  become: true
+
+- name: resolvconf head
+  template:
+    src: resolvconf.head.j2
+    dest: /etc/resolvconf/resolv.conf.d/head
+    mode: 0644
+  become: true
+  notify: restart resolvconf

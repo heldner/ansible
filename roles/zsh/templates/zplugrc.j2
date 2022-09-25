@@ -1,0 +1,14 @@
+# {{ ansible_managed }}
+
+{% for plugin in zplug_plugins %}
+zplug "{{ plugin.name }}"{% if plugin.opts is defined %}, {{ plugin.opts }}{% endif %}
+
+{% endfor %}
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+    zplug install
+fi
+
+# Then, source plugins and add commands to $PATH
+zplug load #--verbose

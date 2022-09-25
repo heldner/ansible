@@ -1,0 +1,3 @@
+#!/bin/sh
+[ "$1" = 'off' ] && pkill ffmpeg
+ffmpeg -f x11grab -framerate 25 -video_size cif -i :0.0 ~/$(date +%Y%m).mp4

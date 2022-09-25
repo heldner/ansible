@@ -1,0 +1,5 @@
+#!/bin/sh
+
+CTEMP="CPU Temp: `sensors | awk '/Core 0/ {print substr($3,2)}'`"
+MESSAGE="${CTEMP}"
+echo $MESSAGE

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+export NAME='pulsemixer'
+SCRIPTHOME="$( cd "$(dirname "$0")" && pwd -P )"
+. "${SCRIPTHOME}/_common"

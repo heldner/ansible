@@ -1,0 +1,9 @@
+---
+# vars file for ansible-role-dnsmasq
+dnsmasq_dns_interfaces:
+  - 'interface=lo'
+  - 'interface=wlp3s0'
+dnsmasq_dns_servers:
+  - 127.0.0.1#5353
+# - 208.67.222.222
+# - 208.67.220.220

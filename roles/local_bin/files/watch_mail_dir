@@ -1,0 +1,26 @@
+#!/bin/sh
+
+maildir=${HOME}/Private/Mail
+
+mail_watcher () {
+  inotifywait \
+    --quiet \
+    --recursive "$maildir" \
+    --event moved_to \
+    --timefmt "%Y%m%d-%H:%M:%S" \
+    --format "%T %e %f " \
+    --exclude ".*mbsyncstate.*|.*tmp.*|.*drafts.*|.*new.*" >&-
+}
+
+mail_notifier () {
+  mbsync -a
+}
+
+while mail_notifier; do
+  mail_watcher
+  if readlink -e "$maildir"; then
+    sleep 0.5
+  else
+    sleep 60
+  fi
+done &

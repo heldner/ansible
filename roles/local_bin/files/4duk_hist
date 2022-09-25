@@ -1,0 +1,6 @@
+#!/bin/sh
+
+BASE_URL='http://www.4duk.ru'
+URL="$BASE_URL/4duk/whatWasPlaying.html"
+HISTORY_FILE="${HOME}/.4duk_history"
+curl -v "$URL" | grep '<li>\([0-9]\{2\}:\)\{3\}' >> "$HISTORY_FILE"

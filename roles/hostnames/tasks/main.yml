@@ -1,0 +1,41 @@
+---
+- name: Set host list
+  set_fact:
+    _host_entries: |
+      {{ (additional_host_entries | d([]) + [{
+        'ip': ansible_default_ipv4.address
+        | default(ansible_all_ipv4_addresses[0]),
+        'name': inventory_hostname
+        }, {
+        'ip': ansible_default_ipv4.address
+        | default(ansible_all_ipv4_addresses[0]),
+        'name': ansible_hostname
+        }]) | unique | select | list
+      }}
+
+- name: Select duplicate names
+  set_fact:
+    _dup_hosts: "{{ _dup_hosts | d([]) + [item.name] }}"
+  loop: "{{ _host_entries }}"
+  loop_control:
+    extended: true
+  when: item.name == ansible_loop.nextitem.name|default('')
+
+- name: Check for uniq names
+  fail:
+    msg: |
+      Fail! Host(s) {{ _dup_hosts | join(',') }} can't duplicate
+  when: _dup_hosts is defined
+
+- name: Fill /etc/hosts
+  ansible.builtin.template:
+    dest: /etc/hosts
+    src: hosts.j2
+  become: true
+  register: _etc_hosts
+
+- name: Notify unbound
+  import_role:
+    name: unbound
+    tasks_from: update_hosts
+  when: _etc_hosts.changed

@@ -1,0 +1,13 @@
+---
+- hosts: '{{ target_host | default("localhost") }}'
+  become: yes
+  become_method: doas
+  gather_facts: yes
+  connection: local
+  vars:
+  collections:
+    - heldner.things
+  roles:
+    - iptables
+
+

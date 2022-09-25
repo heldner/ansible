@@ -1,0 +1,7 @@
+---
+# @var mpd_home_dir:description: Домашняя директория для конфигов
+mpd_home_dir: "{{ ansible_user_dir }}/.config/mpd"
+# @var mpd_host:description: путь к сокету mpd
+mpd_host: "/run/user/1000/mpd.socket"
+# @var mpd_playlist_directory:description: директория с со списками проигрывания
+mpd_playlist_directory: "{{ ansible_user_dir }}/playlists"

@@ -1,0 +1,45 @@
+# nobeep
+xset -b
+
+# screensaver
+xautolock &
+screensaver_disabler
+
+# terminal
+urxvtd -q -f -o
+
+# use x11 ssh askpass
+if [ -x /usr/bin/ssh-askpass ]; then
+    export SSH_ASKPASS=ssh-askpass
+fi
+
+# load additional fonts
+xset +fp /home/dayton/.local/share/fonts
+
+# 1. swap ctrl and caps
+# 2. swap left alt and winkey
+setxkbmap -option ctrl:swapcaps,altwin:swap_lalt_lwin,grp:alt_shift_toggle
+
+# turn off powerbutton led
+powerled off
+
+# imapfilter
+imapfilter -c ~/.imapfilter/yandex.lua >> ~/.imapfilter/log 2>&1 &
+
+# swap mouse scroll
+enable_natural_scroll
+
+# mute microphone
+amixer set Capture nocap >/dev/null
+
+# key combiantions
+sxhkd &
+
+# dwm status
+dwmstatus &
+
+# language
+export LC_ALL=en_US.UTF-8
+
+# run isync when local dirs changed
+watch_mail_dir

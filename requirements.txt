@@ -1,0 +1,30 @@
+ansible==5.10.0
+ansible-core==2.12.8
+ansible-lint==5.3.1
+mitogen==0.3.3
+
+# molecule
+molecule==4.0.1
+molecule-libvirt==0.0.6
+libvirt-python==8.6.0
+
+# please install python-dnf from distribution system
+# dnf
+# for manage docker
+docker
+# for net filters
+ipaddr
+ipaddress
+netaddr
+bcrypt
+# for PostgreSQl
+psycopg2-binary
+# for selinux manage
+selinux
+# for json_query filter
+jmespath
+# for openssl x509
+cryptography
+# for kubernetes
+kubernetes
+jsonpatch

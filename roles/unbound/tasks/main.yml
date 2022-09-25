@@ -1,0 +1,33 @@
+---
+- name: Add unbound package
+  ansible.builtin.package:
+    state: present
+    name:
+      - acl
+      - unbound
+      - dnsutils
+  become: true
+
+- name: Generate unbound config
+  ansible.builtin.template:
+    src: unbound.conf.j2
+    dest: /etc/unbound/unbound.conf
+    mode: 0644
+    owner: root
+  become: true
+  notify:
+    - restart unbound
+
+- name: Copy unbound zone generator
+  ansible.builtin.copy:
+    src: build-unbound-localzone-from-hosts.pl
+    dest: /usr/local/bin
+    mode: 0755
+  become: true
+
+- name: Enable unbound service
+  ansible.builtin.service:
+    name: unbound
+    enabled: true
+    state: started
+  become: true

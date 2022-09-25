@@ -1,0 +1,34 @@
+#!/bin/sh
+
+critical=13
+lowlevel=20
+
+[ "$(acpi -a | awk '{print $3}')" = "on-line" ] && exit 0
+
+charge=$(acpi | awk -F',' '{printf"%d\n",$2}')
+
+notify() {
+    title="$1"
+    body="$2"
+    users=`who | awk '!x[$1]++ {print $1}'`
+
+    for user in ${users}; do
+        echo "$body" | mail -s "$title" $user
+    done
+
+    # notify send
+    pid=$(pgrep -x dwm)
+    DBUS_SESSION_BUS_ADDRESS=$(grep -z DBUS /proc/${pid}/environ \
+        | cut -d= -f 2-4)
+    export DBUS_SESSION_BUS_ADDRESS
+    notify-send "$title" "$body"
+}
+
+if [ "$charge" -le "$critical" ]; then
+    notify "Halt system" \
+        "Will now halt, battery charge critical: $charge"
+    /sbin/halt -p
+elif [ "$charge" -le "$lowlevel" ]; then
+    notify "Low battery charge" \
+        "Attention!\nBattery charge: $charge"
+fi

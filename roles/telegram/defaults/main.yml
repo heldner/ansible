@@ -1,0 +1,5 @@
+---
+telegram_version: 4.0.2
+telegram_url: 'https://updates.tdesktop.com/tlinux/tsetup.{{ telegram_version }}.tar.xz'
+#curl --header 'Host: updates.tdesktop.com' --user-agent 'Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0' --header 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' --header 'Accept-Language: en-US,en;q=0.5' --referer 'https://updates.tdesktop.com/tlinux/tsetup.4.0.2.tar.xz' --header 'DNT: 1' --header 'Upgrade-Insecure-Requests: 1' --header 'Sec-Fetch-Dest: document' --header 'Sec-Fetch-Mode: navigate' --header 'Sec-Fetch-Site: cross-site' --header 'Sec-Fetch-User: ?1' 'https://updates.tdesktop.com/tlinux/tsetup.4.0.2.tar.xz' --output 'tsetup.4.0.2.tar.xz'
+# defaults file for things.telegram

@@ -1,0 +1,7 @@
+---
+- name: restart acpi
+  service:
+    name: acpid
+    state: restarted
+  become: true
+

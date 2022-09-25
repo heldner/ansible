@@ -1,0 +1,12 @@
+set from          = "{{ item.realname }} <{{ item.mail }}@{{ item.domain }}>"
+set mbox          = +{{ item.name }}/inbox
+set postponed     = +{{ item.name }}/drafts
+set realname      = "{{ item.realname }}"
+set record        = +{{ item.name }}/sent
+set signature     = "{{ item.signature | d("cowsay 'Всех благ!'|") }}"
+set smtp_pass     = "{{ item.smtp_pass }}"
+set smtp_url      = "{{ item.smtp_url }}"
+set spoolfile     = "{{ mail_home }}/{{ item.name }}/inbox"
+set ssl_force_tls = yes
+set ssl_starttls  = yes
+set trash         = +{{ item.name }}/trash

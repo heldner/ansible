@@ -1,0 +1,18 @@
+---
+- name: Install libvirt packages
+  ansible.builtin.package:
+    state: present
+    name:
+      - libvirt-daemon
+      - libvirt-clients
+      - virt-manager
+      - virt-viewer
+      - spice-client-gtk
+  become: true
+
+- name: Create link uuidgen
+  ansible.builtin.file:
+    state: link
+    src: /usr/bin/dbus-uuidgen
+    dest: /usr/local/bin/uuidgen
+  become: true

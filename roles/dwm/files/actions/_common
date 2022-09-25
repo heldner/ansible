@@ -1,0 +1,10 @@
+#!/bin/sh
+
+[ -z "$NAME" ] && exit 0
+HOST="${1:-localhost}"
+
+if [ "$HOST" = "localhost" ]; then
+  exec urxvtc -T "$NAME" -e "$NAME" &
+else
+  exec urxvtc -e ssh -t "$HOST" "$NAME" &
+fi

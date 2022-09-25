@@ -1,0 +1,11 @@
+---
+- name: create pf.conf
+  ansible.builtin.template:
+    src: pf.conf.j2
+    dest: /etc/pf.conf
+    validate: pfctl -n -f %s
+  register: _pf_conf
+
+- name: load config to pf if needed
+  ansible.builtin.command: pfctl -f /etc/pf.conf
+  when: _pf_conf.changed

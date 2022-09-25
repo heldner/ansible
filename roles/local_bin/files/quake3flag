@@ -1,0 +1,9 @@
+#!/bin/sh
+
+SCRIPTHOME="${HOME}/.games/quake3e"
+"${SCRIPTHOME}/quake3e.x64" \
+  +set vm_game 2 \
+  +set ttycon 0 \
+  +set com_hunkmegs 128 \
+  +exec my.cfg \
+  +set fs_game missionpack

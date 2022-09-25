@@ -1,0 +1,12 @@
+#!/bin/sh
+
+AMIX=/usr/bin/amixer
+
+master_state() {
+  $AMIX -c 0 get Master | awk '/Front Left:/ {gsub("[|]",""); print $0}'
+}
+
+speaker_switch() {
+  res=$($AMIX -c 0 get Speaker | awk '/Front Left:/ {print $NF}')
+}
+

@@ -1,0 +1,20 @@
+---
+- name: Install mpd
+  ansible.builtin.apt:
+    name:
+      - mpc
+      - mpd
+      - ncmpcpp
+    state: present
+  become: true
+
+- name: Create dirs
+  ansible.builtin.file:
+    state: directory
+    path: '{{ item }}'
+    mode: 0755
+  loop:
+    - "{{ ansible_user_dir }}/Music"
+    - "{{ ansible_user_dir }}/.config/mpd"
+    - "{{ ansible_user_dir }}/.config/mpd/playlists"
+    - "{{ ansible_user_dir }}/.config/ncmpcpp"

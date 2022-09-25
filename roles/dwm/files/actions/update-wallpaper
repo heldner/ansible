@@ -1,0 +1,35 @@
+#!/bin/bash
+
+PATH=/bin:/usr/bin:${HOME}/.bin
+export DISPLAY=:0.0
+
+lock="/var/tmp/$(basename "$0").lock"
+wallpaper_dir="${HOME}/Pictures/backgrounds"
+
+default_bg(){
+  feh -z --no-fehbg --bg-max "$wallpaper_dir" 2>&-
+}
+
+local_curl() {
+  url=$1
+  out=$2
+  curl "$url" \
+    --silent \
+    --location \
+    --output "$out" \
+    --retry 2 \
+    --retry-delay 4 \
+    --max-time 4
+}
+
+[ ! -d "$wallpaper_dir" ] && exit 0
+
+set -e
+(
+flock -w 10 9
+default_bg
+) 9> "$lock"
+
+rm -f "$lock"
+
+exit

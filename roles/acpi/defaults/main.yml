@@ -1,0 +1,2 @@
+scripts_dir: /etc/acpi/scripts
+events_dir: /etc/acpi/events

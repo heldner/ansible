@@ -1,0 +1,41 @@
+---
+- name: Copy logind.conf disable suspend at close
+  ansible.builtin.copy:
+    src: logind.conf
+    dest: /etc/systemd/logind.conf
+    mode: 0755
+
+- name: Ensure tp smapi installed
+  ansible.builtin.package:
+    state: present
+    name:
+      - intel-microcode
+      - rfkill
+      - tp-smapi-dkms
+  become: true
+
+- name: Copy battery checker script
+  ansible.builtin.copy:
+    src: batt_check
+    dest: /usr/local/bin/batt_check
+    mode: 0755
+  become: true
+
+- name: Install laptop packages
+  ansible.builtin.package:
+    state: present
+    name: iwd
+
+- name: Copy iwd config
+  ansible.builtin.copy:
+    src: iwd_main.conf
+    dest: /etc/iwd/main.conf
+    mode: 0644
+  become: true
+
+- name: Add cronjob battery checker
+  cron:
+    name: battery checker
+    job: /usr/local/bin/batt_check
+    minute: '*/5'
+  become: true

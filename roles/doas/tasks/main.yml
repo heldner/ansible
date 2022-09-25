@@ -1,0 +1,10 @@
+---
+- name: Set fact
+  ansible.builtin.set_fact:
+    _enable_log: "{{ true if ansible_distribution != 'OpenBSD' else false }}"
+
+- name: Install doas.conf
+  ansible.builtin.template:
+    src: doas.conf.j2
+    dest: /etc/doas.conf
+  become: true

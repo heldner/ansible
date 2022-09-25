@@ -1,0 +1,4 @@
+#!/bin/sh
+
+action="${1:-"connect"}"
+ssh n900 connection_control.sh $action

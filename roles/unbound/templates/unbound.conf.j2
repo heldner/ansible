@@ -1,0 +1,32 @@
+server:
+    verbosity: 1
+    interface: {{ unbound_interface }}
+    port: {{ unbound_port }}
+    {% for rule in access_control -%}
+    access-control: {{ rule }}
+    {% endfor -%}
+    do-daemonize: yes
+    cache-max-ttl: 14400
+    cache-max-negative-ttl: 10
+    hide-identity: yes
+    hide-version: yes
+    msg-cache-size: 4m
+    rrset-cache-size: 8m
+    forward-zone:
+       name: "."
+       forward-ssl-upstream: yes
+{% for address in default_forward_addresses %}
+       forward-addr: {{ address }}
+{% endfor %}
+    {% for zone in unbound_custom_zones -%}
+    forward-zone:
+       name: "{{ zone.name }}"
+       forward-addr: {{ zone.forward_addr }}
+    {% endfor %}
+
+
+python:
+remote-control:
+    control-enable: no
+
+include: "/etc/unbound/unbound.conf.d/*.conf"

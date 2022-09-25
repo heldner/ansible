@@ -1,0 +1,12 @@
+galaxy_info:
+  author: Stanislav Korolev
+  description: Basic configure OpenBSD pf
+  license: license ISC
+  min_ansible_version: 2.3
+  platforms:
+  - name: OpenBSD
+    versions:
+    - all
+  galaxy_tags:
+    - firewal
+    - pf

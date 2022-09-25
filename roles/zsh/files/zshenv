@@ -1,0 +1,27 @@
+# Start configuration added by Zim install {{{
+#
+# User configuration sourced by all invocations of the shell
+#
+
+PS1='%(?..[%?] )> '
+
+## debian
+if [ -f /etc/debian_version ] ; then
+    PS1='%(?..[%?] )▶ '
+fi
+
+## Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
+HISTSIZE=5000
+SAVEHIST=5000
+HISTFILE=~/.zsh_history
+
+# Remove path separator from WORDCHARS.
+WORDCHARS=${WORDCHARS//[\/]}
+
+# autolocal file when enter directory
+# for this working there is a patch in autoenv.zsh
+# fun _autoenv_authorized_env_file() always return 0
+AUTOENV_FILE_ENTER=.autoenv.sh
+AUTOENV_AUTH_FILE=~/.local/share/autoenv_auth
+# for debug autoenv plugin set > 0
+AUTOENV_DEBUG=0

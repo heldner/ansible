@@ -1,0 +1,32 @@
+---
+- name: Install build tools
+  ansible.builtin.package:
+    state: present
+    name:
+      - libc6-dev
+      - libx11-dev
+      - libxft-dev
+      - libxinerama-dev
+  when: build_tools is defined
+  become: true
+  tags: dwm
+
+- name: Update wallpaper every hour
+  ansible.builtin.cron:
+    name: update wallpaper
+    job: '{{ dmw_home }}/actions/update-wallpaper'
+    minute: '12'
+  tags: dwm
+
+- name: Sync actions dir
+  ansible.builtin.synchronize:
+    archive: false
+    src: '{{ item }}'
+    delete: true
+    dest: '{{ dmw_home }}'
+    recursive: true
+    rsync_opts: ["--times"]
+    use_ssh_args: true
+  loop:
+    - actions
+  tags: dwm

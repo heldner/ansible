@@ -1,0 +1,11 @@
+---
+galaxy_info:
+  author: Stanislav Korolev
+  description: Basic prepare system
+  license: ISC
+  min_ansible_version: 2.12
+  galaxy_tags: [apt, common]
+
+dependencies:
+  - role: apt
+  - role: acpi

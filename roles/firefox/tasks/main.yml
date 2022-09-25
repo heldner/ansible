@@ -1,0 +1,36 @@
+---
+- name: Install firefox
+  ansible.builtin.package:
+    state: present
+    name: firefox-esr
+  tags:
+    - browser
+    - xorg
+    - x11
+  become: true
+
+# TODO: read firefox account name
+
+- name: Sync actions dir
+  ansible.builtin.synchronize:
+    archive: false
+    src: '{{ item.src }}'
+    dest: '{{ item.dst }}'
+    recursive: true
+    rsync_opts: ["--times"]
+    use_ssh_args: true
+  loop:
+    - src: native-messaging-hosts
+      dst: '{{ ansible_user_dir }}/.mozilla'
+#   - src: chrome
+#     dst: '{{ ansible_user_dir }}/.mozilla/firefox'
+
+- name: Configure passff
+  ansible.builtin.template:
+    src: native-messaging-hosts/passff.json.j2
+    dest: '{{ ansible_user_dir }}/.mozilla/native-messaging-hosts/passff.json'
+  tags:
+    - browser
+    - xorg
+    - x11
+    - pass

@@ -1,0 +1,15 @@
+---
+- name: Ensure git package installed
+  ansible.builtin.package:
+    state: present
+    name:
+      - git
+      - git-extras
+  become: true
+
+- name: Install .gitconfig
+  ansible.builtin.template:
+    src: gitconfig.j2
+    dest: '{{ ansible_user_dir}}/.gitconfig'
+    owner: '{{ ansible_user_id }}'
+    mode: 0640

@@ -1,0 +1,100 @@
+#!/bin/sh
+
+ACTION="connect"
+
+while [ $# -gt 0 ]; do
+    opt="$1"
+    shift
+    case "$opt" in
+        off)  ACTION="disconnect" ;;
+        jbl)  DEVICE_ADDRESS='FC:A8:9A:99:61:00' ;;
+        fio)  DEVICE_ADDRESS='20:18:12:00:08:FA' ;;
+        hk)   DEVICE_ADDRESS='98:52:3D:CC:29:18' ;;
+        up4)  DEVICE_ADDRESS='4C:BC:98:80:06:0D' ;;
+        hiby) DEVICE_ADDRESS='4C:BC:98:B0:2F:2B' ;;
+        sony) DEVICE_ADDRESS='90:48:9A:E6:6E:6E' ;;
+        flip) DEVICE_ADDRESS='D8:37:3B:15:FA:04' ;;
+    esac
+done
+
+[ -z "$DEVICE_ADDRESS" ] && [ "$ACTION" = "connect" ] && exit 1
+
+PA_CARD_NAME=$(echo $DEVICE_ADDRESS | sed 's/:/_/g')
+
+start_bluetoothd() {
+    rfkill unblock 0
+    sudo systemctl restart bluetooth
+    until sudo service bluetooth status; do
+        sleep 1
+    done
+}
+
+stop_bluetoothd() {
+    sudo systemctl stop bluetooth
+}
+
+connect_device() {
+    echo $ACTION $DEVICE_ADDRESS | bluetoothctl > /dev/null 2>&1
+}
+
+check_conn() {
+    pactl list cards | grep -q bluez_card.${PA_CARD_NAME}
+}
+
+init_bluetooth() {
+    start_bluetoothd > /dev/null
+    until check_conn; do
+        connect_device
+        sleep 1
+    done
+}
+
+a2dp_sink_enabled() {
+    if echo "$res" | grep -q "Failed to set card profile"; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+set_a2db_profile() {
+    res=$(pacmd set-card-profile bluez_card.${PA_CARD_NAME} a2dp_sink)
+    until a2dp_sink_enabled; do
+        echo "$res"
+        init_bluetooth
+        res=$(pacmd set-card-profile bluez_card.${PA_CARD_NAME} a2dp_sink)
+    done
+}
+
+set_default_sink() {
+    pactl set-default-sink bluez_sink.${PA_CARD_NAME}.a2dp_sink
+}
+
+move_sound_to_device() {
+    move_sink_inputs bluez_sink.${PA_CARD_NAME}.a2dp_sink
+}
+
+move_sink_inputs() {
+    target=$1
+    sink_inputs=$(pactl list short sink-inputs | awk '{print $1}')
+    for sink in $sink_inputs; do
+        pactl move-sink-input $sink $target
+    done
+}
+
+move_sink_inputs_0() {
+    move_sink_inputs 0
+}
+
+case $ACTION in
+    connect)
+        init_bluetooth
+        set_a2db_profile
+        set_default_sink
+        move_sound_to_device
+        ;;
+    disconnect)
+        move_sink_inputs_0
+        stop_bluetoothd
+        ;;
+esac

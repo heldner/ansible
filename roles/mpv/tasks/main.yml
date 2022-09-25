@@ -1,0 +1,23 @@
+---
+- name: Install mpv and mplayer
+  ansible.builtin.package:
+    state: present
+    name:
+      - mplayer
+      - mpv
+  tags: [xorg, mpv, mplayer]
+  become: true
+
+- name: Create mpv config dir
+  ansible.builtin.file:
+    state: directory
+    path: '{{ ansible_user_dir }}/.config/mpv'
+    mode: 0755
+  tags: [xorg, mpv, mplayer]
+
+- name: Copy mpv config
+  ansible.builtin.copy:
+    src: mpv.conf
+    dest: '{{ ansible_user_dir }}/.config/mpv/mpv.conf'
+    mode: 0644
+  tags: [xorg, mpv, mplayer]

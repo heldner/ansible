@@ -1,0 +1,6 @@
+---
+- name: copy logind.conf
+  copy:
+    src: logind.conf
+    dest: /etc/systemd/logind.conf
+  notify: restart logind

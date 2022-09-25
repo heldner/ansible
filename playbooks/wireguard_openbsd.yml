@@ -1,0 +1,10 @@
+---
+- hosts: openbsd
+  become: yes
+  gather_facts: yes
+  become_method: doas
+  collections:
+    - heldner.things
+  roles:
+    - wireguard
+

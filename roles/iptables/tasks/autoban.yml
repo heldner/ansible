@@ -1,0 +1,71 @@
+---
+- name: autoban, copy autoban script
+  copy:
+    src: 'autoban.rb'
+    dest: '/usr/local/bin/auto_ban'
+    mode: 0755
+  notify: autoban, execute autoban
+  tags:
+    - autoban
+
+- name: autoban, add env PATH
+  cron:
+    name: PATH
+    value: '/sbin:/usr/sbin:/usr/bin'
+    env: yes
+    user: 'root'
+    cron_file: 'autoban'
+  tags:
+    - autoban
+    - cron
+
+- name: autoban, copy destroy script
+  copy:
+    src: ipset-destroy.sh
+    dest: /usr/local/bin/ipset-destroy.sh
+    mode: 0750
+  tags:
+    - autoban
+
+- name: autoban, destroy autoban ipset # noqa 301
+  command: ipset-destroy.sh {{ item }}
+  with_items:
+    - auto_ban
+  register: command_result
+  failed_when: "command_result.rc != 0"
+  tags:
+    - autoban
+
+- name: Reload ipset tables # noqa 301
+  command: ipset-reload.sh --force-reload
+  register: command_result
+  failed_when: "command_result.rc != 0"
+  notify: autoban, execute autoban
+  tags:
+    - autoban
+
+- name: autoban, add autoban cronjob
+  cron:
+    name: Autoban from http ban list
+    cron_file: 'autoban'
+    user: 'root'
+    minute: '*/5'
+    job: '/usr/local/bin/auto_ban
+        --url {{ banurl }} >> /var/log/autoban.log 2>&1'
+  tags:
+    - autoban
+    - cron
+
+- name: Configure logrotate for autoban
+  copy:
+    src: logrotate_autoban
+    dest: /etc/logrotate.d/autoban
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+    - autoban
+    - cron
+
+- name: Flush autoban handlers
+  meta: flush_handlers

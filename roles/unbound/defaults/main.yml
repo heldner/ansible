@@ -1,0 +1,17 @@
+---
+unbound_interface: 127.0.0.1
+#unbound_interface: 0.0.0.0
+unbound_port: 53
+access_control:
+  - 127.0.0.0/8 allow
+  - 127.0.0.1/32 allow_snoop
+  - ::1 allow_snoop
+  - 127.0.0.0/8 allow
+  - 192.168.43.0/24 allow
+default_forward_addresses:
+  ## Cloudflare DNS
+  - 1.1.1.1@853
+  - 1.0.0.1@853
+  ## Also add IBM IPv6 Quad9 over TLS
+  - 9.9.9.9@853
+  - 149.112.112.112@853

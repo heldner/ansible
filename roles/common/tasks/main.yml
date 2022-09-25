@@ -1,0 +1,44 @@
+---
+- name: Ensure common packages installed
+  ansible.builtin.package:
+    state: present
+    name:
+      - acl
+      - alsa-utils
+      - at
+      - btrfs-progs
+      - bwm-ng
+      - console-data
+      - curl
+      - dconf-service
+      - dirmngr
+      - exfat-utils
+      - f2fs-tools
+      - firmware-iwlwifi
+      - fonts-powerline
+      - gifsicle
+      - htop
+      - ibam
+      - jnettop
+      - oathtool
+      - keychain
+      - libnotify-bin
+      - man
+      - ncdu
+      - pass
+      - pass-extension-otp
+      - python3-pip
+      - ripgrep
+      - rsync
+      - strace
+      - tcpdump
+      - w3m
+      - zbar-tools
+  become: true
+
+- name: Remove avahi
+  ansible.builtin.apt:
+    state: absent
+    pkg:
+      - avahi-autoipd
+  become: true

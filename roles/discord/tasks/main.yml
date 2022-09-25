@@ -1,0 +1,30 @@
+---
+- name: Check if discord is installed
+  ansible.builtin.package_facts:
+    manager: auto
+
+- block:
+
+    - name: Fetch discord deb
+      ansible.builtin.shell:
+        cmd: curl -o /tmp/discord.deb
+          -L 'https://discord.com/api/download?platform=linux&format=deb'
+      register: _fetch_discord
+
+    - name: Install discord package
+      ansible.builtin.apt:
+        deb: /tmp/discord.deb
+      register: _install_discord
+      when: _fetch_discord.changed
+      become: true
+
+    - name: Cleanup discord package
+      ansible.builtin.file:
+        path: '/tmp/discord.deb'
+        state: absent
+      when: _install_discord.changed
+
+  tags:
+    - xorg
+    - discord
+  when: "'discord' not in ansible_facts.packages"

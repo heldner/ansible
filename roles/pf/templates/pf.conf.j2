@@ -1,0 +1,33 @@
+#	$OpenBSD: pf.conf,v 1.55 2017/12/03 20:40:04 sthen Exp $
+#
+# See pf.conf(5) and /etc/examples/pf.conf
+
+set skip on lo
+
+block return	# block stateless traffic
+pass		# establish keep-state
+block in all
+
+ext_if = "vio0"
+all_ifs = "{" $ext_if wg0 "}"
+in_ports = "{" 80 443 "}"
+wg_port = 53824
+
+# By default, do not permit remote connections to X11
+block return in on ! lo0 proto tcp to port 6000:6010
+
+# Port build user does not need network
+block return out log proto {tcp udp} user _pbuild
+pass in proto icmp max-pkt-rate 100/10
+pass in proto tcp to port 22
+pass in proto tcp to port $ports
+
+anchor socksd in on $ext_if proto tcp to port 8080
+
+# wireguard
+## open wireguard port
+pass in on $ext_if proto udp from any to any port $wg_port
+## allow communication between wireguard peers
+pass on wg0
+## allow clients connected to wg0 to tunnel their outside world traffic
+pass out on $ext_if inet from (wg0:network) nat-to (vio0:0)

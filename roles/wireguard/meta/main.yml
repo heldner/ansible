@@ -1,0 +1,13 @@
+---
+galaxy_info:
+  author: Stanislav Korolev
+  description: Simple wireguard configuration for OpenBSD
+  company: RootIT
+  license: ISC
+  min_ansible_version: 2.1
+  platforms:
+    - name: OpenBSD
+      versions:
+        - 6.2
+
+  galaxy_tags: ['openbsd', 'wireguard', 'vpn']

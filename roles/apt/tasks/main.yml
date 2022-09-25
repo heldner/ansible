@@ -1,0 +1,77 @@
+---
+- name: Install lsb-release
+  ansible.builtin.package:
+    state: present
+    name: lsb-release
+  become: true
+  tags: apt
+
+- name: Create sources.d directory
+  ansible.builtin.file:
+    state: directory
+    path: /etc/apt/sources.list.d
+    mode: 0755
+  become: true
+  tags: apt
+
+- name: Collect service facts
+  ansible.builtin.setup:
+  tags:
+    - always
+    - apt
+
+- name: Set arch for apt
+  ansible.builtin.copy:
+    content: |
+      amd64
+      i386
+    dest: /var/lib/dpkg/arch
+  become: true
+  tags: apt
+  register: _apt_arch
+
+# TODO: - name: Get gpg key
+#  ansible.builtin.get_url:
+#    url:
+#      https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x55f96fcf8231b6dd
+#    dest: /etc/apt/trusted.gpg.d/neovim-ppa_ubuntu_stable.gpg
+#  become: true
+
+- name: Configure apt
+  ansible.builtin.template:
+    src: '{{ item.name }}'
+    dest: '{{ item.dest }}'
+    mode: 0644
+    owner: root
+  loop:
+    - name: stable.pref.j2
+      dest: /etc/apt/preferences.d/stable.pref
+    - name: neovim-ppa-ubuntu-stable.list.j2
+      dest: /etc/apt/sources.list.d/neovim-ppa-ubuntu-stable.list
+    - name: sources.list.j2
+      dest: /etc/apt/sources.list
+    - name: apt_conf_norecommends.j2
+      dest: /etc/apt/apt.conf.d/90aptnorecommends
+    - name: apt_conf_default_release.j2
+      dest: /etc/apt/apt.conf.d/10apt_conf_default_release
+  become: true
+  tags: apt
+  register: _apt_conf
+
+- name: Apt update
+  ansible.builtin.apt:
+    update_cache: true
+  when:
+    _apt_conf.changed or _apt_arch.changed
+  become: true
+
+- name: Apt update
+  ansible.builtin.apt:
+    state: present
+    name:
+      - apt-file
+      - software-properties-common
+  become: true
+
+# TODO: apt-key adv --keyserver keyserver.ubuntu.com \
+# --recv 9DBB0BE9366964F134855E2255F96FCF8231B6DD

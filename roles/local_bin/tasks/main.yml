@@ -1,0 +1,15 @@
+---
+- name: Create local bin
+  file:
+    state: directory
+    path: '{{ ansible_user_dir }}/.local/bin'
+    mode: 0755
+
+- name: Sync actions dir
+  ansible.builtin.synchronize:
+    archive: false
+    src: ../files/
+    dest: '{{ ansible_user_dir }}/.local/bin/'
+    recursive: true
+    rsync_opts: ["--times"]
+    use_ssh_args: true

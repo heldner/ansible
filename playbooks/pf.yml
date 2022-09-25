@@ -1,0 +1,10 @@
+---
+- hosts: openbsd
+  become: yes
+  become_method: doas
+  gather_facts: yes
+  collections:
+    - heldner.things
+  roles:
+    - pf
+

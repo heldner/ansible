@@ -1,0 +1,13 @@
+[Unit]
+Description=Dbus user settings
+Wants=basic.target
+After=basic.target
+Conflicts=shutdown.target
+DefaultDependencies=no
+
+[Service]
+ExecStart=dbus-update-activation-environment --verbose --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
+ExecStop=pkill -9 dbus
+
+[Install]
+WantedBy=sysinit.target

@@ -1,0 +1,27 @@
+---
+- name: Install mutt
+  ansible.builtin.package:
+    name:
+      - neomutt
+      - urlview
+    state: present
+  become: true
+  tags:
+    - install
+    - neomutt
+
+- name: Create link to mutt
+  ansible.builtin.file:
+    state: link
+    src: /usr/bin/neomutt
+    dest: /usr/local/bin/mutt
+  become: true
+  tags:
+    - install
+    - neomutt
+
+- name: Config
+  ansible.builtin.include_tasks: config.yml
+  tags:
+    - config
+    - neomutt

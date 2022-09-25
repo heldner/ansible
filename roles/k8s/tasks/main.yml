@@ -1,0 +1,9 @@
+---
+- name: Install kubernetes packages
+  ansible.builtin.package:
+    state: present
+    name: kubernetes-client
+  become: true
+  tags:
+    - kubernetes
+    - pkg

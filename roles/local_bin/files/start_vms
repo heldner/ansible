@@ -1,0 +1,5 @@
+#!/bin/sh
+action=${1:-start}
+[ "$action" = "stop" ] && action="shutdown"
+sudo virsh list --name --all \
+  | xargs -I% sudo virsh $action %

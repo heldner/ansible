@@ -1,0 +1,5 @@
+#!/bin/sh
+
+NAME='ncmpcpp'
+SCRIPTHOME="$( cd "$(dirname "$0")" && pwd -P )"
+. "${SCRIPTHOME}/_common"

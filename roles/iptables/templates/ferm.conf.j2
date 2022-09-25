@@ -1,0 +1,78 @@
+@hook pre "ipset-reload.sh";
+@def $has_docker = `dpkg -l | grep -Eq 'docker(-ce|-engine|.io)' && echo -n 1 || echo -n 0`;
+@def $has_libvirt = `pgrep libvirtd && echo -n 1 || echo -n 0`;
+@def $libvirt_net = "192.168.123.0/24";
+
+{% for table, chains in ferm_rules|dictsort %}
+table {{ table }} {
+{% for chain, rules in chains|dictsort %}
+  chain {{ chain }} {
+{% for value in rules %}
+{% if value.comment is defined -%}
+    # {{ value.comment|default('') }}
+{% endif %}
+    {{ value.rule }}  
+{% endfor %}
+  }
+{% endfor %}
+}
+{% endfor %}
+
+@if $has_docker {
+table filter {
+  chain DOCKER;
+  chain DOCKER-USER {
+    saddr !10.0.0.0/8 DROP;
+  }
+  chain DOCKER-ISOLATION {
+    RETURN;
+  }
+  chain FORWARD {
+    outerface docker0 jump DOCKER-USER;
+    outerface docker0 jump DOCKER;
+    outerface docker0 mod conntrack ctstate (RELATED ESTABLISHED) ACCEPT;
+    interface docker0 outerface !docker0 ACCEPT;
+    interface docker0 outerface docker0 ACCEPT;
+  }
+}
+table nat {
+  chain DOCKER {
+    interface docker0 RETURN;
+  }
+  chain PREROUTING {
+    mod addrtype dst-type LOCAL jump DOCKER;
+  }
+  chain OUTPUT {
+    daddr !127.0.0.0/8 mod addrtype dst-type LOCAL jump DOCKER;
+  }
+  chain POSTROUTING {
+    saddr 172.17.0.0/16 outerface !docker0 MASQUERADE;
+  }
+}
+}
+
+@if $has_libvirt {
+table nat {
+  chain POSTROUTING {
+    saddr $libvirt_net daddr (224.0.0.0/24 255.255.255.255/32) RETURN;
+    saddr $libvirt_net daddr ! $libvirt_net proto (tcp udp) MASQUERADE to-ports 1024-65535;
+    saddr $libvirt_net daddr ! $libvirt_net MASQUERADE;
+  }
+}
+table filter {
+  chain INPUT {
+    interface virbr0 proto (tcp udp) dport (53 67) ACCEPT;
+  }
+  chain FORWARD {
+    daddr $libvirt_net outerface virbr0 mod conntrack ctstate (ESTABLISHED RELATED) ACCEPT;
+    saddr $libvirt_net interface virbr0 ACCEPT;
+    interface virbr0 outerface virbr0 ACCEPT;
+    outerface virbr0 REJECT reject-with icmp-port-unreachable;
+    interface virbr0 REJECT reject-with icmp-port-unreachable;
+  }
+  chain OUTPUT {
+    outerface virbr0 proto udp dport 68 ACCEPT;
+  }
+}
+
+}

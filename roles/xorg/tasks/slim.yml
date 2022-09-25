@@ -1,0 +1,59 @@
+---
+- name: Install slim
+  ansible.builtin.package:
+    name: slim
+    state: present
+  become: true
+  tags: slim
+
+- name: Create theme directory
+  ansible.builtin.file:
+    state: directory
+    dest: /usr/share/slim/themes/random
+    owner: root
+    mode: 0755
+  become: true
+  tags: slim
+
+- name: Copy config
+  ansible.builtin.copy:
+    src: '{{ item.src }}'
+    dest: '{{ item.dst }}'
+    mode: 0644
+  loop:
+    - src: slim/slim.service
+      dst: /etc/systemd/system/slim.service.d/override.conf
+    - src: slim/slim.conf
+      dst: /etc/slim.conf
+    - src: slim/theme_random/panel.png
+      dst: /usr/share/slim/themes/random/panel.png
+    - src: slim/slim-background.sh
+      dst: /etc/X11/Xreset.d/02slim-background
+    - src: slim/theme_random/slim.theme
+      dst: /usr/share/slim/themes/random/slim.theme
+  become: true
+  register: _slim_config
+  tags: slim
+
+- name: Run systemctl daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: true
+  become: true
+  when: _slim_config.changed
+  tags: slim
+
+- name: Check pictures dir exists
+  ansible.builtin.stat:
+    path: /home/{{ ansible_user_id }}/Pictures
+  become: true
+  register: _slim_picdir
+  tags: slim
+
+- name: Create default background link
+  ansible.builtin.file:
+    state: link
+    dest: /usr/share/slim/themes/random/background.jpg
+    src: /usr/share/slim/themes/default/background.jpg
+  become: true
+  when: not _slim_picdir.stat.exists
+  tags: slim

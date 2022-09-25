@@ -1,0 +1,14 @@
+---
+- name: create locale dir
+  file:
+    path: /var/www/usr/share/locale/UTF-8/
+    state: directory
+
+- name: copy utf-8 local to chroot
+  copy: 
+    src: /usr/share/locale/UTF-8/LC_CTYPE
+    dest: /var/www/usr/share/locale/UTF-8/LC_LOCALE
+    owner: root
+    group: root
+    mode: 644
+    backup: yes

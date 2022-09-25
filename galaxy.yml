@@ -1,0 +1,17 @@
+---
+namespace: heldner
+name: things
+version: 1.1.1
+readme: README.md
+authors:
+  - Stanislav Korolev <teeroo@yandex.ru>
+description: some good roles
+license:
+  - ISC
+license_file: 'LICENSE'
+tags: ['desktop', 'xorg', 'debian']
+dependencies: {}
+repository: http://gitea.rootit.online/freegreen/ansible-collection
+documentation: http://gitea.rootit.online/freegreen/ansible-collection
+homepage: http://gitea.rootit.online/freegreen/ansible-collection
+issues: http://gitea.rootit.online/issue/tracker

@@ -1,0 +1,19 @@
+---
+zplug_plugins:
+  - name: zsh-users/zsh-syntax-highlighting
+    opts: "defer:2"
+  - name: romkatv/powerlevel10k
+    opts: "as:theme, depth:1"
+  - name: changyuheng/fz
+    opts: "defer:1"
+  - name: rupa/z
+    opts: "use:z.sh"
+  - name: unixorn/fzf-zsh-plugin
+    opts: "as:plugin"
+  - name: joshskidmore/zsh-fzf-history-search
+    opts: "use:zsh-fzf-history-search.zsh, as:plugin"
+  - name: smeagol74/zsh-fzf-pass
+    opts: "as:plugin"
+  - name: Dbz/kube-aliases
+    opts: "as:plugin"
+  - name: Tarrasch/zsh-autoenv

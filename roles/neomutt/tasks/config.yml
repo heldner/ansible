@@ -1,0 +1,47 @@
+---
+- block:
+
+    - name: Create config dir
+      ansible.builtin.file:
+        state: directory
+        mode: 0700
+        path: '{{ neomutt_home }}'
+
+    - name: Set fact all mboxes
+      ansible.builtin.set_fact:
+        all_maildirs: |
+          {% for account in neomutt_accounts %}
+          {% for maildir in account.maildirs %}
+          {{ "+%s/%s" | format(account.name, maildir) }}
+          {% endfor %}
+          {% endfor %}
+
+    - name: Generate mutt config
+      ansible.builtin.template:
+        src: 'neomuttrc.j2'
+        dest: '{{ neomutt_home }}/neomuttrc'
+        mode: 0600
+        owner: '{{ ansible_user_id }}'
+
+    - name: Generate account configs
+      ansible.builtin.template:
+        src: 'account.j2'
+        dest: '{{ neomutt_home }}/account.{{ item.name }}'
+        mode: 0600
+        owner: '{{ ansible_user_id }}'
+      loop: '{{ neomutt_accounts }}'
+      when: neomutt_accounts is defined
+
+    - name: Copy mutt files
+      ansible.builtin.copy:
+        src: '{{ item }}'
+        dest: '{{ neomutt_home }}/{{ item }}'
+        mode: 0600
+        owner: '{{ ansible_user_id }}'
+      with_items:
+        - signature_official
+        - vombatidae.mutt
+
+  tags:
+    - config
+    - neomutt
