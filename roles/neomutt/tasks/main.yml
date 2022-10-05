@@ -6,9 +6,7 @@
       - urlview
     state: present
   become: true
-  tags:
-    - install
-    - neomutt
+  tags: neomutt
 
 - name: Create link to mutt
   ansible.builtin.file:
@@ -16,12 +14,9 @@
     src: /usr/bin/neomutt
     dest: /usr/local/bin/mutt
   become: true
-  tags:
-    - install
-    - neomutt
+  tags: neomutt
 
 - name: Config
   ansible.builtin.include_tasks: config.yml
   tags:
-    - config
     - neomutt

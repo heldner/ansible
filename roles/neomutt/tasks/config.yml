@@ -16,6 +16,19 @@
           {% endfor %}
           {% endfor %}
 
+    - name: Ensure default dirs exists
+      ansible.builtin.file:
+        state: directory
+        path: '{{ mail_home }}/local/{{ item.key }}/{{ item.value }}'
+      loop:
+        - {inbox: cur}
+        - {inbox: new}
+        - {inbox: tmp}
+        - {trash: cur}
+        - {trash: new}
+        - {trash: tmp}
+      tags: neomutt
+
     - name: Generate mutt config
       ansible.builtin.template:
         src: 'neomuttrc.j2'

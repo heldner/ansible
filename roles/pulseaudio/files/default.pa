@@ -56,11 +56,6 @@ load-module module-bluetooth-policy
 load-module module-bluetooth-discover
 .endif
 
-### Multimedia keys
-.ifexists module-mmkbd-evdev.so
-load-module module-mmkbd-evdev.so
-.endif
-
 ### Load several protocols
 load-module module-native-protocol-unix
 

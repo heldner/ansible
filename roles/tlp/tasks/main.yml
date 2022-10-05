@@ -1,0 +1,32 @@
+---
+- name: Install tlp
+  ansible.builtin.package:
+    name: tlp
+    state: present
+  become: true
+  tags: tlp
+
+- name: Copy tlp config
+  ansible.builtin.template:
+    src: '{{ item.src }}'
+    dest: '{{ item.dst }}'
+    mode: 0644
+  loop:
+    - src: tlp.conf.j2
+      dst: /etc/tlp.d/custom.conf
+  register: _tlp_conf
+  become: true
+  tags: tlp
+
+- name: Enable tlp service
+  ansible.builtin.service:
+    name: tlp
+    state: started
+    enabled: true
+
+- name: Restart tlp service
+  ansible.builtin.service:
+    name: tlp
+    state: restarted
+  become: true
+  when: _tlp_conf.changed
