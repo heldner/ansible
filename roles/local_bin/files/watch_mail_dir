@@ -6,10 +6,10 @@ mail_watcher () {
   inotifywait \
     --quiet \
     --recursive "$maildir" \
-    --event moved_to \
+    --event moved_from \
     --timefmt "%Y%m%d-%H:%M:%S" \
     --format "%T %e %f " \
-    --exclude ".*mbsyncstate.*|.*tmp.*|.*drafts.*|.*new.*" >&-
+    --exclude ".*mbsyncstate.*|.*tmp.*|.*drafts.*|.*cur.*" >/dev/null
 }
 
 mail_notifier () {
