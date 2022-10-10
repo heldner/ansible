@@ -1,0 +1,12 @@
+[Unit]
+Description=Lock the screen with slock
+Before=sleep.target
+
+[Service]
+User={{ ansible_user }}
+Type=simple
+Environment=DISPLAY=:0
+ExecStart=/usr/local/bin/slock
+
+[Install]
+WantedBy=suspend.target

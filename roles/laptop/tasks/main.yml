@@ -34,8 +34,24 @@
   become: true
 
 - name: Add cronjob battery checker
-  cron:
+  ansible.builtin.cron:
     name: battery checker
     job: /usr/local/bin/batt_check
     minute: '*/5'
+  become: true
+
+- name: Locker service machine before suspend
+  ansible.builtin.template:
+    src: slock.service.j2
+    dest: /lib/systemd/system/slock.service
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  become: true
+
+- name: Enable slock unit
+  ansible.builtin.service:
+    name: slock
+    enabled: true
+    daemon_reload: true
   become: true
