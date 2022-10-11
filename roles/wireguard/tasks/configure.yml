@@ -1,11 +1,5 @@
 ---
-#- name: set sysctl forwarding
-#  sysctl:
-#    name: net.ipv4.ip_forward
-#    value: '1'
-#    state: present
-
-- name: copy hostname config
+- name: Copy hostname config
   ansible.builtin.template:
     src: hostname.wg0.j2
     dest: /etc/hostname.wg0
@@ -13,9 +7,18 @@
   become: true
   when: ansible_distribution == "OpenBSD"
 
-- name: copy wg config
+- name: Copy wg config
   ansible.builtin.template:
     src: wg0.conf.j2
     dest: /etc/wireguard/wg0.conf
     mode: 0600
+  register: _wg_config
+  become: true
+
+- name: Load wireguard conf
+  ansible.builtin.command:
+    cmd: /usr/local/bin/wg syncconf wg0 /etc/wireguard/wg0.conf
+  when:
+    - _wg_config.changed
+    - ansible_distribution == "OpenBSD"
   become: true
