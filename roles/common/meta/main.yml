@@ -8,4 +8,6 @@ galaxy_info:
 
 dependencies:
   - role: apt
+    when: ansible_distribution == 'Debian'
   - role: acpi
+    when: ansible_distribution == 'Debian'

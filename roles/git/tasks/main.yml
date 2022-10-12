@@ -1,10 +1,15 @@
 ---
+- name: Set packages list
+  ansible.builtin.set_fact:
+    git_pkgs: "{{ __pkgs +
+      ([ 'git-extras' ] if ansible_distribution != 'OpenBSD' else []) }}"
+  vars:
+    __pkgs: [git]
+
 - name: Ensure git package installed
   ansible.builtin.package:
     state: present
-    name:
-      - git
-      - git-extras
+    name: '{{ git_pkgs }}'
   become: true
 
 - name: Install .gitconfig

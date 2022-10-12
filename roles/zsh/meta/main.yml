@@ -14,3 +14,4 @@ galaxy_info:
 dependencies:
   - role: git
   - role: common
+    when: ansible_distribution == 'Debian'
