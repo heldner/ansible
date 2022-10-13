@@ -3,13 +3,16 @@
 # enable natural scrolling
 
 station_mouse='Microsoft Microsoft® Comfort Mouse 4500'
-thinkpad_mouse='SynPS/2 Synaptics TouchPad'
-
+thinkpad_mouse='Synaptics'
 xinput_res=$(xinput list)
 
+get_id() {
+  echo "$xinput_res" | awk -F '(\t|=)' '/'"$1"'/ {print $(NF-1)}'
+}
+
 if echo "$xinput_res" |grep -q "$station_mouse"; then
-    xinput set-prop "pointer:$station_mouse" 'libinput Natural Scrolling Enabled' 1
+  xinput set-prop "pointer:$station_mouse" 'libinput Natural Scrolling Enabled' 1
 fi
 if echo "$xinput_res" |grep -q "$thinkpad_mouse"; then
-    xinput set-prop "pointer:$thinkpad_mouse" "Synaptics Scrolling Distance" -110 -110
+  xinput set-prop "$(get_id "$thinkpad_mouse")" "Synaptics Scrolling Distance" -110 -110
 fi
