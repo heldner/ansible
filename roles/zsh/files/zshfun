@@ -1,29 +1,29 @@
 function _virtualenv_auto_activate() {
-    if [[ -d ./.venv ]] ; then
-        source ./.venv/bin/activate
-    else
-        if [[ -n "$VIRTUAL_ENV" ]] ; then
-            parentdir="$(dirname "$VIRTUAL_ENV")"
-            if [[ "$PWD"/ != "$parentdir"/* ]] ; then
-              deactivate
-            fi
-        fi
+  if [[ -d ./.venv ]] ; then
+    source ./.venv/bin/activate
+    export VIRTUAL_ENV_DIR="$(realpath $(dirname "$VIRTUAL_ENV"))"
+  else
+    if [[ -n "$VIRTUAL_ENV" ]] ; then
+      if [[ "$PWD" != "$VIRTUAL_ENV_DIR"/* ]] ; then
+        deactivate
+      fi
     fi
+  fi
 }
 
 chpwd_functions+=(_virtualenv_auto_activate)
 
-function telegram_container() {
-    xhost local:root
-    podman run --rm -it --name telegram \
-      --device /dev/snd \
-      -e DISPLAY \
-      -v /etc/localtime:/etc/localtime:ro \
-      -v /tmp/.X11-unix:/tmp/.X11-unix \
-      -v $HOME/.local/share/TelegramDesktop:/root/.local/share/TelegramDesktop/ \
-      -v $HOME/Downloads:/root/Downloads \
-      -v $HOME/Pictures:/root/Pictures \
-      strm/telegram
+telegram_container() {
+  xhost local:root
+  podman run --rm -it --name telegram \
+    --device /dev/snd \
+    -e DISPLAY \
+    -v /etc/localtime:/etc/localtime:ro \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v $HOME/.local/share/TelegramDesktop:/root/.local/share/TelegramDesktop/ \
+    -v $HOME/Downloads:/root/Downloads \
+    -v $HOME/Pictures:/root/Pictures \
+    strm/telegram
 }
 
 colorss() {
