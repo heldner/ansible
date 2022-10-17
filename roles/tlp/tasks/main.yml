@@ -23,6 +23,7 @@
     name: tlp
     state: started
     enabled: true
+  become: true
 
 - name: Restart tlp service
   ansible.builtin.service:

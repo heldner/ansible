@@ -61,11 +61,9 @@
 - name: Apt update
   ansible.builtin.apt:
     update_cache: true
-  when:
-    _apt_conf.changed or _apt_arch.changed
   become: true
 
-- name: Apt update
+- name: Apt ppa support
   ansible.builtin.apt:
     state: present
     name:

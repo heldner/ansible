@@ -1,3 +1,3 @@
 # SSH
 
-
+Configure OpenSSH client.

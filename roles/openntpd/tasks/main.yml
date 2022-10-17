@@ -1,0 +1,30 @@
+---
+- name: Install openntpd
+  ansible.builtin.package:
+    state: present
+    name: openntpd
+  tags: [ntp]
+  become: true
+
+- name: Copy ntpd.conf
+  ansible.builtin.template:
+    src: 'ntpd.conf.j2'
+    dest: '/etc/openntpd/ntpd.conf'
+    mode: 0644
+  register: _openntpd_conf
+  become: true
+  tags: [ntp]
+
+- name: Enable openntpd service
+  ansible.builtin.service:
+    name: openntpd
+    state: started
+    enabled: true
+  become: true
+
+- name: Restart openntpd service
+  ansible.builtin.service:
+    name: openntpd
+    state: restarted
+  become: true
+  when: _openntpd_conf.changed
