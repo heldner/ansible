@@ -13,3 +13,119 @@
     state: started
     enabled: true
     daemon_reload: true
+
+- name: Get API key directly from config file
+  ansible.builtin.shell:
+    awk -F'<|>' '/apikey/ {print $3}' "{{ syncthing_home }}/config.xml"
+  register: _syncthing_apikey_raw
+  changed_when: false
+  check_mode: false
+
+- name: Run an API call to fetch the current service config
+  ansible.builtin.uri:
+    url: http://localhost:8384/rest/system/config
+    method: GET
+    return_content: true
+    headers:
+      X-API-KEY: '{{ _syncthing_apikey_raw.stdout }}'
+  register: _syncthing_config_raw
+  until: _syncthing_config_raw.status == 200
+  changed_when: false
+  retries: 10
+  delay: 2
+  check_mode: false
+
+# - name: Store a copy of the config
+#   set_fact:
+#     _syncthing_config: "{{ _syncthing_config_raw.content | from_json }}"
+
+- name: Set all devices
+  ansible.builtin.uri:
+    url: "http://localhost:8384/rest/config/devices/{{ item.deviceID }}"
+    method: PUT
+    headers:
+      X-API-KEY: '{{ _syncthing_apikey_raw.stdout }}'
+    body_format: json
+    body:
+      deviceID: "{{ item.deviceID }}"
+      name: "{{ item.name }}"
+      addresses:
+        - dynamic
+      compression: metadata
+      certName: ''
+      introducer: false
+      skipIntroductionRemovals: false
+      introducedBy: ''
+      paused: false
+      allowedNetworks: []
+      autoAcceptFolders: false
+      maxSendKbps: 0
+      maxRecvKbps: 0
+      ignoredFolders: []
+      maxRequestKiB: 0
+      untrusted: false
+      remoteGUIPort: 0
+  changed_when: false
+  retries: 10
+  delay: 2
+  check_mode: false
+  loop: "{{ syncthing_additional_devices }}"
+
+# - name: Set folders
+#   ansible.builtin.uri:
+#     url: "http://localhost:8384/rest/config/devices/{{ item.deviceID }}"
+#     method: PUT
+#     headers:
+#       X-API-KEY: '{{ _syncthing_apikey_raw.stdout }}'
+#     body_format: json
+#     body:
+#       id: {{ item.id }}
+#       label: {{ item.label }}
+#       filesystemType: basic
+#       path: {{ item.path }}
+#       type: sendreceive
+#       devices: [ {{ _syncthing_all_devices }} ]
+#         {
+#           deviceID: JZTL3CN-DNWHW65-DVTLCDW-QGNUD3V-5AEUC36-OLDVKUV-RCGGIOK-IZ7GSAY
+#           introducedBy:
+#           encryptionPassword:
+#         }
+#       ]
+#       rescanIntervalS: 3600
+#       fsWatcherEnabled: true
+#       fsWatcherDelayS: 10
+#       ignorePerms: false
+#       autoNormalize: true
+#       minDiskFree: {
+#         value: 1
+#         unit: %
+#       }
+#       versioning: {
+#         type:
+#         params: {}
+#         cleanupIntervalS: 3600
+#         fsPath:
+#         fsType: basic
+#       }
+#       copiers: 0
+#       pullerMaxPendingKiB: 0
+#       hashers: 0
+#       order: random
+#       ignoreDelete: false
+#       scanProgressIntervalS: 0
+#       pullerPauseS: 0
+#       maxConflicts: 10
+#       disableSparseFiles: false
+#       disableTempIndexes: false
+#       paused: false
+#       weakHashThresholdPct: 25
+#       markerName: .stfolder
+#       copyOwnershipFromParent: false
+#       modTimeWindowS: 0
+#       maxConcurrentWrites: 2
+#       disableFsync: false
+#       blockPullOrder: standard
+#       copyRangeMethod: standard
+#       caseSensitiveFS: false
+#       junctionsAsDirs: false
+#   loop: "{{ syncthing_additional_devices }}"
