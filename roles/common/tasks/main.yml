@@ -19,6 +19,7 @@
       - gifsicle
       - htop
       - ibam
+      - ipython3
       - jnettop
       - oathtool
       - keychain
