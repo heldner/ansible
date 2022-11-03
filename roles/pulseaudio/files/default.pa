@@ -24,6 +24,9 @@
 load-module module-device-restore
 load-module module-stream-restore
 load-module module-card-restore
+.ifexists module-bluez5-discover
+load-module module-bluez5-discover
+.endif
 
 ### Automatically augment property information from .desktop files
 ### stored in /usr/share/application

@@ -6,6 +6,8 @@
       - acl
       - alsa-utils
       - at
+      - bluetooth
+      - bluez
       - btrfs-progs
       - bwm-ng
       - console-data
@@ -21,13 +23,14 @@
       - ibam
       - ipython3
       - jnettop
-      - oathtool
       - keychain
       - libnotify-bin
       - man
       - ncdu
+      - oathtool
       - pass
       - pass-extension-otp
+      - pulseaudio-module-bluetooth
       - python3-pip
       - ripgrep
       - rsync

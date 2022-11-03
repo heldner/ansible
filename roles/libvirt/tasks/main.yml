@@ -3,8 +3,9 @@
   ansible.builtin.package:
     state: present
     name:
-      - libvirt-daemon
+      - gir1.2-spiceclientgtk-3.0
       - libvirt-clients
+      - libvirt-daemon
       - virt-manager
       - virt-viewer
       - spice-client-gtk
