@@ -15,8 +15,7 @@
     mode: 0644
     owner: root
   become: true
-  notify:
-    - restart unbound
+  when: _unbound_config
 
 - name: Copy unbound zone generator
   ansible.builtin.copy:
@@ -30,4 +29,11 @@
     name: unbound
     enabled: true
     state: started
+  become: true
+
+- name: Restart unbound
+  service:
+    name: unbound
+    state: restarted
+  when: _unbound_config.changed
   become: true
