@@ -25,6 +25,14 @@
 #   - src: chrome
 #     dst: '{{ ansible_user_dir }}/.mozilla/firefox'
 
+- name: Copy firefox bwrap
+  ansible.builtin.copy:
+    src: firefox_bwrap
+    dest: /usr/local/bin/firefox
+    mode: 0555
+  become: true
+  tags: browser
+
 - name: Configure passff
   ansible.builtin.template:
     src: native-messaging-hosts/passff.json.j2

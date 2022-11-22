@@ -15,7 +15,7 @@
     mode: 0644
     owner: root
   become: true
-  when: _unbound_config
+  register: _unbound_config
 
 - name: Copy unbound zone generator
   ansible.builtin.copy:

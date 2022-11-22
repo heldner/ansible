@@ -23,6 +23,7 @@
       ansible.builtin.command:
         cmd: pkill -HUP sxhkd
       when: _sxhkdrc.changed
+      ignore_errors: true
 
   tags:
     - xorg

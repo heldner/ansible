@@ -15,6 +15,13 @@
   become: true
   tags: slim
 
+- name: Create systemd slim override dir
+  ansible.builtin.file:
+    state: directory
+    path: /etc/systemd/system/slim.service.d
+  become: true
+  tags: slim
+
 - name: Copy config
   ansible.builtin.copy:
     src: '{{ item.src }}'

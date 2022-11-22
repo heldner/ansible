@@ -46,8 +46,8 @@
   loop:
     - name: stable.pref.j2
       dest: /etc/apt/preferences.d/stable.pref
-    - name: neovim-ppa-ubuntu-stable.list.j2
-      dest: /etc/apt/sources.list.d/neovim-ppa-ubuntu-stable.list
+#    - name: neovim-ppa-ubuntu-stable.list.j2
+#      dest: /etc/apt/sources.list.d/neovim-ppa-ubuntu-stable.list
     - name: sources.list.j2
       dest: /etc/apt/sources.list
     - name: apt_conf_norecommends.j2

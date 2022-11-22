@@ -53,9 +53,14 @@
     src: etc_default_keyboard.j2
     dest: /etc/default/keyboard
     mode: 0644
-  notify: reload udev input
   tags: [xorg, keyboard]
   become: true
+
+- name: Create fonts dir
+  ansible.builtin.file:
+    state: directory
+    path: '{{ ansible_user_dir }}/.local/share/fonts'
+  tags: xorg
 
 - name: Sync fonts dir
   ansible.builtin.synchronize:
