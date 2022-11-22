@@ -36,7 +36,7 @@ ff_bwrap() {
     --ro-bind /usr/share/icons /usr/share/icons \
     --ro-bind /usr/share/libdrm /usr/share/libdrm \
     --ro-bind /usr/share/mime /usr/share/mime \
-    --ro-bind /usr/share/mime /usr/share/mime \
+    --ro-bind /home/"$USER"/.password-store /home/"$USER"/.password-store \
     --setenv GTK_THEME Adwaita:dark \
     --setenv HOME /home/"$USER" \
     --setenv PATH /usr/bin \
