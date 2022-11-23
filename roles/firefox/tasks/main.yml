@@ -29,7 +29,7 @@
   ansible.builtin.copy:
     src: firefox_bwrap
     dest: /usr/local/bin/firefox
-    mode: 0555
+    mode: 0755
   become: true
   tags: browser
 
