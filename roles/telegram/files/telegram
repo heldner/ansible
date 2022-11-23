@@ -4,6 +4,11 @@ uid=$(id -u)
 exec bwrap \
   --bind /home/"$USER"/.local/share/TelegramDesktop /home/"$USER"/.local/share/TelegramDesktop \
   --bind /home/"$USER"/Downloads /home/"$USER"/Downloads \
+  --clearenv \
+  --setenv XDG_RUNTIME_DIR $XDG_RUNTIME_DIR \
+  --setenv DISPLAY $DISPLAY \
+  --setenv HOME $HOME \
+  --setenv LANG $LANG \
   --dev /dev \
   --dev-bind /dev/dri /dev/dri \
   --hostname housekeep \
@@ -22,4 +27,4 @@ exec bwrap \
   --symlink usr/lib64 /lib64 \
   --tmpfs /tmp \
   --unshare-uts \
-  /opt/Telegram/Telegram > /dev/null 2>&1
+  /opt/Telegram/Telegram > ~/telegram.log 2>&1
