@@ -14,5 +14,4 @@ galaxy_info:
   galaxy_tags: [vim, neovim, nvim, editor, text]
 
 dependencies:
-  - role: apt
   - role: editorconfig
