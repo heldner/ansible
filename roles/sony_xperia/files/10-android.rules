@@ -1,0 +1,2 @@
+SUBSYSTEM=="usb", ATTR{idVendor}=="0fce", ENV{adb_user}="yes"
+ENV{adb_user}=="yes", MODE="0660", GROUP="plugdev", TAG+="uaccess"

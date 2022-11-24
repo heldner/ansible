@@ -1,0 +1,22 @@
+---
+- name: Install andoid tools
+  ansible.builtin.package:
+    state: present
+    name:
+      - android-tools-adb
+      - android-tools-fastboot
+  tags: [adb, android, sony]
+  become: true
+
+- name: Copy udev rules
+  ansible.builtin.copy:
+    src: 10-android.rules
+    dest: /etc/udev/rules.d/10-android.rules
+    mode: 0644
+  become: true
+  register: _sony_xperia_udev
+
+- name: Reload udev rules
+  ansible.builtin.command: udevadm control --reload
+  become: true
+  when: _sony_xperia_udev.changed
