@@ -36,10 +36,12 @@ ff_bwrap() {
     --ro-bind /usr/share/icons /usr/share/icons \
     --ro-bind /usr/share/libdrm /usr/share/libdrm \
     --ro-bind /usr/share/mime /usr/share/mime \
-    --ro-bind /home/"$USER"/.password-store /home/"$USER"/.password-store \
+    --clearenv \
     --setenv GTK_THEME Adwaita:dark \
+    --setenv XDG_RUNTIME_DIR $XDG_RUNTIME_DIR \
     --setenv HOME /home/"$USER" \
     --setenv PATH /usr/bin \
+    --setenv DISPLAY $DISPLAY \
     --share-net \
     --symlink usr/bin /bin \
     --symlink usr/bin /sbin \
@@ -50,7 +52,7 @@ ff_bwrap() {
     --unshare-pid \
     --unshare-user-try \
     --unshare-uts \
-    /usr/bin/firefox
+    /usr/bin/firefox "$@"
 }
 
-ff_bwrap &
+ff_bwrap "$@" &

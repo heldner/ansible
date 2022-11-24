@@ -20,12 +20,14 @@
       - libreoffice-calc
       - libreoffice-impress
       - libreoffice-writer
+      - pcmanfm
       - pinentry-curses
       - rxvt-unicode
       - rxvt-unicode-256color
       - sxhkd
       - unclutter
       - unclutter-startup
+      - x11-utils
       - x11-xkb-utils
       - x11-xserver-utils
       - xautolock

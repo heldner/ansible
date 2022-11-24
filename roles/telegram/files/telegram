@@ -5,26 +5,38 @@ exec bwrap \
   --bind /home/"$USER"/.local/share/TelegramDesktop /home/"$USER"/.local/share/TelegramDesktop \
   --bind /home/"$USER"/Downloads /home/"$USER"/Downloads \
   --clearenv \
-  --setenv XDG_RUNTIME_DIR $XDG_RUNTIME_DIR \
-  --setenv DISPLAY $DISPLAY \
-  --setenv HOME $HOME \
-  --setenv LANG $LANG \
   --dev /dev \
   --dev-bind /dev/dri /dev/dri \
-  --hostname housekeep \
   --die-with-parent \
+  --hostname housekeep \
   --new-session \
+  --ro-bind /etc/fonts /etc/fonts \
   --ro-bind /opt/Telegram /opt/Telegram \
   --ro-bind /run/user/"$uid"/pulse /run/user/"$uid"/pulse \
   --ro-bind /sys/dev/char /sys/dev/char \
   --ro-bind /sys/devices/pci0000:00 /sys/devices/pci0000:00 \
   --ro-bind /usr/lib /usr/lib \
   --ro-bind /usr/lib64 /usr/lib64 \
-  --ro-bind /etc/fonts /etc/fonts \
+  --ro-bind /usr/share/applications /usr/share/applications \
+  --ro-bind /usr/share/ca-certificates /usr/share/ca-certificates \
+  --ro-bind /usr/share/drirc.d /usr/share/drirc.d \
   --ro-bind /usr/share/fontconfig /usr/share/fontconfig \
   --ro-bind /usr/share/fonts /usr/share/fonts \
+  --ro-bind /usr/share/glib-2.0 /usr/share/glib-2.0 \
+  --ro-bind /usr/share/glvnd /usr/share/glvnd \
+  --ro-bind /usr/share/icons /usr/share/icons \
+  --ro-bind /usr/share/libdrm /usr/share/libdrm \
+  --ro-bind /usr/share/mime /usr/share/mime \
+  --ro-bind /usr/share/X11/xkb /usr/share/X11/xkb \
+  --setenv DISPLAY $DISPLAY \
+  --setenv HOME $HOME \
+  --setenv LANG $LANG \
+  --setenv XDG_RUNTIME_DIR $XDG_RUNTIME_DIR \
   --symlink usr/lib /lib \
   --symlink usr/lib64 /lib64 \
   --tmpfs /tmp \
+  --unshare-ipc \
+  --unshare-pid \
+  --unshare-user \
   --unshare-uts \
-  /opt/Telegram/Telegram > ~/telegram.log 2>&1
+  /opt/Telegram/Telegram > /dev/null 2>&1 &
