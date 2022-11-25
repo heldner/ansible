@@ -1,0 +1,20 @@
+---
+- name: Copy udev rules
+  ansible.builtin.template:
+    src: 20-autobackup.rules.j2
+    dest: /etc/udev/rules.d/20-autobackup.rules
+    mode: 0644
+  become: true
+  register: _autobackup
+
+- name: Reload udev rules
+  ansible.builtin.command: udevadm control --reload
+  become: true
+  when: _autobackup.changed
+
+- name: Copy autobackup script
+  ansible.builtin.copy:
+    src: autobackup.sh
+    dest: /usr/local/bin/autobackup.sh
+    mode: 0755
+  become: true
