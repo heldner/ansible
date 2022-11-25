@@ -1,0 +1,39 @@
+---
+- name: Get stats of gpg key
+  ansible.builtin.stat:
+    path: /etc/apt/trusted.gpg.d/home-ungoogled_chromium.gpg
+  register: _chromium_gpg_key
+
+- name: Download chromium repo gpg key
+  ansible.builtin.get_url:
+    url: 'https://download.opensuse.org/repositories/home:/ungoogled_chromium/Ubuntu_Focal/Release.key'
+    dest: /tmp/home-ungoogled_chromium.gpg
+  when: not _chromium_gpg_key.stat.exists
+  become: true
+
+- name: Add gpg repo key
+  ansible.builtin.command: >
+    gpg --output /etc/apt/trusted.gpg.d/home-ungoogled_chromium.gpg
+      --dearmor /tmp/home-ungoogled_chromium.gpg
+  when: not _chromium_gpg_key.stat.exists
+  become: true
+
+- name: Add apt repository
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/home-ungoogled_chromium.list
+    content:
+      deb http://download.opensuse.org/repositories/home:/ungoogled_chromium/Ubuntu_Focal/ /
+    mode: 0644
+    owner: root
+  become: true
+
+- name: Apt update
+  ansible.builtin.apt:
+    update_cache: true
+  become: true
+
+- name: Install ungoogled chromium
+  ansible.builtin.package:
+    state: present
+    name: ungoogled-chromium
+  become: true
