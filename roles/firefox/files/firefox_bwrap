@@ -24,10 +24,9 @@ ff_bwrap() {
     --ro-bind /usr/lib /usr/lib \
     --ro-bind /usr/lib64 /usr/lib64 \
     --ro-bind /usr/share/X11/xkb /usr/share/X11/xkb \
-    --ro-bind /usr/share/pyshared /usr/share/pyshared \
-    --ro-bind /usr/share/distro-info /usr/share/distro-info \
     --ro-bind /usr/share/applications /usr/share/applications \
     --ro-bind /usr/share/ca-certificates /usr/share/ca-certificates \
+    --ro-bind /usr/share/distro-info /usr/share/distro-info \
     --ro-bind /usr/share/drirc.d /usr/share/drirc.d \
     --ro-bind /usr/share/fontconfig /usr/share/fontconfig \
     --ro-bind /usr/share/fonts /usr/share/fonts \
@@ -36,6 +35,8 @@ ff_bwrap() {
     --ro-bind /usr/share/icons /usr/share/icons \
     --ro-bind /usr/share/libdrm /usr/share/libdrm \
     --ro-bind /usr/share/mime /usr/share/mime \
+    --ro-bind /usr/share/pyshared /usr/share/pyshared \
+    --ro-bind /usr/share/zoneinfo/Europe /usr/share/zoneinfo/Europe \
     --clearenv \
     --setenv GTK_THEME Adwaita:dark \
     --setenv XDG_RUNTIME_DIR $XDG_RUNTIME_DIR \
@@ -43,6 +44,7 @@ ff_bwrap() {
     --setenv PATH /usr/bin \
     --setenv DISPLAY $DISPLAY \
     --share-net \
+    --symlink /usr/share/zoneinfo/Europe/Moscow /etc/localtime \
     --symlink usr/bin /bin \
     --symlink usr/bin /sbin \
     --symlink usr/lib /lib \
