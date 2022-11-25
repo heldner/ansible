@@ -3,7 +3,7 @@
 #Note that I dont support spaces in params
 #So if your for example gonna specify idle time use --idle=X not -i X.
 
-#If this is specified program will attempt to drop permissions before running encfs. 
+#If this is specified program will attempt to drop permissions before running encfs.
 #(will not work with --public for example, as that requires encfs to run as root)
 drop_permissions
 
@@ -14,9 +14,9 @@ drop_permissions
 #Same for fuse, note that allow_root (or allow_other, or --public in encfs) is needed to run gdm/X.
 #you can find fuse options with encfs -H
 # - Debian Note:
-# allow_other and allow_root are mutually incompatible and cannot be set 
-# simultaneously. If we set any of them here (as done before) all users 
-# inherit it and the other option cannot be set for any user. We better 
+# allow_other and allow_root are mutually incompatible and cannot be set
+# simultaneously. If we set any of them here (as done before) all users
+# inherit it and the other option cannot be set for any user. We better
 # do not set it here, but in specific definitions at the end of this file.
 fuse_default nonempty
 
@@ -30,7 +30,7 @@ fuse_default nonempty
 #ENCFS OPTIONS	encfs options here is encfs_default + encfs_options
 #FUSE OPTIONS	encfs options here is fuse_default + fuse_options
 
-#Keep in mind that the configuration file is parsed top to bottom, so if you put your generic line on top, 
+#Keep in mind that the configuration file is parsed top to bottom, so if you put your generic line on top,
 #that will always match before any custom lines under it.
 
 
@@ -40,4 +40,4 @@ fuse_default nonempty
 #example_user	/mnt/enc/example_user	/home/example_user	-v,--idle=1		allow_root
 #*		.private		private			-v			allow_other
 #-		/mnt/enc		- 			-v			allow_other
-*               .encfs          Private             -v                  allow_other
+*               .encfs          Private             -                  allow_other

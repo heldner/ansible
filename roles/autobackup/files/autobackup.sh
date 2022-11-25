@@ -1,12 +1,14 @@
 #!/bin/sh
 
 USER=dayton
-BACKUP_SOURCE="/home/${USER}/.encfs"
-BACKUP_DEVICE="/dev/external1"
-MOUNT_POINT="/mnt/external"
+DEVICE=external1
+BACKUP_SOURCE="/home/${USER}/.password-store"
+BACKUP_DEVICE="/dev/${DEVICE}"
+MOUNT_POINT="/mnt/${DEVICE}"
+DEST_DIR="${MOUNT_POINT}/${USER}"
 
 log() {
-  /usr/bin/logger -p info
+  /usr/bin/logger -p info "$@"
 }
 
 source_exists() {
@@ -17,7 +19,7 @@ source_exists() {
 }
 
 backup_device_exists() {
-  if [ ! -f "$BACKUP_DEVICE" ]; then
+  if [ ! -l "$BACKUP_DEVICE" ]; then
     log "backup device $BACKUP_DEVICE doesn't exists"
     exit 0
   fi
@@ -37,7 +39,7 @@ mount_drive() {
 }
 
 backup_data() {
-  if /usr/bin/rsync -az --delete-after "$MOUNT_POINT" "$BACKUP_SOURCE"; then
+  if ! /usr/bin/rsync -a --delete-after "$BACKUP_SOURCE" "$DEST_DIR"; then
     log "failed to rsync $BACKUP_SOURCE to $BACKUP_DEVICE"
   fi
 }
@@ -49,7 +51,7 @@ main() {
   log "backup started"
   mount_drive
   backup_data
-  /bin/umount "$BACKUP_DEVICE"
+  /bin/umount "$MOUNT_POINT"
   log "backup done"
 }
 
