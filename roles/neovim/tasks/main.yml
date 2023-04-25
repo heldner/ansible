@@ -1,25 +1,27 @@
 ---
-- name: Add neovim ppa gpg key
-  ansible.builtin.apt_key:
-    url: 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x55f96fcf8231b6dd'
-    state: present
-  become: true
+- block:
 
-- name: Configure apt
-  ansible.builtin.template:
-    src: '{{ item.name }}'
-    dest: '{{ item.dest }}'
-    mode: 0644
-    owner: root
-  loop:
-    - name: neovim-ppa-ubuntu-stable.list.j2
-      dest: /etc/apt/sources.list.d/neovim-ppa-ubuntu-stable.list
-  become: true
+    - name: Add neovim ppa gpg key
+      ansible.builtin.apt_key:
+        url: 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x55f96fcf8231b6dd'
+        state: present
 
-- name: Apt update
-  ansible.builtin.apt:
-    update_cache: true
+    - name: Configure apt
+      ansible.builtin.template:
+        src: '{{ item.name }}'
+        dest: '{{ item.dest }}'
+        mode: 0644
+        owner: root
+      loop:
+        - name: neovim-ppa-ubuntu-stable.list.j2
+          dest: /etc/apt/sources.list.d/neovim-ppa-ubuntu-stable.list
+
+    - name: Apt update
+      ansible.builtin.apt:
+        update_cache: true
+
   become: true
+  when: ansible_distribution == "Debian"
 
 - name: Install neovim
   ansible.builtin.package:
