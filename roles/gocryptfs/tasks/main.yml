@@ -1,0 +1,15 @@
+---
+- name: Ensure main and pam packages present
+  apt:
+    state: present
+    pkg:
+    - fuse
+    - gocryptfs
+    - libpam-mount
+  become: true
+
+- name: Copy pam_mount user config
+  template:
+    src: pam_mount.conf.xml.j2
+    dest: '{{ ansible_user_dir }}/.pam_mount.conf.xml'
+    mode: 0644
