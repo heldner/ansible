@@ -67,6 +67,6 @@
     src: "{{ neovim_home }}/plugged/jellybeans.vim/colors/jellybeans.vim"
 
 - name: Install python support
-  ansible.builtin.pip:
-    name: pynvim
+  ansible.builtin.package:
+    name: python3-pynvim
   become: true

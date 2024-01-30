@@ -1,9 +1,13 @@
 #!/bin/sh
 
-DWM="/usr/local/bin/dwm"
+DWM="/usr/bin/dwm"
 
 if [ ! -f "$DWM" ]; then
-    exec /usr/bin/wmii -r "${HOME}/.wmii/wmiirc_local"
+    exit 1
+fi
+
+if [ ! -d "~/.dwm" ]; then
+    mkdir ~/.dwm
 fi
 
 while true; do
