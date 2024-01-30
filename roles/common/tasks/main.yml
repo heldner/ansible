@@ -14,13 +14,12 @@
       - curl
       - dconf-service
       - dirmngr
-      - exfat-utils
+      - exfatprogs
       - f2fs-tools
       - firmware-iwlwifi
       - fonts-powerline
       - gifsicle
       - htop
-      - ibam
       - ipython3
       - jnettop
       - keychain

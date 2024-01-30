@@ -1,5 +1,3 @@
 ---
 dependencies:
   - role: common
-  - role: isync
-  - role: dunst

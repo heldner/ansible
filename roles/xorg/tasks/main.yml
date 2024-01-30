@@ -23,7 +23,6 @@
       - pcmanfm
       - pinentry-curses
       - rxvt-unicode
-      - rxvt-unicode-256color
       - sxhkd
       - unclutter
       - unclutter-startup
