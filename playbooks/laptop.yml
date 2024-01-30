@@ -1,13 +1,10 @@
 ---
 - hosts: laptop
   become: yes
-  become_method: doas
+  become_method: sudo
   gather_facts: yes
-  vars:
   collections:
     - heldner.things
   roles:
-    - acpi
     - laptop
-    - lenovo
     - xorg

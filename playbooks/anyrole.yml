@@ -1,8 +1,8 @@
 ---
 - hosts: 'all'
   gather_facts: yes
+  become: yes
   collections:
     - heldner.things
-      #- ansible.posix
   roles:
     - '{{ target_role }}'
