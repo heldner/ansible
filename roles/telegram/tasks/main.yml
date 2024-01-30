@@ -1,5 +1,6 @@
 ---
 - name: Unarchive a telegram archive
+  become: true
   ansible.builtin.unarchive:
     src: '{{ telegram_url }}'
     dest: /opt
@@ -10,6 +11,7 @@
   become: yes
 
 - name: Make link
+  become: true
   copy:
     src: telegram
     mode: 0755
