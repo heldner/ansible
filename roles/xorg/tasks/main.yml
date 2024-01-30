@@ -57,33 +57,18 @@
   tags: [xorg, keyboard]
   become: true
 
-- name: Create fonts dir
+- name: Create sxhkd config dir
   ansible.builtin.file:
     state: directory
-    path: '{{ ansible_user_dir }}/.local/share/fonts'
-  tags: xorg
+    path: '{{ ansible_user_dir }}/.config/sxhkd'
+  tags: sxhkd
 
-- name: Sync fonts dir
-  ansible.builtin.synchronize:
-    archive: false
-    src: fonts/
-    dest: '{{ ansible_user_dir }}/.local/share/fonts'
-    recursive: true
-    rsync_opts: ["--times"]
-    use_ssh_args: true
-  tags: xorg
-
-- name: Create fonts.dir
-  ansible.builtin.shell:
-    cmd: /usr/sbin/update-fonts-dir '{{ ansible_user_dir }}/.local/share/fonts'
-    creates: '{{ ansible_user_dir }}/.local/share/fonts/fonts.dir'
-  tags: xorg
-
-- name: Create uuids
-  ansible.builtin.shell:
-    cmd: /usr/bin/fc-cache -f
-    creates: '{{ ansible_user_dir }}/.local/share/fonts/.uuid'
-  tags: xorg
+- name: Copy sxhd config
+  ansible.builtin.copy:
+    src: 'sxhkdrc'
+    dest: '{{ ansible_user_dir }}/.config/sxhkd/sxhkdrc'
+    mode: 0644
+  tags: sxhkd
 
 - name: Copy session scripts
   ansible.builtin.copy:
@@ -98,3 +83,6 @@
   tags:
     - xorg
     - script
+
+- name: Install fonts
+  ansible.builtin.include_tasks: fonts.yml

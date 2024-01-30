@@ -1,0 +1,29 @@
+---
+- name: Create fonts dir
+  ansible.builtin.file:
+    state: directory
+    path: '{{ ansible_user_dir }}/.local/share/fonts'
+  tags: xorg
+
+- name: Sync fonts dir
+  ansible.builtin.synchronize:
+    archive: false
+    src: fonts/
+    dest: '{{ ansible_user_dir }}/.local/share/fonts'
+    recursive: true
+    rsync_opts: ["--times"]
+    use_ssh_args: true
+  tags: xorg
+
+- name: Create fonts.dir
+  ansible.builtin.shell:
+    cmd: /usr/sbin/update-fonts-dir '{{ ansible_user_dir }}/.local/share/fonts'
+    creates: '{{ ansible_user_dir }}/.local/share/fonts/fonts.dir'
+  tags: xorg
+
+- name: Update font cache
+  ansible.builtin.shell:
+    cmd: /usr/bin/fc-cache -f
+    creates: '{{ ansible_user_dir }}/.local/share/fonts/.uuid'
+  tags: xorg
+
