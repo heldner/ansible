@@ -1,5 +1,5 @@
 !! Urxvt
-URxvt.font:               -xos4-terminesspowerline-medium-*-*--18-*-*-*-*-*-iso10646-*
+URxvt.font:               -xos4-terminus-medium-*-*--18-*-*-*-*-*-iso10646-*
 URxvt.scrollBar:          false
 URxvt.print-pipe:         cat >> $(date +"urxvt_%F")
 URxvt.foreground:         white
@@ -19,32 +19,8 @@ URxvt.scrollTtyOutput:    false
 URxvt.scrollWithBuffer:   true
 URxvt.scrollTtyKeypress:  true
 
-!! Xterm
-xterm.VT100.Translations:    #override \n\
-        Shift <KeyPress> Home:        insert-selection(CLIPBOARD) \n\
-        <Btn2Up>:                       insert-selection(SELECT, CUT_BUFFER0) \n\
-        ~Shift<BtnUp>:                  select-end(PRIMARY, CUT_BUFFER0) \n\
-        Shift<BtnUp>:                   select-end(CLIPBOARD, CUT_BUFFER1)
-xterm*termName:           xterm-256color
-xterm*font:               -xos4-terminesspowerline-medium-*-*--18-*-*-*-*-*-iso10646-*
-xterm*locale:             true
-xterm*metaSendsEscape:    true
-xterm*dynamicColors:      true
-xterm*utf8:               2
-xterm*eightBitInput:      true
-xterm*saveLines:          5120
-xterm*scrollKey:          true
-xterm*scrollTtyOutput:    false
-xterm*scrollBar:          false
-xterm*rightScrollBar:     false
-xterm*jumpScroll:         false
-xterm*multiScroll:        false
-xterm*toolBar:            false
-xterm*utf8Title:          true
-xterm*background:         grey7
-
 !! ssh-akspass
-ssh-askpass*font:                   -xos4-terminesspowerline-medium-*-*--18-*-*-*-*-*-iso10646-*
+ssh-askpass*font:                   -xos4-terminus-medium-*-*--18-*-*-*-*-*-iso10646-*
 ssh-askpass*title:                  Greetings, my friend!
 ssh-askpass*background:             #222222
 ssh-askpass*foreground:             #ffffff
