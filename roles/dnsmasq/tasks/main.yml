@@ -10,8 +10,8 @@
 
 # --- config ---
 - name: "all | ensure templated dnsmasq.conf"
-  template: 
-    src: "dnsmasq.conf.j2" 
+  template:
+    src: "dnsmasq.conf.j2"
     dest: "{{ dnsmasq_path_conf }}"
     validate: 'dnsmasq --test --conf-file=%s'
   notify: restart dnsmasq
@@ -27,7 +27,6 @@
   template:
     src: "dnsmasq.d_dhcp.opts.j2"
     dest: "{{ dnsmasq_path_dhcp_opts }}"
-
 
 # --- service ---
 - name: "all | ensure dnsmasq service running"
