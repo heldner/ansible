@@ -23,7 +23,6 @@
       - pcmanfm
       - pinentry-curses
       - rxvt-unicode
-      - sxhkd
       - unclutter
       - unclutter-startup
       - x11-utils
@@ -56,19 +55,6 @@
     mode: 0644
   tags: [xorg, keyboard]
   become: true
-
-- name: Create sxhkd config dir
-  ansible.builtin.file:
-    state: directory
-    path: '{{ ansible_user_dir }}/.config/sxhkd'
-  tags: sxhkd
-
-- name: Copy sxhd config
-  ansible.builtin.copy:
-    src: 'sxhkdrc'
-    dest: '{{ ansible_user_dir }}/.config/sxhkd/sxhkdrc'
-    mode: 0644
-  tags: sxhkd
 
 - name: Copy session scripts
   ansible.builtin.copy:
