@@ -4,9 +4,11 @@
     path: /etc/apt/trusted.gpg.d/home-ungoogled_chromium.gpg
   register: _chromium_gpg_key
 
+# curl -fsSL https://download.opensuse.org/repositories/home:ungoogled_chromium/Debian_Sid/Release.key \
+#   | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_ungoogled_chromium.gpg > /dev/null
 - name: Download chromium repo gpg key
   ansible.builtin.get_url:
-    url: 'https://download.opensuse.org/repositories/home:/ungoogled_chromium/Ubuntu_Focal/Release.key'
+    url: 'https://download.opensuse.org/repositories/home:/ungoogled_chromium/Debian_Sid/Release.key'
     dest: /tmp/home-ungoogled_chromium.gpg
   when: not _chromium_gpg_key.stat.exists
   become: true
@@ -22,7 +24,7 @@
   ansible.builtin.copy:
     dest: /etc/apt/sources.list.d/home-ungoogled_chromium.list
     content:
-      deb http://download.opensuse.org/repositories/home:/ungoogled_chromium/Ubuntu_Focal/ /
+      deb http://download.opensuse.org/repositories/home:/ungoogled_chromium/Debian_Sid/ /
     mode: 0644
     owner: root
   become: true
