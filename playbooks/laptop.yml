@@ -11,3 +11,6 @@
     - git
     - telegram
     - feh
+    - sxhkd
+    - dwm
+    - openntpd
