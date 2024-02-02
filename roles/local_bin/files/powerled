@@ -5,7 +5,7 @@ need_state="$1"
 new_state=""
 
 curr_state() {
-  res=$(doas cat $power_led)
+  res=$(cat $power_led)
   if echo "$res" |grep -qE '(1|0)' ; then
     echo "$res"
   else

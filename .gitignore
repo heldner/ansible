@@ -1,5 +1,5 @@
 .venv
-.ansible_collections
+ansible_collections
 inventories
 .ansible
 .autoenv.sh
