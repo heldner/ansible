@@ -29,7 +29,8 @@
       - oathtool
       - pass
       - pass-extension-otp
-      - pulseaudio-module-bluetooth
+      - pipewire-audio
+      - pipewire-pulse
       - python3-pip
       - ripgrep
       - rsync
