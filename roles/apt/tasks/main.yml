@@ -69,6 +69,7 @@
     name:
       - apt-file
       - software-properties-common
+      - python3-launchpadlib
   become: true
 
 # TODO: apt-key adv --keyserver keyserver.ubuntu.com \

@@ -27,6 +27,7 @@
       - man
       - ncdu
       - oathtool
+      - p7zip-full
       - pass
       - pass-extension-otp
       - pipewire-audio
