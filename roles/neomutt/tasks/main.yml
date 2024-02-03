@@ -20,3 +20,4 @@
   ansible.builtin.include_tasks: config.yml
   tags:
     - neomutt
+    - config

@@ -4,7 +4,11 @@
 IMAPAccount {{ item.name | regex_replace("\.com","") }}
   Host {{ item.imap_server }}
   User {{ item.address }}
+{% if item.pass_cmd is defined %}
+  PassCmd "{{ item.pass_cmd }}"
+{% else %}
   PassCmd "pass {{ item.pass_name }} | head -n1"
+{% endif %}
   SSLVersions TLSv1.2
   SSLType IMAPS
 {% if item.auth_mechs is defined %}

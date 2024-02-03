@@ -1,6 +1,6 @@
 #!/bin/sh
 
-USER=dayton
+USER={{ ansible_user_id }}
 USER_ID=$(id -u $USER)
 export HOME=/home/$USER
 MBSYNC=/usr/bin/mbsync

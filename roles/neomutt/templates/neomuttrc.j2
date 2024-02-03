@@ -48,7 +48,8 @@ set pager_format = "%4C %Z %[!%b %e at %I:%M %p] %.20n %s%* -- (%P)"
 unset confirmappend
 mailboxes +local/inbox{{ ' \\' if neomutt_accounts is defined }}
 {% for maildir in (all_maildirs | trim | split('\n') | list) %}
-  {{ maildir }}{{ ' \\' if not loop.last }}
+  {{ maildir }}{% if not loop.last %} \
+  {% endif %}
 {% endfor %}
 
 bind index,pager @ compose-to-sender
