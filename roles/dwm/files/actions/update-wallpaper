@@ -4,7 +4,7 @@ PATH=/bin:/usr/bin:${HOME}/.bin
 export DISPLAY=:0.0
 
 lock="/var/tmp/$(basename "$0").lock"
-wallpaper_dir="${HOME}/Pictures/backgrounds"
+wallpaper_dir="${HOME}/Pictures/Wallpapers"
 
 default_bg(){
   feh -z --no-fehbg --bg-max "$wallpaper_dir" 2>&-

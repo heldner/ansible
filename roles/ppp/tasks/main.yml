@@ -1,0 +1,15 @@
+---
+- name: Install ppp and sstpc
+  ansible.builtin.package:
+    name:
+      - ppp
+      - sstp-client
+    state: present
+  become: true
+
+- name: Create ppp provider config
+  ansible.builtin.template:
+    src: ppp.j2
+    dest: '/etc/ppp/peers/{{ sstp_provider }}'
+    mode: 0700
+  become: true
