@@ -6,6 +6,8 @@
   collections:
     - heldner.things
   roles:
+    - console-setup
+    - openntpd
     - laptop
     - xorg
     - git
@@ -13,4 +15,3 @@
     - feh
     - sxhkd
     - dwm
-    - openntpd

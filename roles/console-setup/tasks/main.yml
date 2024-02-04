@@ -1,0 +1,12 @@
+---
+- name: Install console-cyrillic
+  ansible.builtin.package:
+    state: present
+    name: console-cyrillic
+
+- name: Copy console config
+  ansible.builtin.copy:
+    src: etc_default_console-setup
+    dest: /etc/default/console-setup
+    mode: 0644
+
