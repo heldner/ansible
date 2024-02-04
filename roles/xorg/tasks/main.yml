@@ -10,6 +10,7 @@
       - ffmpeg
       - flameshot
       - gimp
+      - gnome-icon-theme
       - gnome-keyring
       - gnome-themes-extra-data
       - gsfonts-x11
