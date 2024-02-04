@@ -4,8 +4,9 @@
     state: present
     name:
       - acl
-      - unbound
+      - dns-root-data
       - dnsutils
+      - unbound
   become: true
 
 - name: Generate unbound config
