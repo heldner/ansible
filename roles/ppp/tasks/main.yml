@@ -11,5 +11,12 @@
   ansible.builtin.template:
     src: ppp.j2
     dest: '/etc/ppp/peers/{{ sstp_provider }}'
-    mode: 0700
+    mode: 0600
+  become: true
+
+- name: Create ip up script
+  ansible.builtin.template:
+    src: ip-up-routes.j2
+    dest: '/etc/ppp/ip-up.d/{{ sstp_provider }}-routes'
+    mode: 0755
   become: true

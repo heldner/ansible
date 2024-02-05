@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+GW={{ sstp_gateway }}
+
+if [ "$6" = '{{ sstp_provider }}' ]; then
+{% for route in sstp_routes %}
+    ip r add {{ route }}
+{% endfor %}
+fi
