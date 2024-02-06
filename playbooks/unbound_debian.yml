@@ -2,7 +2,7 @@
 - hosts: x220
   become: yes
   connection: local
-  become_method: doas
+  become_method: sudo
   gather_facts: yes
   collections:
     - heldner.things

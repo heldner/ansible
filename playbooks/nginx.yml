@@ -1,6 +1,6 @@
 ---
 - hosts: rootit
-  become_method: doas
+  become_method: sudo
   become: yes
   collections:
     - nginxinc.nginx_core

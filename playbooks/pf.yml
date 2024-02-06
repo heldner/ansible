@@ -1,7 +1,7 @@
 ---
 - hosts: openbsd
   become: yes
-  become_method: doas
+  become_method: sudo
   gather_facts: yes
   collections:
     - heldner.things
