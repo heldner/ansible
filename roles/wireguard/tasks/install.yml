@@ -1,21 +1,13 @@
 ---
-#- name: install pkg
-#  openbsd_pkg:
-#    name: "{{ item }}"
-#    state: present
-#  loop: "{{ packages }}"
-#  when: ansible_distribution == "OpenBSD"
-
 - name: install pkg
-  apt:
+  ansible.builtin.package:
     name: "{{ item }}"
     state: present
   loop: "{{ packages }}"
-  when: ansible_distribution == "Debian"
   become: true
 
 - name: create directory
-  file:
+  ansible.builtin.file:
     dest: /etc/wireguard
     state: directory
     mode: 0700

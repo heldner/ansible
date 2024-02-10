@@ -1,12 +1,12 @@
 Wireguard
 =========
 
-Configure wiregural vpn in OpenBSD.
+Configure wiregurad vpn client and server side.
 
 Requirements
 ------------
 
-All you need is OpenBSD version higher than 6.8
+Server
 
 Role Variables
 --------------
