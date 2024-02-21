@@ -14,6 +14,7 @@
       - curl
       - dconf-service
       - dirmngr
+      - duf
       - exfatprogs
       - f2fs-tools
       - firmware-iwlwifi
@@ -24,12 +25,14 @@
       - jnettop
       - keychain
       - libnotify-bin
+      - lsd
       - man
       - ncdu
       - oathtool
       - p7zip-full
       - pass
       - pass-extension-otp
+      - pinentry-curses
       - pipewire-audio
       - pipewire-pulse
       - python3-pip

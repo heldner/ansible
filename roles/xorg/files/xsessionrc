@@ -8,23 +8,15 @@ screensaver_disabler
 # terminal
 urxvtd -q -f -o
 
+# for gtk3 apps
+export GTK_THEME='Adwaita-dark'
+
 # use x11 ssh askpass
-if [ -x /usr/bin/ssh-askpass ]; then
-    export SSH_ASKPASS=ssh-askpass
+if [ -x /usr/bin/ssh-askpass-fullscreen ]; then
+    export SSH_ASKPASS=/usr/bin/ssh-askpass-fullscreen
+    export SUDO_ASKPASS=/usr/bin/ssh-askpass-fullscreen
+    export SSH_ASKPASS_REQUIRE=force
 fi
-
-# load additional fonts
-xset +fp /home/dayton/.local/share/fonts
-
-# 1. swap ctrl and caps
-# 2. swap left alt and winkey
-setxkbmap -option ctrl:swapcaps,altwin:swap_lalt_lwin,grp:alt_shift_toggle
-
-# turn off powerbutton led
-powerled off
-
-# imapfilter
-imapfilter -c ~/.imapfilter/yandex.lua >> ~/.imapfilter/log 2>&1 &
 
 # swap mouse scroll
 enable_natural_scroll
@@ -36,10 +28,20 @@ amixer set Capture nocap >/dev/null
 sxhkd &
 
 # dwm status
-dwmstatus &
+spoon &
 
 # language
 export LC_ALL=en_US.UTF-8
+
+# imapfilter
+if command -v imapfilter >/dev/null; then
+    imapfilter -c ~/.imapfilter/yandex.lua >> ~/.imapfilter/log 2>&1 &
+fi
+
+# update wallpaper
+if [ -f "${HOME}/.dwm/actions/update-wallpaper" ]; then
+    "${HOME}/.dwm/actions/update-wallpaper"
+fi
 
 # run isync when local dirs changed
 watch_mail_dir

@@ -2,15 +2,18 @@
 PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin
 
 [ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
-[ -d "$HOME/.krew" ] && PATH="$HOME/.krew/bin:$PATH"
 [ -d "${HOME}/.cargo/bin" ] && PATH="${HOME}/.cargo/bin:$PATH"
+if [ -d "${HOME}/.cargo/env" ]; then
+    . "${HOME}/.cargo/env"
+fi
 
 if [ -d "$HOME/Projects/gocode" ]; then
     export GOPATH="${HOME}/Projects/gocode"
     PATH="${PATH}:${GOPATH}/bin"
 fi
-
-export MPD_HOST="/run/user/1000/mpd.socket"
+if [ -d "/usr/lib/go-1.22/bin" ]; then
+    PATH="${PATH}:/usr/lib/go-1.22/bin"
+fi
 
 ## openbsd
 if [ "$(uname)" = "OpenBSD" ]; then
@@ -19,15 +22,11 @@ if [ "$(uname)" = "OpenBSD" ]; then
     alias banshow='doas pfctl -t ban -T show'
     MIRROR="openbsd.cs.fau.de"
     PKG_PATH="http://${MIRROR}/pub/OpenBSD/$(uname -r)/packages/$(machine -a)/"
-    LANG=en_US.UTF-8
-    EDITOR=/usr/local/bin/vim
-    export PKG_PATH LANG
+    export PKG_PATH
 fi
 
 ## debian
 if [ -f /etc/debian_version ] ; then
-    alias sudo='doas'
-    alias ls='ls --color'
     eval "$(dircolors -b)"
 fi
 
@@ -40,39 +39,38 @@ if [ -z "$TMUX" ] && [ -n "$SSH_CONNECTION" ]; then
     tmux attach || tmux new
 fi
 
+MPD_HOST=/run/user/"$(id -u)"/mpd.socket
+GPG_TTY="$(tty)" # used by gpg-agent
 LANGUAGE=en_US.UTF-8
 EDITOR=vim
-GREP_COLOR='1;32'
+GREP_COLOR='mt=1;32'
 LANG='en_US.UTF-8'
-LESS="--RAW-CONTROL-CHARS --prompt=short"
+LESS='--RAW-CONTROL-CHARS --prompt=short'
 LESSOPEN='|gzip -cdfq -- %s'
-PYTHONPATH="./.pip:$PYTHONPATH"
-PELICAN_HOME="${HOME}/Backups/pelican-original"
-HOSTNAME="$(/bin/hostname)"
 export \
     EDITOR \
+    GPG_TTY \
     GREP_COLOR \
-    HOSTNAME \
     LANG \
     LANGUAGE \
     LESS \
     LESSOPEN \
+    MPD_HOST \
     PATH \
-    PELICAN_HOME \
-    PYTHONPATH
 
 # load termcap (5)
 . "${HOME}/.termcap"
 
-GPG_TTY="$(tty)"
-export GPG_TTY
-
-if [ -d "${HOME}/.cargo/env" ]; then
-    . "${HOME}/.cargo/env"
+## ssh keys
+#keychain ~/.ssh/id_ed25519 2>/dev/null
+keychain --agents ssh 2>/dev/null
+if [ -f "${HOME}/.keychain/$(hostname)-sh" ]; then
+    . "${HOME}/.keychain/$(hostname)-sh" #2>/dev/null
 fi
 
-## ssh keys
-keychain ~/.ssh/id_ed25519 2>/dev/null
-if [ -f "${HOME}/.keychain/${HOSTNAME}-sh" ]; then
-    . "${HOME}/.keychain/${HOSTNAME}-sh" #2>/dev/null
+# autorun sway on tty1
+if [ -z "${WAYLAND_DISPLAY}" ] \
+    && [ "${XDG_VTNR}" -eq 1 ] \
+    && [ -x "/usr/bin/sway" ]; then
+    exec sway
 fi

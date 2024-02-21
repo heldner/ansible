@@ -22,8 +22,9 @@
       - libreoffice-impress
       - libreoffice-writer
       - pcmanfm
-      - pinentry-curses
+      - pinentry-gnome3
       - rxvt-unicode
+      - ssh-askpass-fullscreen
       - unclutter
       - unclutter-startup
       - x11-utils
