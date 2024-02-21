@@ -9,8 +9,8 @@ pass_find () {
     | sed -e 's:\.gpg$::' -e 's:\.\/::'
 }
 
-pass=$(pass_find | dmenu)
-pass "$pass" \
-  | awk '/^login:/ {print $2}' \
+password=$(pass_find | dmenu -p login:)
+[ -z "$password" ] && exit
+pass "$password" \
+  | awk '/^login:/ {printf $2}' \
   | xclip -selection clipboard
-

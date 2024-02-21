@@ -1,4 +1,0 @@
-NAME=neomutt
-if ! pgrep -U $USER $NAME > /dev/null; then
-    urxvtc -T $NAME -e sh -c "$NAME -Z || $NAME" &
-fi

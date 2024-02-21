@@ -3,16 +3,6 @@
 # return totp code from pass
 #
 
-dmenu_local () {
-    dmenu \
-        -nb '#333333' \
-        -nf '#ffffff' \
-        -sf '#ffffff' \
-        -sb '#405060' \
-        -fn '-xos4-terminesspowerline-medium-*-*--18-*-*-*-*-*-iso10646-*' \
-        -l 20
-}
-
 pass_find () {
     cd "${HOME}/.password-store" && \
     find . \
@@ -22,7 +12,7 @@ pass_find () {
     | sed -e 's:\.gpg$::' -e 's:\.\/::'
 }
 
-key=$(pass_find | dmenu_local)
+key=$(pass_find | dmenu -l 20 -p otp:)
 
 
 if res=$(pass otp -c "$key" 2>&1); then
