@@ -1,4 +1,4 @@
-# Ansible Collection - heldner.things
+# Ansible Collection
 
 Collection for the freedom
 
@@ -9,7 +9,3 @@ Encrypt sensitive data with ansible-vault:
 ```shell
 ansible-vault encrypt_string $string
 ```
-
-## Docs
-
-[iptables](roles/iptables/README.md)
