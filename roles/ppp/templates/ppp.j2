@@ -1,8 +1,11 @@
-pty "/sbin/sstpc {{ sstp_server }} \
-  --cert-warn --tls-ext \
-  --nolaunchpppd --ipparam {{ sstp_provider }} \
-  --uuid 98f8c7d2-2f6f-4fb5-9fab-d141cb19634d"
+remotename {{ sstp_provider }}
+linkname {{ sstp_provider }}
 ipparam {{ sstp_provider }}
+pty "/sbin/sstpc {{ sstp_server }} \
+  --cert-warn \
+  --tls-ext \
+  --nolaunchpppd \
+  --ipparam {{ sstp_provider }}"
 lcp-echo-failure 0
 lcp-echo-interval 0
 lock
@@ -10,10 +13,14 @@ noauth
 nodefaultroute
 nodefaultroute6
 noipdefault
-plugin /usr/lib/pppd/2.4.9/nm-sstp-pppd-plugin.so
+plugin sstp-pppd-plugin.so
+sstp-sock /var/run/sstpc/sstpc-icl
 refuse-chap
 refuse-mschap
 refuse-pap
+persist
+holdoff 30
+maxfail 600
 {% if sstp_userpeerdns is defined %}usepeerdns{% endif %}
 user '{{ sstp_user }}'
 password '{{ sstp_password }}'
