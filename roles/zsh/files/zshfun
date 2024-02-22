@@ -1,12 +1,9 @@
-function _virtualenv_auto_activate() {
-  if [[ -d ./.venv ]] ; then
+_virtualenv_auto_activate() {
+  if [ -d ./.venv ] ; then
     source ./.venv/bin/activate
-    export VIRTUAL_ENV_DIR="$(realpath $(dirname "$VIRTUAL_ENV"))"
   else
-    if [[ -n "$VIRTUAL_ENV" ]] ; then
-      if [[ "$PWD" != "$VIRTUAL_ENV_DIR"/* ]] ; then
-        deactivate
-      fi
+    if [ -n "$VIRTUAL_ENV" ] && [ "$PWD" != "$VIRTUAL_ENV/*" ] ; then
+      deactivate
     fi
   fi
 }
