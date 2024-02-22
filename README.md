@@ -2,6 +2,26 @@
 
 Collection for the freedom
 
+## Installation
+
+Create and activate virtual env:
+```shell
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+Install system packages for libvirt-python:
+```
+apt install libvirt-dev libpython3.11-dev
+```
+
+Install requirements:
+```shell
+pip3 install -r requirements.txt
+
+```
+
+
 ## Usefull
 
 Encrypt sensitive data with ansible-vault:
