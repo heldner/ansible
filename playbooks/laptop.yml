@@ -1,17 +1,17 @@
 ---
 - hosts: laptop
-  become: no
+  become: true
   become_method: sudo
-  gather_facts: yes
+  gather_facts: true
   collections:
     - heldner.things
   roles:
     - console-setup
-    - openntpd
-    - laptop
-    - xorg
-    - git
-    - telegram
-    - feh
-    - sxhkd
     - dwm
+    - feh
+    - git
+    - laptop
+    - mpv
+    - openntpd
+    - sxhkd
+    - xorg

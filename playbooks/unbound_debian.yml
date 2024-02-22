@@ -1,9 +1,9 @@
 ---
 - hosts: x220
-  become: yes
+  become: true
   connection: local
   become_method: sudo
-  gather_facts: yes
+  gather_facts: true
   collections:
     - heldner.things
   roles:

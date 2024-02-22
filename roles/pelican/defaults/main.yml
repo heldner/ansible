@@ -1,8 +1,0 @@
----
-# vim:ft=ansible:
-# defaults file for pelican
-pelicanprefix: '/var/www'
-build_path_prefix: '/home'
-build_path: "{{ build_path_prefix }}/{{ build_user }}"
-web_root: "/var/www"
-git_version: "master"

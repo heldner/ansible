@@ -1,6 +1,0 @@
----
-# vim:ft=ansible:
-# vars file for pelican
-
-# set var for internal use.
-application: "{{ pelicanapp }}"
