@@ -3,12 +3,15 @@
   ansible.builtin.package:
     state: present
     name:
-      - abiword
+      - adwaita-icon-theme
       - baobab
       - dbus-x11
       - feh
       - ffmpeg
       - flameshot
+      - fonts-font-awesome
+      - fonts-powerline
+      - fonts-takao
       - gimp
       - gnome-icon-theme
       - gnome-keyring
