@@ -54,7 +54,7 @@
   tags: slim
 
 - name: Copy keyboard defaults
-  template:
+  ansible.builtin.template:
     src: etc_default_keyboard.j2
     dest: /etc/default/keyboard
     mode: 0644

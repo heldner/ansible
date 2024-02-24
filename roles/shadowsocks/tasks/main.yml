@@ -1,0 +1,18 @@
+---
+- name: Install shadowsocks-libev
+  ansible.builtin.package:
+    state: present
+    name: shadowsocks-libev
+  tags: shadowsocks
+  become: true
+
+- name: Create shadowsocks user
+  ansible.builtin.user:
+    name: shadowsocks
+    home: /nonexistent
+    shell: /sbin/nologin
+  tags: shadowsocks
+  become: true
+
+- ansible.builtin.include_tasks: server.yml
+  when: "{{ shadowsocks_mode == 'server' }}"
