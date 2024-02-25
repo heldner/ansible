@@ -28,3 +28,10 @@
     state: restarted
   become: true
   when: _openntpd_conf.changed
+
+- name: Remove timesyncd
+  ansible.builtin.package:
+    name: systemd-timesyncd
+    state: absent
+  become: true
+  tags: [timesync]
