@@ -1,2 +1,3 @@
 ---
 shadowsocks_server_port: 3128
+shadowsocks_local_port: 1080

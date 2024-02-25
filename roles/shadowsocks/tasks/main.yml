@@ -14,5 +14,4 @@
   tags: shadowsocks
   become: true
 
-- ansible.builtin.include_tasks: server.yml
-  when: "{{ shadowsocks_mode == 'server' }}"
+- ansible.builtin.include_tasks: "{{ shadowsocks_mode }}.yml"

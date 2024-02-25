@@ -4,3 +4,9 @@
     name: shadowsocks-libev
     state: restarted
   become: true
+
+- name: Restart shadowsocks-client
+  ansible.builtin.service:
+    name: shadowsocks-libev-local@client
+    state: restarted
+  become: true
