@@ -1,7 +1,7 @@
 ---
-- name: Restart shadowsocks-libev
+- name: Restart shadowsocks-server
   ansible.builtin.service:
-    name: shadowsocks-libev
+    name: "shadowsocks-libev-server@{{ shadowsocks_mode }}"
     state: restarted
   become: true
 

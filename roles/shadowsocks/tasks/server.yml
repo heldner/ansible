@@ -1,26 +1,35 @@
 ---
+- name: Replace systemd unit
+  ansible.builtin.file:
+    state: directory
+    path: /etc/systemd/system/shadowsocks-libev-server@.service.d
+  become: true
+
 - name: Copy shadowsocks config
   ansible.builtin.template:
-    src: "server-config.json.j2"
-    dest: /etc/shadowsocks-libev/config.json
-    owner: shadowsocks
-    mode: 0644
-  tags: [shadowsocks, config]
-  notify: Restart shadowsocks-libev
+    src: "systemd.conf.j2"
+    dest: /etc/systemd/system/shadowsocks-libev-server@.service.d/custom.conf
   become: true
 
-- name: Copy shadowsocks default
+- name: Force systemd to reread configs
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+  become: true
+
+- name: Copy shadowsocks config
   ansible.builtin.template:
-    src: "default.j2"
-    dest: /etc/default/shadowsocks-libev
-    mode: 0644
+    src: "{{ shadowsocks_mode }}-config.json.j2"
+    dest: "/etc/shadowsocks-libev/{{ shadowsocks_mode }}.json"
+    owner: shadowsocks
+    mode: 0640
   tags: [shadowsocks, config]
-  notify: Restart shadowsocks-libev
+  notify: Restart shadowsocks-server
+  no_log: true
   become: true
 
-- name: Start shadowsocks-libev
+- name: Enable and start server ss
   ansible.builtin.service:
-    name: shadowsocks-libev
+    name: "shadowsocks-libev-server@{{ shadowsocks_mode }}"
     state: started
     enabled: true
   become: true
