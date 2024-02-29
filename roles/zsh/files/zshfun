@@ -1,14 +1,20 @@
 _virtualenv_auto_activate() {
-  if [ -d ./.venv ] ; then
+  if [[ -d ./.venv ]] ; then
     source ./.venv/bin/activate
+    VIRTUAL_ENV_HOME="$PWD"
   else
-    if [ -n "$VIRTUAL_ENV" ] && [ "$PWD" != "$VIRTUAL_ENV/*" ] ; then
-      deactivate
+    if [[ -n "$VIRTUAL_ENV" ]] && ! [[ $PWD =~ $VIRTUAL_ENV_HOME ]] ; then
+        deactivate
+        unset VIRTUAL_ENV_HOME
     fi
   fi
 }
 
-chpwd_functions+=(_virtualenv_auto_activate)
+_change_title() {
+  echo -n -e "\033]0;zsh: ${PWD}\007"
+}
+
+chpwd_functions+=(_virtualenv_auto_activate _change_title)
 
 telegram_container() {
   xhost local:root
