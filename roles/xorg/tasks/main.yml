@@ -17,7 +17,6 @@
       - gnome-keyring
       - gnome-themes-extra-data
       - gsfonts-x11
-      - gtk-chtheme
       - imagemagick
       - inotify-tools
       - libpam-gnome-keyring
