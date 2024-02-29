@@ -4,5 +4,7 @@
     "mode":"tcp_only",
     "password":"{{ shadowsocks_password }}",
     "timeout":86400,
+    "fast_open": true,
+    "reuse_port": true,
     "method":"aes-256-gcm"
 }
