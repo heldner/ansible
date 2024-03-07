@@ -1,1 +1,1 @@
-mplayer tv:// -tv driver=v4l2:width=1280:height=720:device=/dev/video0 -vf mirror
+mplayer tv:// -fs -tv driver=v4l2:width=1280:height=720:device=/dev/video0 -vf mirror
