@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=iwctl
+GenericName=IWD control
+Comment=Internet wireless control utility
+Icon=htop
+Exec=iwctl
+Terminal=true
+Categories=System;Network;ConsoleOnly;
+Keywords=system;process;task
+

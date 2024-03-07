@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Pulsemixer
+GenericName=Pulseaudio control
+Comment=Show System Processes
+Icon=htop
+Exec=pulsemixer
+Terminal=true
+Categories=System;Audio;ConsoleOnly;
+Keywords=system;process;task

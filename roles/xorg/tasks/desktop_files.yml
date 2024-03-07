@@ -1,0 +1,12 @@
+---
+- name: Sync desktop files
+  ansible.builtin.synchronize:
+    archive: false
+    src: desktop_files/
+    dest: '{{ ansible_user_dir }}/.local/share/applications/'
+    perms: true
+    recursive: true
+    use_ssh_args: true
+  tags:
+    - xorg
+    - desktop

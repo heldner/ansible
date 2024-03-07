@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Pulsemixer
+GenericName=Pulseaudio control
+Comment=Show System Processes
+Icon=htop
+Exec=sudo -A jnettop
+Terminal=true
+Categories=System;Audio;ConsoleOnly;
+Keywords=system;process;task

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Alsamixer
+GenericName=Alsa control
+Comment=soundcard mixer for ALSA soundcard driver, with ncurses interface
+Icon=htop
+Exec=alsamixer
+Terminal=true
+Categories=System;Audio;ConsoleOnly;
+Keywords=system;process;task
