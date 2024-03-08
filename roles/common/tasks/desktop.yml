@@ -1,0 +1,17 @@
+---
+- name: Install desktop packages
+  ansible.builtin.package:
+    state: present
+    name:
+      - libnotify-bin
+      - firmware-iwlwifi
+      - alsa-utils
+      - bluetooth
+      - bluez
+      - pass
+      - pass-extension-otp
+      - oathtool
+      - pinentry-curses
+      - pipewire-audio
+      - pipewire-pulse
+  become: true

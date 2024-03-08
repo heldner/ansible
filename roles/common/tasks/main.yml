@@ -4,11 +4,7 @@
     state: present
     name:
       - acl
-      - alsa-utils
       - at
-      - bluetooth
-      - bluez
-      - btrfs-progs
       - bwm-ng
       - console-data
       - curl
@@ -17,25 +13,16 @@
       - dirmngr
       - duf
       - exfatprogs
-      - f2fs-tools
-      - firmware-iwlwifi
       - fonts-powerline
       - gifsicle
       - htop
       - ipython3
       - jnettop
       - keychain
-      - libnotify-bin
       - lsd
       - man
       - ncdu
-      - oathtool
       - p7zip-full
-      - pass
-      - pass-extension-otp
-      - pinentry-curses
-      - pipewire-audio
-      - pipewire-pulse
       - python3-pip
       - ripgrep
       - rsync
@@ -52,3 +39,7 @@
     pkg:
       - avahi-autoipd
   become: true
+
+- name: Include desktop tasks
+  ansible.builtin.include_tasks: desktop.yml
+  when: desktop_mode == true | bool

@@ -1,0 +1,14 @@
+---
+- hosts: 'all'
+  gather_facts: true
+  become: false
+  collections:
+    - heldner.things
+  roles:
+    - apt
+    - common
+    - hardending
+    - shadowsocks
+    - tmux
+    - unbound
+    - zsh
