@@ -25,7 +25,7 @@
     owner: "root"
     group: "root"
     mode: "0644"
-  notify: restart unattended-upgrades
+  notify: Restart unattended-upgrades
   become: true
   tags:
     - apt

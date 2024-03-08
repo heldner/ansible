@@ -3,7 +3,6 @@
   ansible.builtin.apt:
     state: present
     name:
-      - apt-listbugs
       - lsb-release
       - needrestart
   become: true
