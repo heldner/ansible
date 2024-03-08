@@ -1,8 +1,8 @@
 XF86Audio{Lower,Raise}Volume
-  pulsemixer --change-volume {-,+}2 --max-volume 100
+  wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%{-,+} --limit 1
 
 XF86AudioMute
-  pulsemixer --toggle
+  wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
 XF86Audio{Prev,Next,Play}
   mpc -q {prev,next,toggle} > /dev/null
