@@ -58,14 +58,34 @@ let g:python3_host_prog = '/usr/bin/python3'
 "использовать системный буффер обмена
 set clipboard=unnamedplus
 
-{% if neovim_plugins is defined and neovim_plugins | length > 0 %}
 "Plug
-call plug#begin('{{ neovim_home }}/plugged')
-{% for plugin in neovim_plugins %}
-Plug '{{ plugin }}'
-{% endfor %}
+call plug#begin('/home/daysun/.config/nvim/plugged')
+Plug 'airblade/vim-gitgutter'
+Plug 'aklt/plantuml-syntax'
+Plug 'jceb/vim-orgmode'
+Plug 'bling/vim-airline'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'Sjd-Risca-salt/salt-vim'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'ervandew/supertab'
+Plug 'exafunction/codeium.vim'
+Plug 'fatih/vim-go'
+Plug 'hashivim/vim-terraform'
+Plug 'jremmen/vim-ripgrep'
+Plug 'junegunn/vim-easy-align'
+Plug 'kien/ctrlp.vim'
+Plug 'martinda/Jenkinsfile-vim-syntax'
+Plug 'modille/groovy.vim'
+Plug 'mzlogin/vim-markdown-toc'
+Plug 'nanotech/jellybeans.vim'
+Plug 'pearofducks/ansible-vim'
+Plug 'plasticboy/vim-markdown'
+Plug 'rbgrouleff/bclose.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'vbe0201/vimdiscord'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-syntastic/syntastic'
 call plug#end()
-{% endif %}
 
 " disable auto linter for ansible
 let g:syntastic_ansible_checkers = ['yamllint']

@@ -1,5 +1,10 @@
 ---
-- block:
+- name: Prepare apt
+  become: true
+  when:
+    - ansible_distribution == "Debian"
+    - ansible_distribution_major_version <= "11"
+  block:
 
     - name: Add neovim ppa gpg key
       ansible.builtin.apt_key:
@@ -20,9 +25,6 @@
       ansible.builtin.apt:
         update_cache: true
 
-  become: true
-  when: ansible_distribution == "Debian"
-
 - name: Install neovim
   ansible.builtin.package:
     state: present
@@ -33,11 +35,13 @@
   ansible.builtin.file:
     state: directory
     path: "{{ neovim_home }}"
+    mode: "0755"
 
 - name: Create dirs
   ansible.builtin.file:
     state: directory
     path: "{{ neovim_home }}/{{ item }}"
+    mode: "0755"
   loop:
     - autoload
     - colors
@@ -47,18 +51,14 @@
   ansible.builtin.template:
     src: init.vim.j2
     dest: "{{ neovim_home }}/init.vim"
-  register: _init_vim
+    mode: "0644"
+  notify: Install plugins
 
 - name: Fetch plug.vim
   ansible.builtin.uri:
     url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     dest: "{{ neovim_home }}/autoload/plug.vim"
     creates: "{{ neovim_home }}/autoload/plug.vim"
-
-- name: Install plugins
-  ansible.builtin.shell:
-    cmd: nvim -c 'PlugInstall' -c quit -c quit
-  when: _init_vim.changed
 
 - name: Create jelybeans link
   ansible.builtin.file:

@@ -1,0 +1,5 @@
+---
+- name: Install plugins
+  ansible.builtin.command:
+    cmd: nvim -c 'PlugInstall' -c quit -c quit
+    creates: "{{ neovim_home }}/plugged/jellybeans.vim"
