@@ -25,7 +25,7 @@
     dest: /etc/apt/sources.list.d/home-ungoogled_chromium.list
     content:
       deb http://download.opensuse.org/repositories/home:/ungoogled_chromium/Debian_Sid/ /
-    mode: 0644
+    mode: "0644"
     owner: root
   become: true
 

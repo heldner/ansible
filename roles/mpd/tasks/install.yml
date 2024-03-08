@@ -12,7 +12,7 @@
   ansible.builtin.file:
     state: directory
     path: '{{ item }}'
-    mode: 0755
+    mode: "0755"
   loop:
     - "{{ ansible_user_dir }}/Music"
     - "{{ ansible_user_dir }}/.config/mpd"

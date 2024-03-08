@@ -13,7 +13,7 @@
   ansible.builtin.template:
     src: unbound.conf.j2
     dest: /etc/unbound/unbound.conf
-    mode: 0644
+    mode: "0644"
     owner: root
   become: true
   register: _unbound_config
@@ -22,7 +22,7 @@
   ansible.builtin.copy:
     src: build-unbound-localzone-from-hosts.pl
     dest: /usr/local/bin
-    mode: 0755
+    mode: "0755"
   become: true
 
 - name: Enable unbound service

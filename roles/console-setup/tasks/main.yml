@@ -8,5 +8,5 @@
   ansible.builtin.copy:
     src: etc_default_console-setup
     dest: /etc/default/console-setup
-    mode: 0644
+    mode: "0644"
 

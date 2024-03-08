@@ -12,7 +12,7 @@
   ansible.builtin.file:
     state: directory
     path: "{{ ansible_user_dir }}/.config/pulse"
-    mode: 0700
+    mode: "0700"
 
 - name: Remove unused file
   ansible.builtin.file:
@@ -23,7 +23,7 @@
   ansible.builtin.copy:
     src: '{{ item.src }}'
     dest: "{{ ansible_user_dir + '/.config/pulse/' + item.src }}"
-    mode: '{{ item.mode|d("0644") }}'
+    mode: '{{ item.mode|default("0644") }}'
   loop:
     - src: default.pa
     - src: daemon.conf
@@ -32,7 +32,7 @@
   ansible.builtin.copy:
     src: 'rtp_stream'
     dest: "{{ ansible_user_dir }}/.local/bin/rtp_stream"
-    mode: 0755
+    mode: "0755"
 
 - name: Enable and start pulseaudio service
   ansible.builtin.service:

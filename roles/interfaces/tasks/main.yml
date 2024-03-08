@@ -3,7 +3,7 @@
   template:
     src: interfaces.j2
     dest: /etc/network/interfaces
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
   when: interfaces is defined
@@ -22,6 +22,6 @@
     #    dest: /etc/resolv.conf
     #    owner: root
     #    group: root
-    #    mode: 0644
+    #    mode: "0644"
     #  when: not resolvconf.stat.exists
     #  tags: interfaces

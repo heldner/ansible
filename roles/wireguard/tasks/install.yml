@@ -10,5 +10,5 @@
   ansible.builtin.file:
     dest: /etc/wireguard
     state: directory
-    mode: 0700
+    mode: "0700"
   become: true

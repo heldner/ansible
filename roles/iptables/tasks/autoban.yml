@@ -3,7 +3,7 @@
   copy:
     src: 'autoban.rb'
     dest: '/usr/local/bin/auto_ban'
-    mode: 0755
+    mode: "0755"
   notify: autoban, execute autoban
   tags:
     - autoban
@@ -23,7 +23,7 @@
   copy:
     src: ipset-destroy.sh
     dest: /usr/local/bin/ipset-destroy.sh
-    mode: 0750
+    mode: "0750"
   tags:
     - autoban
 
@@ -62,7 +62,7 @@
     dest: /etc/logrotate.d/autoban
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   tags:
     - autoban
     - cron

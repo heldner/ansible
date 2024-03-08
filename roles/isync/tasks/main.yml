@@ -21,7 +21,7 @@
     src: mbsyncrc.j2
     dest: '{{ ansible_user_dir}}/Private/Mail/.mbsyncrc'
     owner: '{{ ansible_user_id }}'
-    mode: 0600
+    mode: "0600"
 
 - name: Create links
   ansible.builtin.file:
@@ -36,7 +36,7 @@
   ansible.builtin.template:
     src: update-mail.j2
     dest: '{{ ansible_user_dir }}/.local/bin/update-mail'
-    mode: 0755
+    mode: "0755"
 
 - name: Fill mailcap
   ansible.builtin.copy:

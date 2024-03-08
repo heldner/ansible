@@ -12,7 +12,7 @@
     src: '{{ item.src }}'
     dest: '{{ item.dest }}'
     owner: root
-    mode: 0644
+    mode: "0644"
   loop:
     - src: pam_encfs.conf.j2
       dest: '{{ encfs_conf_path }}'

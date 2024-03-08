@@ -86,7 +86,7 @@
   ansible.builtin.template:
     src: ferm.conf.j2
     dest: /etc/ferm/ferm.conf
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
   notify: Reload ferm

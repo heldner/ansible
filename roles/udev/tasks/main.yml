@@ -3,7 +3,7 @@
   copy:
     src: '{{item}}'
     dest: '/etc/udev/rules.d/90-{{item}}'
-    mode: 0644
+    mode: "0644"
   notify: reload udev rules
   tags:
     - udev
@@ -16,6 +16,6 @@
   copy:
     src: 'automount-usb'
     dest: '/usr/local/bin/automount-usb'
-    mode: 0755
+    mode: "0755"
   tags:
     - udev

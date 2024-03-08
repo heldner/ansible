@@ -3,7 +3,7 @@
   file:
     state: directory
     path: '{{ ansible_user_dir }}/.local/bin'
-    mode: 0755
+    mode: "0755"
 
 - name: Sync actions dir
   ansible.builtin.synchronize:

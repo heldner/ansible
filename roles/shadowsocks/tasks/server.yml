@@ -21,7 +21,7 @@
     src: "{{ shadowsocks_mode }}-config.json.j2"
     dest: "/etc/shadowsocks-libev/{{ shadowsocks_mode }}.json"
     owner: shadowsocks
-    mode: 0640
+    mode: "0640"
   tags: [shadowsocks, config]
   notify: Restart shadowsocks-server
   no_log: true

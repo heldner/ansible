@@ -13,14 +13,14 @@
     - name: Create config dir
       ansible.builtin.file:
         state: directory
-        mode: 0700
+        mode: "0700"
         path: '{{ imapfilter_home }}'
 
     - name: Generate imapfilter config
       ansible.builtin.template:
         src: 'config.lua.j2'
         dest: '{{ imapfilter_home }}/{{ item.name }}.lua'
-        mode: 0600
+        mode: "0600"
         owner: '{{ ansible_user_id }}'
       loop: '{{ imapfilter_accounts }}'
 

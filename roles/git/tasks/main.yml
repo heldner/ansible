@@ -17,4 +17,4 @@
     src: gitconfig.j2
     dest: '{{ ansible_user_dir}}/.gitconfig'
     owner: '{{ ansible_user_id }}'
-    mode: 0640
+    mode: "0640"

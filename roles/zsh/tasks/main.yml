@@ -14,7 +14,7 @@
   ansible.builtin.copy:
     src: '{{item}}'
     dest: '{{ ansible_env.HOME }}/.{{ item | basename }}'
-    mode: 0644
+    mode: "0644"
   with_fileglob:
     - ../files/*
   tags:
@@ -35,7 +35,7 @@
   ansible.builtin.template:
     src: 'zplugrc.j2'
     dest: '{{ ansible_env.HOME }}/.zplugrc'
-    mode: 0644
+    mode: "0644"
   tags:
     - zsh
     - config

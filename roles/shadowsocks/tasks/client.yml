@@ -22,7 +22,7 @@
     dest: "/etc/shadowsocks-libev/{{ shadowsocks_mode }}.json"
     owner: shadowsocks
     group: shadowsocks
-    mode: 0640
+    mode: "0640"
   tags: [shadowsocks, config]
   notify: Restart shadowsocks-client
   become: true

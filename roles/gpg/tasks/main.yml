@@ -14,13 +14,13 @@
   ansible.builtin.file:
     state: directory
     dest: '{{ ansible_env.HOME }}/.gnupg'
-    mode: 0700
+    mode: "0700"
 
 - name: Copy gnupg configs
   ansible.builtin.template:
     src: '{{ item }}.j2'
     dest: '{{ ansible_env.HOME }}/.gnupg/{{ item }}'
-    mode: 0644
+    mode: "0644"
   loop:
     - gpg.conf
     - gpg-agent.conf

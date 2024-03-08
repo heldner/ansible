@@ -10,13 +10,13 @@
       ansible.builtin.file:
         state: directory
         path: '{{ ansible_env.HOME }}/.config/sxhkd'
-        mode: 0755
+        mode: "0755"
 
     - name: Copy sxhkdrc config
       ansible.builtin.template:
         src: 'sxhkdrc.j2'
         dest: '{{ ansible_env.HOME }}/.config/sxhkd/sxhkdrc'
-        mode: 0640
+        mode: "0640"
       register: _sxhkdrc
 
     - name: Reload sxhkd

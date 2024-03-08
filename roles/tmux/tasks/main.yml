@@ -9,7 +9,7 @@
   ansible.builtin.copy:
     src: '{{ item }}'
     dest: '{{ ansible_env.HOME }}/.{{ item }}'
-    mode: 0644
+    mode: "0644"
   loop:
     - tmux.conf
     - gray.tmuxtheme

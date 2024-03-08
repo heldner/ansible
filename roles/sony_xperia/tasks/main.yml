@@ -12,7 +12,7 @@
   ansible.builtin.copy:
     src: 10-android.rules
     dest: /etc/udev/rules.d/10-android.rules
-    mode: 0644
+    mode: "0644"
   become: true
   register: _sony_xperia_udev
 

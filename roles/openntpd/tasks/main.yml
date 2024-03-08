@@ -10,7 +10,7 @@
   ansible.builtin.template:
     src: 'ntpd.conf.j2'
     dest: '/etc/openntpd/ntpd.conf'
-    mode: 0644
+    mode: "0644"
   register: _openntpd_conf
   become: true
   tags: [ntp]

@@ -10,7 +10,7 @@
       ansible.builtin.template:
         src: '{{ item.name }}'
         dest: '{{ item.dest }}'
-        mode: 0644
+        mode: "0644"
         owner: root
       loop:
         - name: neovim-ppa-ubuntu-stable.list.j2

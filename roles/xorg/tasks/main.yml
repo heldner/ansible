@@ -55,7 +55,7 @@
   ansible.builtin.template:
     src: etc_default_keyboard.j2
     dest: /etc/default/keyboard
-    mode: 0644
+    mode: "0644"
   tags: [xorg, keyboard]
   become: true
 
@@ -63,7 +63,7 @@
   ansible.builtin.copy:
     src: '{{ item }}'
     dest: '{{ ansible_user_dir }}/.{{ item }}'
-    mode: 0644
+    mode: "0644"
   loop:
     - gtkrc-2.0
     - xsession
