@@ -1,0 +1,9 @@
+---
+- name: Enable service unattended-upgrades
+  ansible.builtin.service:
+    name: unattended-upgrades
+    state: restarted
+  become: true
+  tags:
+    - apt
+    - unattended
