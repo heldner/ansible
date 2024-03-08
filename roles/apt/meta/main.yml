@@ -4,7 +4,7 @@ galaxy_info:
   description: Configure apt repos and params
   company: RootIT
   license: ISC
-  min_ansible_version: 2.1
+  min_ansible_version: "2.1"
   platforms:
     - name: Debian
       versions:

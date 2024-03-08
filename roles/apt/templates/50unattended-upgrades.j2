@@ -101,14 +101,14 @@ Unattended-Upgrade::Package-Blacklist {
 
 // Remove unused automatically installed kernel-related packages
 // (kernel images, kernel headers and kernel version locked tools).
-Unattended-Upgrade::Remove-Unused-Kernel-Packages "{{ unattended_upgrade_remove_unused_kernel_packages }}";
+Unattended-Upgrade::Remove-Unused-Kernel-Packages "{{ apt_unattended_upgrade_remove_unused_kernel_packages }}";
 
 // Do automatic removal of newly unused dependencies after the upgrade
-Unattended-Upgrade::Remove-New-Unused-Dependencies "{{ unattended_upgrade_remove_new_unused_dependencies }}";
+Unattended-Upgrade::Remove-New-Unused-Dependencies "{{ apt_unattended_upgrade_remove_new_unused_dependencies }}";
 
 // Do automatic removal of unused packages after the upgrade
 // (equivalent to apt-get autoremove)
-Unattended-Upgrade::Remove-Unused-Dependencies "{{ unattended_upgrade_remove_unused_dependencies }}";
+Unattended-Upgrade::Remove-Unused-Dependencies "{{ apt_unattended_upgrade_remove_unused_dependencies }}";
 
 // Automatically reboot *WITHOUT CONFIRMATION* if
 //  the file /var/run/reboot-required is found after the upgrade
