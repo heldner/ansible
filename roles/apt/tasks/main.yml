@@ -1,8 +1,11 @@
 ---
-- name: Install lsb-release
-  ansible.builtin.package:
+- name: Install sugessted packages
+  ansible.builtin.apt:
     state: present
-    name: lsb-release
+    name:
+      - apt-listbugs
+      - lsb-release
+      - needrestart
   become: true
   tags: apt
 
@@ -10,7 +13,7 @@
   ansible.builtin.file:
     state: directory
     path: /etc/apt/sources.list.d
-    mode: 0755
+    mode: '0755'
   become: true
   tags: apt
 
@@ -26,28 +29,20 @@
       amd64
       i386
     dest: /var/lib/dpkg/arch
+    mode: '0644'
   become: true
   tags: apt
   register: _apt_arch
-
-# TODO: - name: Get gpg key
-#  ansible.builtin.get_url:
-#    url:
-#      https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x55f96fcf8231b6dd
-#    dest: /etc/apt/trusted.gpg.d/neovim-ppa_ubuntu_stable.gpg
-#  become: true
 
 - name: Configure apt
   ansible.builtin.template:
     src: '{{ item.name }}'
     dest: '{{ item.dest }}'
-    mode: 0644
+    mode: '0644'
     owner: root
   loop:
     - name: stable.pref.j2
       dest: /etc/apt/preferences.d/stable.pref
-#    - name: neovim-ppa-ubuntu-stable.list.j2
-#      dest: /etc/apt/sources.list.d/neovim-ppa-ubuntu-stable.list
     - name: sources.list.j2
       dest: /etc/apt/sources.list
     - name: apt_conf_norecommends.j2
@@ -72,5 +67,6 @@
       - python3-launchpadlib
   become: true
 
-# TODO: apt-key adv --keyserver keyserver.ubuntu.com \
-# --recv 9DBB0BE9366964F134855E2255F96FCF8231B6DD
+- name: Import tasks from the unattended-upgrades
+  ansible.builtin.import_tasks: unattended-upgrades.yml
+  tags: unattended

@@ -1,0 +1,26 @@
+---
+- name: Disable soft limits kernel dump
+  community.general.pam_limits:
+    domain: '*'
+    limit_type: soft
+    limit_item: core
+    value: '0'
+  become: true
+  tags: kernel
+
+- name: Disable hard limits kernel dump
+  community.general.pam_limits:
+    domain: '*'
+    limit_type: hard
+    limit_item: core
+    value: '0'
+  become: true
+  tags: kernel
+
+- name: Import tasks to configure login_defs
+  ansible.builtin.import_tasks: login_defs.yml
+  tags: login_defs
+
+- name: Import tasks to configure pam
+  ansible.builtin.import_tasks: pam.yml
+  tags: pam

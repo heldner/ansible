@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Stanislav Korolev
+  description: Configure apt repos and params
+  company: RootIT
+  license: ISC
+  min_ansible_version: 2.1
+  platforms:
+    - name: Debian
+      versions:
+        - all
+  galaxy_tags:
+    - linux
+    - hardending

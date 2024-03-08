@@ -1,0 +1,9 @@
+---
+- name: Install sugessted packages
+  ansible.builtin.apt:
+    state: present
+    name:
+      - libpam-pwquality
+      - libpam-tmpdir
+  become: true
+  tags: pam

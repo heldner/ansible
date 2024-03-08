@@ -1,12 +1,12 @@
-deb http://mirror.yandex.ru/debian/ {{ ansible_lsb.codename }} main contrib non-free
-deb-src http://mirror.yandex.ru/debian/ {{ ansible_lsb.codename }} main contrib non-free
+deb http://mirror.yandex.ru/debian/ {{ ansible_lsb.codename }} main contrib non-free non-free-firmware
+deb-src http://mirror.yandex.ru/debian/ {{ ansible_lsb.codename }} main contrib non-free non-free-firmware
 
 deb https://deb.debian.org/debian-security {{ ansible_lsb.codename }}-security main contrib
 deb-src https://deb.debian.org/debian-security {{ ansible_lsb.codename }}-security main contrib
 
 # {{ ansible_lsb.codename }}-updates, previously known as 'volatile'
-deb http://mirror.yandex.ru/debian/ {{ ansible_lsb.codename }}-updates main contrib non-free
-deb-src http://mirror.yandex.ru/debian/ {{ ansible_lsb.codename }}-updates main contrib non-free
+deb http://mirror.yandex.ru/debian/ {{ ansible_lsb.codename }}-updates main contrib non-free non-free-firmware
+deb-src http://mirror.yandex.ru/debian/ {{ ansible_lsb.codename }}-updates main contrib non-free non-free-firmware
 
-deb http://mirror.yandex.ru/debian/ {{ ansible_lsb.codename }}-backports main contrib non-free
-deb-src http://mirror.yandex.ru/debian/ {{ ansible_lsb.codename }}-backports main contrib non-free
+deb http://mirror.yandex.ru/debian/ {{ ansible_lsb.codename }}-backports main contrib non-free non-free-firmware
+deb-src http://mirror.yandex.ru/debian/ {{ ansible_lsb.codename }}-backports main contrib non-free non-free-firmware
