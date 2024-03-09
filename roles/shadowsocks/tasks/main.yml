@@ -14,4 +14,11 @@
   tags: shadowsocks
   become: true
 
+- name: Disable default ss service
+  ansible.builtin.service:
+    name: "shadowsocks-libev"
+    state: stopped
+    enabled: false
+  become: true
+
 - ansible.builtin.include_tasks: "{{ shadowsocks_mode }}.yml"
