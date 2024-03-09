@@ -6,6 +6,8 @@
   collections:
     - heldner.things
   roles:
+    - apt
+    - common
     - console-setup
     - dwm
     - feh
