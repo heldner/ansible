@@ -1,9 +1,9 @@
 ---
-
-- name: copy modprobe files
+- name: Copy modprobe files
   copy:
     src: '{{ item }}'
     dest: /etc/modprobe.d
     mode: "0644"
+  become: true
   with_fileglob:
     - "*"
