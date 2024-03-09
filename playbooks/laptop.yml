@@ -10,8 +10,12 @@
     - dwm
     - feh
     - git
+    - hardending
     - laptop
+    - modprobe
     - mpv
     - openntpd
     - sxhkd
+    - unbound
     - xorg
+    - zsh
