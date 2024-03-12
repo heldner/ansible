@@ -33,6 +33,7 @@
       - x11-xserver-utils
       - xautolock
       - xclip
+      - xdo
       - xdotool
       - xfonts-terminus
       - xinit

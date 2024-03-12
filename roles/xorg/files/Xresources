@@ -8,6 +8,7 @@ URxvt.cursorColor:        grey70
 URxvt.cursorColor2:       grey20
 URxvt.perl-ext-common:    default,matcher,font-size
 URxvt.url-launcher:       /usr/bin/xdg-open
+URxvt.iconFile:           /usr/share/icons/gnome/48x48/apps/terminal.png
 URxvt.matcher.button:     1
 URxvt.termName:           xterm-256color
 URxvt.keysym.Home:        \033[1~
