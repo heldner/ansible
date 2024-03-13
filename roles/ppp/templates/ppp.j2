@@ -14,7 +14,7 @@ nodefaultroute
 nodefaultroute6
 noipdefault
 plugin sstp-pppd-plugin.so
-sstp-sock /var/run/sstpc/sstpc-icl
+sstp-sock /var/run/sstpc/sstpc-{{ sstp_provider }}
 refuse-chap
 refuse-mschap
 refuse-pap
