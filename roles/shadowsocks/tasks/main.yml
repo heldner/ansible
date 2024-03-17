@@ -2,7 +2,9 @@
 - name: Install shadowsocks-libev
   ansible.builtin.package:
     state: present
-    name: shadowsocks-libev
+    name:
+      - shadowsocks-libev
+      - shadowsocks-v2ray-plugin
   tags: shadowsocks
   become: true
 

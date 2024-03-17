@@ -5,7 +5,7 @@
     path: /etc/systemd/system/shadowsocks-libev-local@.service.d
   become: true
 
-- name: Copy shadowsocks config
+- name: Copy shadowsocks systemd config
   ansible.builtin.template:
     src: "systemd.conf.j2"
     dest: /etc/systemd/system/shadowsocks-libev-local@.service.d/custom.conf

@@ -5,7 +5,7 @@
     path: /etc/systemd/system/shadowsocks-libev-server@.service.d
   become: true
 
-- name: Copy shadowsocks config
+- name: Copy shadowsocks systemd config
   ansible.builtin.template:
     src: "systemd.conf.j2"
     dest: /etc/systemd/system/shadowsocks-libev-server@.service.d/custom.conf
@@ -24,7 +24,7 @@
     mode: "0640"
   tags: [shadowsocks, config]
   notify: Restart shadowsocks-server
-  no_log: true
+  no_log: "{{ nolog | default('true') | bool }}"
   become: true
 
 - name: Enable and start server ss
