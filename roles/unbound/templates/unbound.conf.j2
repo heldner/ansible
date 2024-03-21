@@ -19,15 +19,15 @@ server:
 {% for address in default_forward_addresses %}
         forward-addr: {{ address }}
 {% endfor %}
-{% if unbound_custom_zones is defined %}
-    {% for zone in unbound_custom_zones -%}
+{%- if unbound_custom_zones is defined %}
+{%- for zone in unbound_custom_zones %}
     forward-zone:
         name: "{{ zone.name }}"
-        {% for addr in zone.forward_addrs -%}
+{% for addr in zone.forward_addrs %}
         forward-addr: {{ addr }}
-        {% endfor -%}
-    {% endfor %}
-{% endif %}
+{% endfor %}
+{%- endfor %}
+{%- endif %}
 
 
 python:
