@@ -14,16 +14,18 @@ server:
     rrset-cache-size: 8m
     module-config: "iterator"
     forward-zone:
-       name: "."
-       forward-ssl-upstream: yes
+        name: "."
+        forward-ssl-upstream: yes
 {% for address in default_forward_addresses %}
-       forward-addr: {{ address }}
+        forward-addr: {{ address }}
 {% endfor %}
 {% if unbound_custom_zones is defined %}
     {% for zone in unbound_custom_zones -%}
     forward-zone:
-       name: "{{ zone.name }}"
-       forward-addr: {{ zone.forward_addr }}
+        name: "{{ zone.name }}"
+        {% for addr in zone.forward_addrs -%}
+        forward-addr: {{ addr }}
+        {% endfor -%}
     {% endfor %}
 {% endif %}
 
