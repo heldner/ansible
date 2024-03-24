@@ -8,11 +8,11 @@
     - apt
     - unattended
 
-- name: Enable service unattended-upgrades
+- name: Disable service unattended-upgrades
   ansible.builtin.service:
     name: unattended-upgrades
-    state: started
-    enabled: true
+    state: stopped
+    enabled: false
   become: true
   tags:
     - apt
@@ -25,8 +25,24 @@
     owner: "root"
     group: "root"
     mode: "0644"
-  notify: Restart unattended-upgrades
   become: true
   tags:
     - apt
     - unattended
+
+- name: Create cronfile
+  ansible.builtin.cron:
+    name: unattended-upgrades
+    minute: "0"
+    hour: "19"
+    day: "*"
+    month: "*"
+    weekday: "*"
+    cron_file: "/etc/cron.d/unattended-upgrades"
+    job: "/usr/bin/unattended-upgrade"
+    user: "root"
+  become: true
+  tags:
+    - apt
+    - unattended
+    - cron
