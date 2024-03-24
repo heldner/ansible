@@ -1,0 +1,22 @@
+---
+- name: Install newsboat
+  ansible.builtin.package:
+    state: present
+    name: newsboat
+  tags: newsboat
+  become: true
+
+- name: Copy newsboat urls
+  ansible.builtin.template:
+    src: "urls.j2"
+    dest: "{{ ansible_user_dir }}/.newsboat/urls"
+    mode: "0644"
+  tags: newsboat
+
+- name: Copy newsboat desktopfile
+  ansible.builtin.copy:
+    src: "newsboat.desktop"
+    dest: "/usr/share/applications/newsboat.desktop"
+    mode: "0644"
+  become: true
+  tags: newsboat

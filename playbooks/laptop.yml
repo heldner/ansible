@@ -16,6 +16,7 @@
     - laptop
     - modprobe
     - mpv
+    - newsboat
     - openntpd
     - sxhkd
     - unbound
