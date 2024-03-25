@@ -6,17 +6,37 @@
   tags: newsboat
   become: true
 
+- name: Create config and podcats directories
+  ansible.builtin.file:
+    state: directory
+    path: "{{ item }}"
+    mode: "0755"
+  with_items:
+    - "{{ ansible_user_dir }}/.config/newsboat"
+    - "{{ ansible_user_dir }}/Podcasts"
+  tags: newsboat
+
 - name: Copy newsboat urls
   ansible.builtin.template:
     src: "urls.j2"
-    dest: "{{ ansible_user_dir }}/.newsboat/urls"
+    dest: "{{ ansible_user_dir }}/.config/newsboat/urls"
+    mode: "0644"
+  tags: newsboat
+
+- name: Copy newsboat urls
+  ansible.builtin.copy:
+    src: "config"
+    dest: "{{ ansible_user_dir }}/.config/newsboat/config"
     mode: "0644"
   tags: newsboat
 
 - name: Copy newsboat desktopfile
   ansible.builtin.copy:
-    src: "newsboat.desktop"
-    dest: "/usr/share/applications/newsboat.desktop"
+    src: "{{ item }}"
+    dest: "/usr/share/applications/{{ item }}"
     mode: "0644"
+  with_items:
+    - newsboat.desktop
+    - podboat.desktop
   become: true
   tags: newsboat

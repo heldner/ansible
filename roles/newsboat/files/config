@@ -1,0 +1,11 @@
+unbind-key j
+unbind-key k
+unbind-key J
+unbind-key K
+bind-key j down
+bind-key k up
+bind-key l open
+bind-key h quit
+podcast-auto-enqueue yes
+player mpv
+download-path ~/Podcasts

@@ -1,10 +1,10 @@
 [Desktop Entry]
 Type=Application
-Name=Newsboat
+Name=Podboat
 GenericName=RSS feed reader
 Comment=RSS/Atom feed reader for text terminals
 Icon=htop
-Exec=newsboat
+Exec=podboat
 Terminal=true
 Categories=Utility;Network;ConsoleOnly;
 Keywords=task
