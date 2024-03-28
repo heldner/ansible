@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ "$1" = "get" ]; then
+  full_pass=$(pass icl/ad)
+  pass=$(echo "$full_pass" | head -1)
+  user=$(echo "$full_pass" | awk '/^login:/ {print $2}')
+  echo "password=${pass}"
+  echo "username=${user}"
+fi
