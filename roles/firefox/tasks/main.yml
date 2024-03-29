@@ -9,17 +9,20 @@
     - x11
   become: true
 
-- name: Configure passff
-  ansible.builtin.file:
-    state: directory
-    path: '{{ ansible_user_dir }}/.mozilla/native-messaging-hosts'
+- name: Copy bubblewrap firefox
+  ansible.builtin.copy:
+    src: firefox_bwrap
+    dest: '{{ firefox_bwrap_path }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+  become: true
 
-- name: Configure passff
+- name: Update firefox-esr desktop
   ansible.builtin.template:
-    src: native-messaging-hosts/passff.json.j2
-    dest: '{{ ansible_user_dir }}/.mozilla/native-messaging-hosts/passff.json'
-  tags:
-    - browser
-    - xorg
-    - x11
-    - pass
+    src: firefox-esr.desktop
+    dest: '/usr/share/applications/firefox-esr.desktop'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  become: true

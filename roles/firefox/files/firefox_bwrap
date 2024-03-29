@@ -1,60 +1,57 @@
 #!/bin/sh
+UID="$(id -u)"
+exec bwrap \
+     --symlink /usr/lib64 /lib64 \
+     --symlink /usr/lib /lib \
+     --symlink /usr/bin /bin \
+     --symlink /usr/bin /sbin \
+     --proc /proc \
+     --dev /dev \
+     --dev-bind-try /dev/char /dev/char \
+     --dev-bind-try /dev/dri /dev/dri \
+     --ro-bind /etc/passwd /etc/passwd \
+     --ro-bind /etc/group /etc/group \
+     --ro-bind /etc/hostname /etc/hostname \
+     --ro-bind /etc/hosts /etc/hosts \
+     --ro-bind /etc/localtime /etc/localtime \
+     --ro-bind /etc/nsswitch.conf /etc/nsswitch.conf \
+     --ro-bind /usr/bin/firefox /usr/bin/firefox \
+     --ro-bind /usr/bin/update-mime-database /usr/bin/update-mime-database \
+     --ro-bind /usr/bin/update-desktop-database /usr/bin/update-desktop-database \
+     --ro-bind /usr/share /usr/share/ \
+     --ro-bind /usr/lib /usr/lib \
+     --ro-bind /usr/lib64 /usr/lib64 \
+     --ro-bind-try /sys/bus/usb /sys/bus/usb \
+     --ro-bind-try /sys/bus/pci /sys/bus/pci \
+     --ro-bind-try /sys/class/hidraw /sys/class/hidraw \
+     --ro-bind-try /sys/dev /sys/dev \
+     --ro-bind-try /sys/devices /sys/devices \
+     --ro-bind-try /etc/resolv.conf /etc/resolv.conf \
+     --ro-bind-try /etc/xdg /etc/xdg \
+     --ro-bind-try /etc/gtk-2.0 /etc/gtk-2.0 \
+     --ro-bind-try /etc/gtk-3.0 /etc/gtk-3.0 \
+     --ro-bind-try /etc/fonts /etc/fonts \
+     --ro-bind-try /etc/mime.types /etc/mime.types \
+     --ro-bind-try /etc/alsa /etc/alsa \
+     --tmpfs /run \
+     --tmpfs /tmp \
+     --ro-bind-try "${XDG_RUNTIME_DIR}/pipewire-0" "${XDG_RUNTIME_DIR}/pipewire-0" \
+     --ro-bind-try "${XDG_RUNTIME_DIR}/pipewire-0.lock" "${XDG_RUNTIME_DIR}/pipewire-0.lock" \
+     --ro-bind-try "${XDG_RUNTIME_DIR}/pulse" "${XDG_RUNTIME_DIR}/pulse" \
+     --bind-try ~/Downloads ~/Downloads \
+     --bind-try ~/.mozilla ~/.mozilla \
+     --bind-try ~/.cache/mozilla ~/.cache/mozilla \
+     --unsetenv PATH \
+     --ro-bind-try /run/user/"${UID}"/bus /run/user/"${UID}"/bus \
+     --setenv MOZ_ENABLE_WAYLAND 0 \
+     --setenv PATH /usr/bin \
+     --unshare-all \
+     --share-net \
+     --hostname mypc \
+     --new-session \
+     /usr/lib/firefox-esr/firefox-esr "$@"
 
-ff_bwrap() {
-  uid=$(id -u)
-  exec bwrap \
-    --bind /home/"$USER"/.cache/mozilla /home/"$USER"/.cache/mozilla \
-    --bind /home/"$USER"/.mozilla /home/"$USER"/.mozilla \
-    --bind /home/"$USER"/Downloads /home/"$USER"/Downloads \
-    --dev /dev \
-    --dev-bind /dev/dri /dev/dri \
-    --die-with-parent \
-    --dir /run/user/"$uid" \
-    --hostname RESTRICTED \
-    --new-session \
-    --proc /proc \
-    --ro-bind /etc/ca-certificates /etc/ca-certificates \
-    --ro-bind /etc/fonts /etc/fonts \
-    --ro-bind /etc/resolv.conf /etc/resolv.conf \
-    --ro-bind /etc/ssl /etc/ssl \
-    --ro-bind /run/user/"$uid"/pulse /run/user/"$uid"/pulse \
-    --ro-bind /sys/dev/char /sys/dev/char \
-    --ro-bind /sys/devices/pci0000:00 /sys/devices/pci0000:00 \
-    --ro-bind /usr/bin /usr/bin \
-    --ro-bind /usr/lib /usr/lib \
-    --ro-bind /usr/lib64 /usr/lib64 \
-    --ro-bind /usr/share/X11/xkb /usr/share/X11/xkb \
-    --ro-bind /usr/share/applications /usr/share/applications \
-    --ro-bind /usr/share/ca-certificates /usr/share/ca-certificates \
-    --ro-bind /usr/share/distro-info /usr/share/distro-info \
-    --ro-bind /usr/share/drirc.d /usr/share/drirc.d \
-    --ro-bind /usr/share/fontconfig /usr/share/fontconfig \
-    --ro-bind /usr/share/fonts /usr/share/fonts \
-    --ro-bind /usr/share/glib-2.0 /usr/share/glib-2.0 \
-    --ro-bind /usr/share/glvnd /usr/share/glvnd \
-    --ro-bind /usr/share/icons /usr/share/icons \
-    --ro-bind /usr/share/libdrm /usr/share/libdrm \
-    --ro-bind /usr/share/mime /usr/share/mime \
-    --ro-bind /usr/share/pyshared /usr/share/pyshared \
-    --ro-bind /usr/share/zoneinfo/Europe /usr/share/zoneinfo/Europe \
-    --clearenv \
-    --setenv GTK_THEME Adwaita:dark \
-    --setenv XDG_RUNTIME_DIR $XDG_RUNTIME_DIR \
-    --setenv HOME /home/"$USER" \
-    --setenv PATH /usr/bin \
-    --setenv DISPLAY $DISPLAY \
-    --share-net \
-    --symlink /usr/share/zoneinfo/Europe/Moscow /etc/localtime \
-    --symlink usr/bin /bin \
-    --symlink usr/bin /sbin \
-    --symlink usr/lib /lib \
-    --symlink usr/lib64 /lib64 \
-    --tmpfs /tmp \
-    --unshare-cgroup-try \
-    --unshare-pid \
-    --unshare-user-try \
-    --unshare-uts \
-    /usr/bin/firefox "$@"
-}
-
-ff_bwrap "$@" &
+# TODO: use xdg-dbus-proxy
+#--unsetenv DBUS_SESSION_BUS_ADDRESS \
+#--setenv DBUS_SESSION_BUS_ADDRESS "unix:path=/run/sandbox/bus" \
+#--ro-bind-try /run/user/"${UID}"/.session-bus-proxy-12 /run/sandbox/bus \
