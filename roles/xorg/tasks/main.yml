@@ -24,6 +24,7 @@
       - libreoffice-writer
       - pcmanfm
       - pinentry-gnome3
+      - rtkit
       - rxvt-unicode
       - ssh-askpass-fullscreen
       - unclutter
