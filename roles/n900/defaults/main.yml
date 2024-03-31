@@ -1,5 +1,0 @@
----
-
-connection_control:
-  path: /usr/sbin/connection_control.sh
-  sleep_timeout: 5
