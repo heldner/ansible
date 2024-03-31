@@ -14,8 +14,8 @@
 - name: Update wallpaper every hour
   ansible.builtin.cron:
     name: update wallpaper
-    job: '{{ dmw_home }}/actions/update-wallpaper'
-    minute: '12'
+    job: '{{ dmw_home }}/actions/update-wallpaper --cron'
+    minute: '0'
   tags: dwm
 
 - name: Sync actions dir

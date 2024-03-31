@@ -13,3 +13,4 @@ galaxy_info:
 
 dependencies:
   - role: sxhkd
+  - role: rofi
