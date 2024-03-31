@@ -5,6 +5,7 @@
     name:
       - mplayer
       - mpv
+      - mpv-mpris
   tags: [xorg, mpv, mplayer]
   become: true
 
