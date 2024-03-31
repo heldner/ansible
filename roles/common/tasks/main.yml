@@ -5,6 +5,7 @@
     name:
       - acl
       - at
+      - bat
       - bwm-ng
       - console-data
       - curl
