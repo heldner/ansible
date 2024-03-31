@@ -27,3 +27,28 @@
     state: started
     enabled: true
     scope: user
+  tags: bluetooth
+
+- name: Create icon directory
+  ansible.builtin.file:
+    state: directory
+    path: "{{ ansible_user_dir +
+      '/.local/share/icons/hicolor/512x512/apps' }}"
+    recurse: true
+  tags: bluetooth
+
+- name: Copy desktopfile
+  ansible.builtin.copy:
+    src: 'bluetoothctl.desktop'
+    dest: "{{ ansible_user_dir +
+      '/.local/share/applications/bluetoothctl.desktop' }}"
+    mode: '0644'
+  tags: bluetooth
+
+- name: Copy svg icon
+  ansible.builtin.copy:
+    src: 'bluetooth.svg'
+    dest: "{{ ansible_user_dir +
+      '/.local/share/icons/hicolor/512x512/apps/bluetooth.svg' }}"
+    mode: '0644'
+  tags: bluetooth

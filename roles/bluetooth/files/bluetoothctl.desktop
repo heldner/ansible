@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Bluetoothctl
+GenericName=bluetoothctl
+Comment=interactive bluetooth control tool
+Icon=bluetooth
+Exec=bluetoothctl
+Terminal=true
+Categories=System;Network;ConsoleOnly;
+Keywords=system;process;task
