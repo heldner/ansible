@@ -7,6 +7,7 @@
     - heldner.things
   roles:
     - apt
+    - bluetooth
     - common
     - console-setup
     - dwm
@@ -18,6 +19,7 @@
     - mpv
     - newsboat
     - openntpd
+    - rofi
     - sxhkd
     - unbound
     - xorg

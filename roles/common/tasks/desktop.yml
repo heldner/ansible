@@ -6,8 +6,6 @@
       - libnotify-bin
       - firmware-iwlwifi
       - alsa-utils
-      - bluetooth
-      - bluez
       - pass
       - pass-extension-otp
       - oathtool

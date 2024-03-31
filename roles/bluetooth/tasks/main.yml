@@ -1,0 +1,29 @@
+---
+- name: Install desktop packages
+  ansible.builtin.package:
+    state: present
+    name:
+      - bluetooth
+      - bluez
+  become: true
+  tags: bluetooth
+
+- name: Copy mpris-proxy service file
+  ansible.builtin.copy:
+    src: mpris-proxy.service
+    dest: /usr/lib/systemd/user/mpris-proxy.service
+    mode: '0644'
+  notify: Systemctl daemon-reload
+  become: true
+  tags: bluetooth
+
+- name: Flush handlers for mpris-proxy
+  ansible.builtin.meta: flush_handlers
+  tags: bluetooth
+
+- name: Enable and start mpris-proxy
+  ansible.builtin.systemd:
+    name: mpris-proxy
+    state: started
+    enabled: true
+    scope: user
