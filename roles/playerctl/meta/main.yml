@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Stanislav Korolev
+  namespace: things
+  description: >
+    The playerctl utility provides a command line tool to
+    send commands to MPRIS clients.
+  company: RootIT
+  license: ISC
+  min_ansible_version: '2.12'
+  platforms:
+    - name: Debian
+      versions:
+        - all

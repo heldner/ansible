@@ -19,6 +19,7 @@
     - mpv
     - newsboat
     - openntpd
+    - playerctl
     - rofi
     - sxhkd
     - unbound

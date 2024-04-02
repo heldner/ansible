@@ -1,0 +1,28 @@
+---
+- name: Install desktop packages
+  ansible.builtin.package:
+    state: present
+    name: playerctl
+  become: true
+  tags: playerctl
+
+- name: Copy playerctld service file
+  ansible.builtin.copy:
+    src: playerctld.service
+    dest: /usr/lib/systemd/user/playerctld.service
+    mode: '0644'
+  notify: Systemctl daemon-reload
+  become: true
+  tags: playerctl
+
+- name: Flush handlers for playerctld
+  ansible.builtin.meta: flush_handlers
+  tags: playerctl
+
+- name: Enable and start playerctld
+  ansible.builtin.systemd:
+    name: playerctld
+    state: started
+    enabled: true
+    scope: user
+  tags: playerctl
