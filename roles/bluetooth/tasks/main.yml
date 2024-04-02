@@ -33,7 +33,7 @@
   ansible.builtin.file:
     state: directory
     path: "{{ ansible_user_dir +
-      '/.local/share/icons/hicolor/512x512/apps' }}"
+      '/.local/share/icons/hicolor/scalable/apps' }}"
     recurse: true
   tags: bluetooth
 
@@ -49,6 +49,6 @@
   ansible.builtin.copy:
     src: 'bluetooth.svg'
     dest: "{{ ansible_user_dir +
-      '/.local/share/icons/hicolor/512x512/apps/bluetooth.svg' }}"
+      '/.local/share/icons/hicolor/scalable/apps/bluetooth.svg' }}"
     mode: '0644'
   tags: bluetooth
