@@ -1,9 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Terminal=false
-Type=Application
-Name=Telemost
-Exec=chromium --force-dark-mode --profile-directory=Telemost --app=https://telemost.yandex.ru/
-Icon=chrome
-Actions=Explore;Subscriptions
-
