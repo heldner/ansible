@@ -13,8 +13,8 @@ export GTK_THEME='Adwaita-dark'
 
 # use x11 ssh askpass
 if [ -x /usr/bin/ssh-askpass-fullscreen ]; then
-    export SSH_ASKPASS=/usr/bin/ssh-askpass-fullscreen
-    export SUDO_ASKPASS=/usr/bin/ssh-askpass-fullscreen
+    export SSH_ASKPASS=/usr/local/bin/dmenu_pass
+    export SUDO_ASKPASS=/usr/local/bin/dmenu_pass
     export SSH_ASKPASS_REQUIRE=force
 fi
 
@@ -25,10 +25,10 @@ enable_natural_scroll
 amixer set Capture nocap >/dev/null
 
 # key combiantions
-sxhkd &
+SXHKD_SHELL=/bin/sh sxhkd &
 
 # dwm status
-spoon &
+slstatus &
 
 # language
 export LC_ALL=en_US.UTF-8

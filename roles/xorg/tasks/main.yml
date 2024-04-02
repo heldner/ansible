@@ -26,7 +26,6 @@
       - pinentry-gnome3
       - rtkit
       - rxvt-unicode
-      - ssh-askpass-fullscreen
       - unclutter
       - unclutter-startup
       - x11-utils
