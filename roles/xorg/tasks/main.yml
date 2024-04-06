@@ -50,14 +50,24 @@
 
 - name: Install slim
   ansible.builtin.include_tasks: slim.yml
-  tags: slim
+  tags:
+    - slim
+    - xorg
+
+- name: Include fonts tasks
+  ansible.builtin.include_tasks: fonts.yml
+  tags:
+    - fonts
+    - xorg
 
 - name: Copy keyboard defaults
   ansible.builtin.template:
     src: etc_default_keyboard.j2
     dest: /etc/default/keyboard
     mode: "0644"
-  tags: [xorg, keyboard]
+  tags:
+    - xorg
+    - keyboard
   become: true
 
 - name: Copy session scripts
@@ -73,8 +83,3 @@
   tags:
     - xorg
     - script
-
-- name: Install desktopfiles
-  ansible.builtin.include_tasks: desktop_files.yml
-  tags:
-    - xorg

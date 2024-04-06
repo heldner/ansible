@@ -11,7 +11,7 @@
     state: directory
     dest: /usr/share/slim/themes/random
     owner: root
-    mode: "0755"
+    mode: '0755'
   become: true
   tags: slim
 
@@ -19,6 +19,7 @@
   ansible.builtin.file:
     state: directory
     path: /etc/systemd/system/slim.service.d
+    mode: '0755'
   become: true
   tags: slim
 

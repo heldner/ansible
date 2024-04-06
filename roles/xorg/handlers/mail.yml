@@ -1,3 +1,4 @@
 ---
-- name: reload udev input
-  command: udevadm trigger --subsystem-match=input --action=change
+- name: Reload udev input
+  ansible.builtin.command:
+    udevadm trigger --subsystem-match=input --action=change
