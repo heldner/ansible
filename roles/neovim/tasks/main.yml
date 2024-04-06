@@ -1,6 +1,7 @@
 ---
 - name: Prepare apt
   become: true
+  tags: neovim
   when:
     - ansible_distribution == "Debian"
     - ansible_distribution_major_version <= "11"
@@ -30,12 +31,14 @@
     state: present
     name: neovim
   become: true
+  tags: neovim
 
 - name: Create home dir
   ansible.builtin.file:
     state: directory
     path: "{{ neovim_home }}"
     mode: "0755"
+  tags: neovim
 
 - name: Create dirs
   ansible.builtin.file:
@@ -46,6 +49,7 @@
     - autoload
     - colors
     - plugged
+  tags: neovim
 
 - name: Copy init.vim rc
   ansible.builtin.template:
@@ -53,20 +57,25 @@
     dest: "{{ neovim_home }}/init.vim"
     mode: "0644"
   notify: Install plugins
+  tags: neovim
 
 - name: Fetch plug.vim
   ansible.builtin.uri:
     url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     dest: "{{ neovim_home }}/autoload/plug.vim"
     creates: "{{ neovim_home }}/autoload/plug.vim"
+  tags: neovim
 
 - name: Create jelybeans link
   ansible.builtin.file:
     state: link
+    force: true
     dest: "{{ neovim_home }}/colors/jellybeans.vim"
     src: "{{ neovim_home }}/plugged/jellybeans.vim/colors/jellybeans.vim"
+  tags: neovim
 
 - name: Install python support
   ansible.builtin.package:
     name: python3-pynvim
   become: true
+  tags: neovim
