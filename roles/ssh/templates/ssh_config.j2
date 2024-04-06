@@ -2,7 +2,7 @@
 {% if ssh_hosts is defined -%}
 {%   for host in ssh_hosts -%}
 Host {{ host.host }}
-{%     if host.hostname is defined -%}
+{%     if host.hostname is defined %}
   Hostname {{ host.hostname }}
 {%     endif %}
 {%     if host.user is defined -%}
@@ -18,9 +18,7 @@ Host *
   Compression yes
   LogLevel quiet
   SendEnv TMUX
-  StrictHostKeyChecking no
   ServerAliveInterval 10
-  UserKnownHostsFile /dev/null
   GSSAPIAuthentication no
   AddKeysToAgent yes
   ForwardAgent no
