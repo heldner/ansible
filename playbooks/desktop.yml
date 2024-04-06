@@ -1,5 +1,5 @@
 ---
-- hosts: laptop
+- hosts: all
   become: true
   become_method: sudo
   gather_facts: true
@@ -14,7 +14,9 @@
     - feh
     - git
     - hardending
-    - laptop
+    - iwd
+    - role: laptop
+      when: host in groups['laptop']
     - modprobe
     - mpv
     - newsboat
