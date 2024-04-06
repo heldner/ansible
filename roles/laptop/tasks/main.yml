@@ -21,18 +21,6 @@
     mode: "0755"
   become: true
 
-- name: Install laptop packages
-  ansible.builtin.package:
-    state: present
-    name: iwd
-
-- name: Copy iwd config
-  ansible.builtin.copy:
-    src: iwd_main.conf
-    dest: /etc/iwd/main.conf
-    mode: "0644"
-  become: true
-
 - name: Add cronjob battery checker
   ansible.builtin.cron:
     name: battery checker
