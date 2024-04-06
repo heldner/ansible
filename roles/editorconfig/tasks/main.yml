@@ -3,3 +3,4 @@
   ansible.builtin.copy:
     src: editorconfig
     dest: "{{ ansible_user_dir }}/.editorconfig"
+  tags: editorconfig
