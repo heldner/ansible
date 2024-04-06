@@ -3,9 +3,7 @@ galaxy_info:
   author: Stanislav Korolev
   description: install gocryptfs packages
   license: ISC
-  min_ansible_version: 2.1
+  min_ansible_version: '2.1'
   galaxy_tags:
     - encrypted
     - security
-
-dependencies: []

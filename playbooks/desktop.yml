@@ -14,11 +14,14 @@
     - dwm
     - feh
     - git
+    - role: gocryptfs
+      when: enable_gocryptfs | default('false') | bool
     - hardending
     - iwd
     - role: laptop
       when: "'laptop' in group_names"
     - modprobe
+    - mpd
     - mpv
     - newsboat
     - openntpd

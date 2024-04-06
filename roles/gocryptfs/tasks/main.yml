@@ -1,15 +1,17 @@
 ---
-- name: Ensure main and pam packages present
-  apt:
+- name: Ensure gocryptfs and pam packages present
+  ansible.builtin.package:
     state: present
     pkg:
-    - fuse
-    - gocryptfs
-    - libpam-mount
+      - fuse
+      - gocryptfs
+      - libpam-mount
+  tags: gocryptfs
   become: true
 
 - name: Copy pam_mount user config
-  template:
+  ansible.builtin.template:
     src: pam_mount.conf.xml.j2
     dest: '{{ ansible_user_dir }}/.pam_mount.conf.xml'
     mode: "0644"
+  tags: gocryptfs
