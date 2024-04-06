@@ -6,8 +6,8 @@ Include /etc/ssh/sshd_config.d/*.conf
 LoginGraceTime 20
 PermitRootLogin no
 MaxAuthTries 3
-PubkeyAuthentication no
-PasswordAuthentication yes
+PubkeyAuthentication {{ sshd_pubkey_authentication | default('yes') }}
+PasswordAuthentication {{ sshd_password_authentication |default('no') }}
 PermitEmptyPasswords no
 ChallengeResponseAuthentication no
 KerberosAuthentication no

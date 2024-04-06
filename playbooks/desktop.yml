@@ -27,6 +27,7 @@
     - openntpd
     - playerctl
     - rofi
+    - ssh
     - sxhkd
     - tmux
     - unbound

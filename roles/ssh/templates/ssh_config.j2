@@ -1,27 +1,20 @@
 # {{ ansible_managed}}
-Host rootit
-  Hostname ssh.rootit.online
-  LocalForward 8081 localhost:8384
-  ControlMaster no
-  ProxyJump none
-Host station-treenet
-  Hostname 192.168.88.253
-  DynamicForward 7887
-  ProxyJump none
-{% for host in ssh_hosts %}
+{% if ssh_hosts is defined -%}
+{%   for host in ssh_hosts -%}
 Host {{ host.host }}
-{% if host.hostname is defined %}
+{%     if host.hostname is defined -%}
   Hostname {{ host.hostname }}
-{% endif %}
-{% if host.user is defined %}
+{%     endif %}
+{%     if host.user is defined -%}
   User {{ host.user }}
-{% endif %}
-{% endfor %}
+{%     endif -%}
+{%   endfor -%}
+{% endif -%}
 
 Host *
   User {{ lookup('env', 'USER') }}
   ControlMaster auto
-  ControlPersist 240m
+  ControlPersist 10m
   Compression yes
   LogLevel quiet
   SendEnv TMUX
@@ -31,4 +24,4 @@ Host *
   GSSAPIAuthentication no
   AddKeysToAgent yes
   ForwardAgent no
-  #ControlPath /run/user/1000/ssh_%h_%p_%r.socket
+  ControlPath ~/.ssh/control-%h-%r-%p
