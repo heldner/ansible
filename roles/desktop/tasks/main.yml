@@ -4,6 +4,7 @@
     state: present
     name:
       - alsa-utils
+      - bubblewrap
       - dex
       - firmware-iwlwifi
       - libnotify-bin
