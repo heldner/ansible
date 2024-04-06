@@ -13,6 +13,7 @@
     - console-setup
     - desktop
     - dwm
+    - editorconfig
     - feh
     - firefox
     - git
@@ -22,6 +23,7 @@
     - iwd
     - role: laptop
       when: "'laptop' in group_names"
+    - local_bin
     - modprobe
     - mpd
     - mpv
@@ -29,11 +31,13 @@
     - newsboat
     - openntpd
     - playerctl
+    - podman
     - rofi
     - ssh
     - sxhkd
     - syncthing
     - tmux
+    - udev
     - unbound
     - xorg
     - zsh
