@@ -33,6 +33,7 @@
       - w3m
       - zbar-tools
   become: true
+  tags: common
 
 - name: Remove avahi
   ansible.builtin.apt:
@@ -40,3 +41,12 @@
     pkg:
       - avahi-autoipd
   become: true
+  tags: common
+
+- name: Copy jenttop desktopfile
+  ansible.builtin.copy:
+    src: 'jnettop.desktop'
+    dest: "{{ ansible_user_dir +
+      '/.local/share/applications/jnettop.desktop' }}"
+    mode: '0644'
+  tags: common
