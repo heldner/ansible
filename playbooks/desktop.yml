@@ -6,6 +6,7 @@
     - heldner.things
   roles:
     - apt
+    - acpi
     - bluetooth
     - common
     - console-setup
@@ -16,7 +17,7 @@
     - hardending
     - iwd
     - role: laptop
-      when: host in groups['laptop']
+      when: "'laptop' in group_names"
     - modprobe
     - mpv
     - newsboat
