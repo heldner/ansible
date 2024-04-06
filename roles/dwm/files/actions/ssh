@@ -12,13 +12,12 @@ ssh_cmd () {
 }
 
 host=$(awk '$2 !~ /^\*/ && /^Host/ {sub(/\*$/,""); print $2}' ~/.ssh/config \
-    | dmenu)
+    | dmenu -p ssh:)
 
 [ -z "$host" ] && exit
 
 if pgrep -lf "$(ssh_cmd).*${host}$"; then
   notify-send "SSH" "Already connected to $host"
-  #notifi-send "SSH" "Cant connect $host"
 else
   urxvtc -e $(ssh_cmd) $OPTS $host "$CMD"
 fi

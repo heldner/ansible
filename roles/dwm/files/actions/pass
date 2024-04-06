@@ -1,7 +1,5 @@
 #!/bin/sh
 
-[ -n "$1" ] && PASS="$1"
-
 pass_find () {
     cd "${HOME}/.password-store" && \
     find . \
@@ -11,15 +9,10 @@ pass_find () {
     | sed -e 's:\.gpg$::' -e 's:\.\/::'
 }
 
-if [ -n "$PASS" ]; then \
-    key="$PASS"
-else
-    key=$(pass_find | dmenu)
-fi
+key=$(pass_find | dmenu -p pass:)
 
-if res=$(pass -c "$key" 2>&1); then
-    notify-send -i emblem-default.png  "OTP" "$key copied"
-else
-    notify-send -i emblem-important.png "OTP" "$res"
+[ -z "$key" ] && exit 0
+if pass -c "$key" > /dev/null 2>&1; then
+  notify-send -i /usr/share/icons/gnome/32x32/status/dialog-password.png \
+    -u low "pass" "$key copied"
 fi
-

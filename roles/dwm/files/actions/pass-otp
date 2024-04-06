@@ -12,7 +12,7 @@ pass_find () {
     | sed -e 's:\.gpg$::' -e 's:\.\/::'
 }
 
-key=$(pass_find | dmenu -l 20 -p otp:)
+key=$(pass_find | dmenu -p otp:)
 
 
 if res=$(pass otp -c "$key" 2>&1); then

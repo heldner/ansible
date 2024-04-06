@@ -1,5 +1,0 @@
-#!/bin/sh
-
-if ! pgrep -u $USER -f "^newsboat" > /dev/null; then
-    urxvtc -e "newsboat"
-fi

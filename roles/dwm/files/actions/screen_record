@@ -1,3 +1,8 @@
 #!/bin/sh
-[ "$1" = 'off' ] && pkill ffmpeg
-ffmpeg -f x11grab -framerate 25 -video_size cif -i :0.0 ~/$(date +%Y%m).mp4
+[ "$1" = 'off' ] && exec pkill ffmpeg
+#ffmpeg -f x11grab -framerate 25 -i :0.0 -loglevel quiet \
+ffmpeg -f x11grab -framerate 25 -i :0.0 \
+  -f alsa -i default \
+  ~/Videos/"$(date +%Y%m%d-%H%M)"-screen-record.mp4
+  #-f pulse -ac 2 -i default \
+  #-f alsa -ac 2 -i pulse -acodec aac -strict experimental \

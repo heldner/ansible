@@ -1,3 +1,0 @@
-#!/bin/sh
-opt="$@"
-xrandr --output HDMI-1 --right-of LVDS-1 --mode 1920x1080 $opt

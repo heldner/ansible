@@ -1,5 +1,0 @@
-NAME='iwctl'
-
-if ! pgrep -U $USER $NAME > /dev/null; then
-    urxvtc -T $NAME -e "$NAME" &
-fi

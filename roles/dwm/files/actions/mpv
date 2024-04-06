@@ -1,26 +1,20 @@
 #!/bin/sh
 
-export TERM=rxvt
 IFS=$'\n'
 VIDEO_HOME="${HOME}/Videos"
+MPV_HISTORY="${HOME}/.config/mpv/mpvhistory.log"
 
-if [ "$1" = "-m" ]; then
-    player_options="-vf=flip,mirror"
-fi
-alias player="/usr/bin/mpv $player_options"
 
-dmenu () {
-    /usr/bin/dmenu \
-        -nb '#222222' \
-        -nf '#ffffff' \
-        -sf '#ffffff' \
-        -sb '#405060' \
+dmenu_local () {
+    dmenu -c -i \
+        -bw 1 \
+        -p video \
         -fn '-xos4-terminus-medium-*-*--18-*-*-*-*-*-iso10646-*' \
         -l 20
 }
 
 all_videos () {
-    pattern='.*(avi|mp4|mkv|webm|m4v)$'
+    pattern='.*(avi|mp4|mkv|webm|m4v|m3u)$'
 
     find -L "$VIDEO_HOME" \
         -type f \
@@ -29,10 +23,18 @@ all_videos () {
         -printf "%f\n"
 }
 
+history_videos() {
+    awk -F'"' '{print $4}' "$MPV_HISTORY" | uniq
+}
+
+history_search() {
+    awk -v search="$1" -F'"' '$4 ~ search {print $2; exit}' "$MPV_HISTORY"
+}
+
 choose_file () {
-    all_videos \
+    (history_videos && all_videos) \
         | sort -h \
-        | dmenu
+        | dmenu_local
 }
 
 full_path () {
@@ -60,14 +62,23 @@ start_video () {
     file="$1"
     mpd_status=$(mpd_switch)
 
-    powerled off
-    wmiir xwrite /ctl view vid
-    player "$file"
-    mpd_switch $mpd_status
-    powerled on
+    mpv "$file" >/dev/null 2>&1
+    mpd_switch "$mpd_status"
 }
 
-file_name="$(choose_file)"
-if [ -n "$file_name" ]; then
-    start_video "$(full_path "$file_name")"
+choose_video() {
+    file_name="$(choose_file)"
+    if [ -n "$file_name" ]; then
+        video="$(full_path "$file_name")"
+        if [ -z "$video" ]; then
+            video="$(history_search "$file_name")"
+        fi
+        start_video "$video"
+    fi
+}
+
+if [ -z "$1" ]; then
+    choose_video
+else
+    start_video "$1"
 fi
