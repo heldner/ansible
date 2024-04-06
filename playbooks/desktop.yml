@@ -1,6 +1,5 @@
 ---
 - hosts: all
-  become: true
   become_method: sudo
   gather_facts: true
   collections:
@@ -10,6 +9,7 @@
     - bluetooth
     - common
     - console-setup
+    - desktop
     - dwm
     - feh
     - git

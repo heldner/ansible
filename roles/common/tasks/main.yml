@@ -40,7 +40,3 @@
     pkg:
       - avahi-autoipd
   become: true
-
-- name: Include desktop tasks
-  ansible.builtin.include_tasks: desktop.yml
-  when: desktop_mode == true | bool
