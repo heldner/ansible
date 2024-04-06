@@ -9,10 +9,12 @@
     - acpi
     - bluetooth
     - common
+    - chromium
     - console-setup
     - desktop
     - dwm
     - feh
+    - firefox
     - git
     - role: gocryptfs
       when: enable_gocryptfs | default('false') | bool
@@ -23,12 +25,14 @@
     - modprobe
     - mpd
     - mpv
+    - neovim
     - newsboat
     - openntpd
     - playerctl
     - rofi
     - ssh
     - sxhkd
+    - syncthing
     - tmux
     - unbound
     - xorg
