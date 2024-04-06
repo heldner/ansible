@@ -29,12 +29,17 @@
     scope: user
   tags: bluetooth
 
-- name: Create icon directory
+- name: Create icon and desktopfiles directory
   ansible.builtin.file:
     state: directory
-    path: "{{ ansible_user_dir +
-      '/.local/share/icons/hicolor/scalable/apps' }}"
+    path: "{{ item }}"
+    mode: 0755
     recurse: true
+  with_items:
+    - "{{ ansible_user_dir +
+      '/.local/share/applications' }}"
+    - "{{ ansible_user_dir +
+      '/.local/share/icons/hicolor/scalable/apps' }}"
   tags: bluetooth
 
 - name: Copy desktopfile
