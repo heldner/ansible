@@ -13,6 +13,7 @@
     - console-setup
     - desktop
     - dwm
+    - dunst
     - editorconfig
     - feh
     - firefox
