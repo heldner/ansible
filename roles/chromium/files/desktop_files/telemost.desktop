@@ -3,6 +3,6 @@ Version=1.0
 Terminal=false
 Type=Application
 Name=Telemost
-Exec=/home/daysun/.local/bin/chrome --force-dark-mode --profile-directory=Telemost --app=https://telemost.yandex.ru/
+Exec=/usr/bin/chromium-bubblewrap --force-dark-mode --profile-directory=Telemost --app=https://telemost.yandex.ru/
 Icon=telemost
 Actions=Explore;Subscriptions

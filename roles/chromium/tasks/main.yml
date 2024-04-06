@@ -3,6 +3,9 @@
   ansible.builtin.stat:
     path: /etc/apt/trusted.gpg.d/home-ungoogled_chromium.gpg
   register: _chromium_gpg_key
+  tags:
+    - browser
+    - chromium
 
 - name: Download chromium repo gpg key
   ansible.builtin.get_url:
@@ -12,6 +15,9 @@
     mode: '0644'
   when: not _chromium_gpg_key.stat.exists
   become: true
+  tags:
+    - browser
+    - chromium
 
 - name: Add gpg repo key
   ansible.builtin.command: >
@@ -19,6 +25,9 @@
       --dearmor /tmp/home-ungoogled_chromium.gpg
   when: not _chromium_gpg_key.stat.exists
   become: true
+  tags:
+    - browser
+    - chromium
 
 - name: Add apt repository
   ansible.builtin.apt_repository:
@@ -27,14 +36,66 @@
     repo: "deb http://download.opensuse.org/repositories/home:\
       /ungoogled_chromium/Debian_Sid/ /"
   become: true
+  tags:
+    - browser
+    - chromium
 
 - name: Apt update
   ansible.builtin.apt:
     update_cache: true
   become: true
+  tags:
+    - browser
+    - chromium
 
 - name: Install ungoogled chromium
   ansible.builtin.package:
     state: present
     name: ungoogled-chromium
   become: true
+  tags:
+    - browser
+    - chromium
+
+- name: Copy bubblewrap chromium script
+  ansible.builtin.copy:
+    src: chromium-bubblewrap
+    dest: '/usr/bin/chromium-bubblewrap'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+  become: true
+  tags:
+    - browser
+    - chromium
+
+- name: Create icon and desktopfiles directory
+  ansible.builtin.file:
+    state: directory
+    path: '{{ ansible_user_dir }}/.config/chromium'
+    mode: 0755
+    recurse: true
+  tags:
+    - browser
+    - chromium
+
+- name: Add chromium desktop files
+  ansible.builtin.copy:
+    src: '{{ item.src }}'
+    dest: '{{ ansible_user_dir }}/.local/share/applications/{{ item.path }}'
+    mode: '0644'
+  with_community.general.filetree: "files/desktop_files/"
+  tags:
+    - browser
+    - chromium
+
+- name: Add icons for desktopfiles
+  ansible.builtin.copy:
+    src: '{{ item.src }}'
+    dest: "{{ ansible_user_dir +
+      '/.local/share/icons/hicolor/scalable/apps/' + item.path }}"
+    mode: '0644'
+  with_community.general.filetree: "files/icons/"
+  tags:
+    - browser
+    - chromium

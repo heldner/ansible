@@ -4,6 +4,6 @@ Version=1.0
 Terminal=false
 Type=Application
 Name=Telegram Web
-Exec=/home/daysun/.local/bin/chrome --profile-directory=TelegramWeb --app=https://web.telegram.org/
-Icon=chrome-majiogicmcnmdhhlgmkahaleckhjbmlk-Default
+Exec=/usr/bin/chromium-bubblewrap --profile-directory=TelegramWeb --app=https://web.telegram.org/
+Icon=telegram
 Actions=Explore;Subscriptions

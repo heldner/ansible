@@ -4,6 +4,6 @@ Version=1.0
 Terminal=false
 Type=Application
 Name=Youtube
-Exec=/home/daysun/.local/bin/chrome --force-dark-mode --profile-directory=Youtube --app=https://youtube.com
+Exec=/usr/bin/chromium-bubblewrap --force-dark-mode --profile-directory=Youtube --app=https://youtube.com
 Icon=youtube
 Actions=Explore;Subscriptions
