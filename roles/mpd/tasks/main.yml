@@ -1,18 +1,77 @@
 ---
-- name: Install
-  ansible.builtin.include_tasks: install.yml
-  tags:
-    - mpd
-    - install
+- name: Install mpd
+  ansible.builtin.apt:
+    name:
+      - mpc
+      - mpd
+      - ncmpcpp
+      - libmpdclient2
+    state: present
+  become: true
+  tags: mpd
 
-- name: Configure
-  ansible.builtin.include_tasks: configure.yml
-  tags:
-    - mpd
-    - configure
+- name: Create dirs
+  ansible.builtin.file:
+    state: directory
+    path: '{{ item }}'
+    mode: '0755'
+  loop:
+    - "{{ ansible_user_dir }}/Music"
+    - "{{ ansible_user_dir }}/Music/playlists"
+    - "{{ ansible_user_dir }}/.config/mpd"
+    - "{{ ansible_user_dir }}/.config/ncmpcpp"
+  tags: mpd
 
-- name: Start
-  ansible.builtin.include_tasks: start.yml
-  tags:
-    - mpd
-    - start
+- name: Copy config
+  ansible.builtin.template:
+    src: '{{ item.src }}'
+    dest: '{{ item.dst }}'
+    mode: '0644'
+  loop:
+    - src: mpd.conf.j2
+      dst: '{{ mpd_home_dir }}/mpd.conf'
+    - src: ncmpcpp_config.j2
+      dst: '{{ ansible_user_dir }}/.config/ncmpcpp/config'
+  register: _mpd_config
+  tags: mpd
+
+- name: Copy playlists
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ ansible_user_dir }}/Music/playlists/{{ item.path }}"
+    mode: '0644'
+  with_community.general.filetree: "files/playlists"
+  tags: mpd
+
+- name: Copy ncmpcpp desktopfile
+  ansible.builtin.copy:
+    src: "ncmpcpp.desktop"
+    dest: '{{ ansible_user_dir }}/.local/share/applications/ncmpcpp.desktop'
+    mode: "0644"
+  tags: mpd
+
+- name: Disable system mpd
+  ansible.builtin.systemd:
+    name: mpd
+    enabled: false
+    state: stopped
+  become: true
+  tags: mpd
+
+- name: Start mpd
+  ansible.builtin.systemd:
+    scope: user
+    name: mpd
+    enabled: true
+    state: started
+  tags: mpd
+  register: _start_mpd
+
+- name: Restart mpd
+  ansible.builtin.systemd:
+    scope: user
+    name: mpd
+    state: restarted
+  when:
+    - _mpd_config.changed
+    - not _start_mpd.changed
