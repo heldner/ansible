@@ -12,7 +12,7 @@ urxvtd -q -f -o
 export GTK_THEME='Adwaita-dark'
 
 # use x11 ssh askpass
-if [ -x /usr/bin/ssh-askpass-fullscreen ]; then
+if [ -x /usr/local/bin/dmenu_pass ]; then
     export SSH_ASKPASS=/usr/local/bin/dmenu_pass
     export SUDO_ASKPASS=/usr/local/bin/dmenu_pass
     export SSH_ASKPASS_REQUIRE=force
