@@ -5,9 +5,11 @@
     name:
       - alsa-utils
       - bubblewrap
+      - desktop-file-utils
       - dex
       - firmware-iwlwifi
       - libnotify-bin
+      - ntfs-3g
       - oathtool
       - pass
       - pass-extension-otp
