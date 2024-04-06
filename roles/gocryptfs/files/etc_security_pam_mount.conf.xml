@@ -28,7 +28,7 @@
 <mntoptions allow="*" />
 <mntoptions deny="*" />
 -->
-<mntoptions require="nosuid,nodev" />
+<mntoptions require="nosuid,nodev,allow_other" />
 
 <!-- requires ofl from hxtools to be present -->
 <logout wait="0" hup="no" term="no" kill="no" />

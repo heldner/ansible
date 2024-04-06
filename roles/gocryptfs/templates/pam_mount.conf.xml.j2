@@ -7,6 +7,6 @@
         fstype="fuse"
         path="/usr/bin/gocryptfs#/home/%(USER)/.cipher_private"
         mountpoint="/home/%(USER)/Private"
-        options="nodev,nosuid"
+        options="nodev,nosuid,allow_other"
     />
 </pam_mount>
