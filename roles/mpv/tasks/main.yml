@@ -6,6 +6,7 @@
       - mplayer
       - mpv
       - mpv-mpris
+      - youtube-dl
   tags: [xorg, mpv, mplayer]
   become: true
 
