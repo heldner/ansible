@@ -21,8 +21,5 @@
 - name: Update firefox-esr desktop
   ansible.builtin.template:
     src: firefox-esr.desktop
-    dest: '/usr/share/applications/firefox-esr.desktop'
-    owner: 'root'
-    group: 'root'
+    dest: '{{ ansible_user_dir }}/.local/share/applications/firefox-esr.desktop'
     mode: '0644'
-  become: true
