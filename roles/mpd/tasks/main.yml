@@ -4,6 +4,7 @@
     name:
       - mpc
       - mpd
+      - mpdris2
       - ncmpcpp
       - libmpdclient2
     state: present
@@ -61,11 +62,14 @@
 - name: Start mpd
   ansible.builtin.systemd:
     scope: user
-    name: mpd
+    name: '{{ item }}'
     enabled: true
     state: started
-  tags: mpd
+  loop:
+    - mpd
+    - mpDris2
   register: _start_mpd
+  tags: mpd
 
 - name: Restart mpd
   ansible.builtin.systemd:
