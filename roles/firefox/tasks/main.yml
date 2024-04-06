@@ -5,8 +5,7 @@
     name: firefox-esr
   tags:
     - browser
-    - xorg
-    - x11
+    - firefox
   become: true
 
 - name: Copy bubblewrap firefox
@@ -17,9 +16,15 @@
     group: 'root'
     mode: '0755'
   become: true
+  tags:
+    - browser
+    - firefox
 
 - name: Update firefox-esr desktop
   ansible.builtin.template:
     src: firefox-esr.desktop
     dest: '{{ ansible_user_dir }}/.local/share/applications/firefox-esr.desktop'
     mode: '0644'
+  tags:
+    - browser
+    - firefox
