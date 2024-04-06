@@ -6,15 +6,16 @@
       - gnupg
       - gnupg-utils
       - pinentry-curses
-      - pinentry-gtk2
-  tags: [gnupg, pgp, gpg]
+      - pinentry-gnome3
   become: true
+  tags: gpg
 
 - name: Create config direcotyr
   ansible.builtin.file:
     state: directory
     dest: '{{ ansible_env.HOME }}/.gnupg'
     mode: "0700"
+  tags: gpg
 
 - name: Copy gnupg configs
   ansible.builtin.template:
@@ -24,3 +25,4 @@
   loop:
     - gpg.conf
     - gpg-agent.conf
+  tags: gpg

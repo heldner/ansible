@@ -20,6 +20,7 @@
     - git
     - role: gocryptfs
       when: enable_gocryptfs | default('false') | bool
+    - gpg
     - hardending
     - iwd
     - role: laptop
