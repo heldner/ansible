@@ -15,3 +15,11 @@
     dest: '{{ ansible_user_dir }}/.pam_mount.conf.xml'
     mode: "0644"
   tags: gocryptfs
+
+- name: Copy pam_mount system config
+  ansible.builtin.copy:
+    src: etc_security_pam_mount.conf.xml
+    dest: '/etc/security/pam_mount.conf.xml'
+    mode: "0644"
+  become: true
+  tags: gocryptfs
