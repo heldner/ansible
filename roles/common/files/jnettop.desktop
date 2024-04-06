@@ -1,11 +1,11 @@
 [Desktop Entry]
 Type=Application
 Version=1.0
-Name=Pulsemixer
-GenericName=Pulseaudio control
+Name=Jnettop
+GenericName=Show network activity
 Comment=Show System Processes
-Icon=htop
+Icon=network-receive
 Exec=sudo -A jnettop
 Terminal=true
-Categories=System;Audio;ConsoleOnly;
+Categories=System;ConsoleOnly;
 Keywords=system;process;task
