@@ -25,6 +25,7 @@
     - playerctl
     - rofi
     - sxhkd
+    - tmux
     - unbound
     - xorg
     - zsh

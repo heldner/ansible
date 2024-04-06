@@ -30,13 +30,10 @@ if [ -f /etc/debian_version ] ; then
     eval "$(dircolors -b)"
 fi
 
-if [ -z "$TMUX" ] && [ -n "$SSH_CONNECTION" ]; then
-    socket_path="${HOME}/.ssh/auth_sock_$(hostname)"
-    if [ "$SSH_AUTH_SOCK" != "$socket_path" ] ; then
-        ln -sf "$SSH_AUTH_SOCK" "$socket_path"
-        export SSH_AUTH_SOCK=$socket_path
-    fi
-    tmux attach || tmux new
+if command -v tmux >/dev/null 2>&1; then
+  if [ -z "$TMUX" ] && [ -n "$SSH_CONNECTION" ]; then
+      tmux attach || tmux new
+  fi
 fi
 
 MPD_HOST=/run/user/"$(id -u)"/mpd.socket

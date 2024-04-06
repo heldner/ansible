@@ -4,6 +4,7 @@
     name: tmux
     state: present
   become: true
+  tags: tmux
 
 - name: copy tmux conf
   ansible.builtin.copy:
