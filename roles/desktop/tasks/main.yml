@@ -3,13 +3,27 @@
   ansible.builtin.package:
     state: present
     name:
-      - libnotify-bin
-      - firmware-iwlwifi
       - alsa-utils
+      - dex
+      - firmware-iwlwifi
+      - libnotify-bin
+      - oathtool
       - pass
       - pass-extension-otp
-      - oathtool
+      - pavucontrol
       - pinentry-curses
       - pipewire-audio
       - pipewire-pulse
+      - pulsemixer
   become: true
+  tags: desktop
+
+- name: Copy desktopfiles
+  ansible.builtin.copy:
+    src: '{{ item }}'
+    dest: "{{ ansible_user_dir + '/.local/share/applications/' + item }}"
+    mode: '0644'
+  with_items:
+    - 'alsamixer.desktop'
+    - 'pulsemixer.desktop'
+  tags: desktop
