@@ -20,7 +20,20 @@ Print
   flameshot gui
 
 super + a
-  action_menu_run
+  ~/.local/bin/action_menu_run
 
 super + s
   ~/.dwm/actions/ssh
+
+alt + Tab
+  rofi -show window \
+    -kb-cancel "Alt+Escape,Escape" \
+    -kb-accept-entry "!Alt-Tab,Return" \
+    -kb-row-down "Alt+Tab,Alt+Down" \
+    -kb-row-up "Alt+Shift+Tab,Alt+Up"
+
+super + Down
+  playerctl play-pause
+
+super + {Right,Left}
+  playerctl position 30{+,-}
