@@ -23,7 +23,6 @@ set showtabline=0       "Вырубаем черточки на табах
 set showcmd             "Показывать незавершенные команды в статусбаре
 set t_Co=256            "Включаем 256 цветов в терминале, мы ведь работаем из иксов?
 set laststatus=2        "Всегда показывать статусную строку
-colorscheme jellybeans   "Цветовая схема
 syntax on                "Включить подсветку синтаксиса
 set termencoding=utf-8   "Кодировка терминала
 "set encoding=utf-8       "Кодировка файлов по умолчанию
@@ -77,7 +76,7 @@ Plug 'kien/ctrlp.vim'
 Plug 'martinda/Jenkinsfile-vim-syntax'
 Plug 'modille/groovy.vim'
 Plug 'mzlogin/vim-markdown-toc'
-Plug 'nanotech/jellybeans.vim'
+Plug 'nanotech/jellybeans.vim', { 'as': 'jellybeans' }
 Plug 'pearofducks/ansible-vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'rbgrouleff/bclose.vim'
@@ -85,6 +84,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-syntastic/syntastic'
 call plug#end()
+
+" Цветовая схема
+colorscheme jellybeans
 
 " disable auto linter for ansible
 let g:syntastic_ansible_checkers = ['yamllint']

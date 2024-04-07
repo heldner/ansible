@@ -47,7 +47,6 @@
     mode: "0755"
   loop:
     - autoload
-    - colors
     - plugged
   tags: neovim
 
@@ -64,14 +63,6 @@
     url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     dest: "{{ neovim_home }}/autoload/plug.vim"
     creates: "{{ neovim_home }}/autoload/plug.vim"
-  tags: neovim
-
-- name: Create jelybeans link
-  ansible.builtin.file:
-    state: link
-    force: true
-    dest: "{{ neovim_home }}/colors/jellybeans.vim"
-    src: "{{ neovim_home }}/plugged/jellybeans.vim/colors/jellybeans.vim"
   tags: neovim
 
 - name: Install python support
