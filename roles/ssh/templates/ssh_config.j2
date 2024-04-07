@@ -1,25 +1,28 @@
 # {{ ansible_managed}}
 {% if ssh_hosts is defined -%}
-{%   for host in ssh_hosts -%}
+{%   for host in ssh_hosts | unique -%}
 Host {{ host.host }}
 {%     if host.hostname is defined %}
   Hostname {{ host.hostname }}
 {%     endif %}
-{%     if host.user is defined -%}
+{%     if host.user is defined %}
   User {{ host.user }}
 {%     endif -%}
+{%     if host.dynamic_forward is defined %}
+  DynamicForward {{ host.dynamic_forward }}
+{%     endif -%}
 {%   endfor -%}
-{% endif -%}
+{% endif %}
 
 Host *
-  User {{ lookup('env', 'USER') }}
-  ControlMaster auto
-  ControlPersist 10m
+  AddKeysToAgent 12h
   Compression yes
-  LogLevel quiet
-  SendEnv TMUX
-  ServerAliveInterval 10
-  GSSAPIAuthentication no
-  AddKeysToAgent yes
-  ForwardAgent no
+  ControlMaster auto
   ControlPath ~/.ssh/control-%h-%r-%p
+  ControlPersist 10m
+  ForwardAgent no
+  GSSAPIAuthentication no
+  LogLevel quiet
+  PreferredAuthentications publickey,password
+  ServerAliveInterval 10
+  User {{ lookup('env', 'USER') }}
