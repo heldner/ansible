@@ -51,6 +51,14 @@
     mode: "0644"
   tags: mpd
 
+- name: Copy mpDris2 systemd override
+  ansible.builtin.copy:
+    src: 'mpDris2.service.override'
+    dest: '/usr/lib/systemd/user/mpDris2.service.d/dbus.conf'
+    mode: "0644"
+  become: true
+  tags: mpd
+
 - name: Disable system mpd
   ansible.builtin.systemd:
     name: mpd
