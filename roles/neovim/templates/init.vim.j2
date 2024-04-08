@@ -59,22 +59,18 @@ set clipboard=unnamedplus
 
 "Plug
 call plug#begin('/home/daysun/.config/nvim/plugged')
+Plug 'Sjd-Risca-salt/salt-vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'aklt/plantuml-syntax'
-Plug 'jceb/vim-orgmode'
 Plug 'bling/vim-airline'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'Sjd-Risca-salt/salt-vim'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'ervandew/supertab'
 Plug 'exafunction/codeium.vim'
 Plug 'fatih/vim-go'
-Plug 'hashivim/vim-terraform'
+Plug 'jceb/vim-orgmode'
 Plug 'jremmen/vim-ripgrep'
-Plug 'junegunn/vim-easy-align'
 Plug 'kien/ctrlp.vim'
-Plug 'martinda/Jenkinsfile-vim-syntax'
-Plug 'modille/groovy.vim'
 Plug 'mzlogin/vim-markdown-toc'
 Plug 'nanotech/jellybeans.vim', { 'as': 'jellybeans' }
 Plug 'pearofducks/ansible-vim'
@@ -101,12 +97,6 @@ autocmd FileType cpp,py,yaml.ansible autocmd BufWritePre <buffer> %s/\s\+$//e
 set conceallevel=0
 let g:vim_markdown_folding_disabled = 1
 "let g:vim_markdown_folding_level = 6
-
-" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-vmap <Enter> <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
 
 " alias Bclose
 command Bc Bclose
