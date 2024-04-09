@@ -1,3 +1,5 @@
 ---
-- name: reload udev rules
-  shell: /sbin/udevadm control --reload-rules
+- name: Reload udev rules
+  ansible.builtin.command: udevadm control --reload
+  become: true
+  tags: udev

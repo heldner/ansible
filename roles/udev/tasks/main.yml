@@ -1,21 +1,23 @@
 ---
-- name: copy udev rules
-  copy:
-    src: '{{item}}'
+- name: Copy udev rules
+  ansible.builtin.copy:
+    src: '{{ item }}'
     dest: '/etc/udev/rules.d/90-{{item}}'
     mode: "0644"
-  notify: reload udev rules
-  tags:
-    - udev
-  with_items:
+  become: true
+  loop:
     - automount-by-label.rules
-   #- wifi.rules
-   #- backlight.rules
+  notify: Reload udev rules
+  tags: udev
 
-- name: copy automount script
-  copy:
-    src: 'automount-usb'
-    dest: '/usr/local/bin/automount-usb'
-    mode: "0755"
-  tags:
-    - udev
+- name: Copy udev rules
+  ansible.builtin.copy:
+    src: 'usbmount.sh'
+    dest: '/usr/bin/usbmount.sh'
+    mode: '0755'
+  become: true
+  tags: udev
+
+- name: Flush udev handlers
+  meta: flush_handlers
+  tags: udev

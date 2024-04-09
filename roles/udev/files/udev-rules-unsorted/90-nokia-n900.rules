@@ -1,1 +1,0 @@
-SUBSYSTEM=="net", ACTION=="add", ATTRS{idVendor}=="0421", ATTRS{idProduct}=="01c8", ATTRS{manufacturer}=="Nokia", ATTRS{product}=="N900 (PC-Suite Mode)", NAME=="n900", ACTION=="add", SUBSYSTEM=="net"
