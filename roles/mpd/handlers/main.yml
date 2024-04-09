@@ -1,2 +1,20 @@
 ---
-# handlers file for mpd
+- name: Restart mpd
+  ansible.builtin.systemd:
+    scope: user
+    name: mpd
+    state: restarted
+  tags: mpd
+
+- name: Restart mpDris2
+  ansible.builtin.systemd:
+    scope: user
+    name: mpDris2
+    state: restarted
+  tags: mpd
+
+- name: Systemctl daemon-reload mpd
+  ansible.builtin.systemd:
+    scope: user
+    daemon_reload: true
+  tags: mpd

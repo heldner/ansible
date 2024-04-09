@@ -33,7 +33,7 @@
       dst: '{{ mpd_home_dir }}/mpd.conf'
     - src: ncmpcpp_config.j2
       dst: '{{ ansible_user_dir }}/.config/ncmpcpp/config'
-  register: _mpd_config
+  notify: Restart mpd
   tags: mpd
 
 - name: Copy playlists
@@ -51,16 +51,26 @@
     mode: "0644"
   tags: mpd
 
+- name: Create systemd mpDris2 override
+  ansible.builtin.file:
+    state: directory
+    path: '{{ ansible_user_dir }}/.config/systemd/user/mpDris2.service.d'
+    mode: '0755'
+  tags: mpd
+
 - name: Copy mpDris2 systemd override
-  ansible.builtin.copy:
-    src: 'mpDris2.service.override'
-    dest: '/usr/lib/systemd/user/mpDris2.service.d/dbus.conf'
+  ansible.builtin.template:
+    src: 'mpDris2.service.override.j2'
+    dest: '{{ ansible_user_dir +
+      "/.config/systemd/user/mpDris2.service.d/override.conf" }}'
     mode: "0644"
-  become: true
+  notify:
+    - Systemctl daemon-reload mpd
+    - Restart mpDris2
   tags: mpd
 
 - name: Disable system mpd
-  ansible.builtin.systemd:
+  ansible.builtin.service:
     name: mpd
     enabled: false
     state: stopped
@@ -68,7 +78,7 @@
   tags: mpd
 
 - name: Start mpd
-  ansible.builtin.systemd:
+  ansible.builtin.service:
     scope: user
     name: '{{ item }}'
     enabled: true
@@ -76,14 +86,8 @@
   loop:
     - mpd
     - mpDris2
-  register: _start_mpd
   tags: mpd
 
-- name: Restart mpd
-  ansible.builtin.systemd:
-    scope: user
-    name: mpd
-    state: restarted
-  when:
-    - _mpd_config.changed
-    - not _start_mpd.changed
+- name: Flush mpd handlers
+  meta: flush_handlers
+  tags: mpd
