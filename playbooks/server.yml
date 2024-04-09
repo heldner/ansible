@@ -1,16 +1,16 @@
 ---
-- hosts: 'all'
+- hosts: server
   gather_facts: true
   become: false
   collections:
     - heldner.things
   roles:
     - apt
-    - common
     - console-setup
     - hardending
     - modprobe
     - shadowsocks
+    - ssh
     - tmux
     - unbound
     - zsh
