@@ -1,0 +1,21 @@
+---
+- name: Install xfce packages
+  ansible.builtin.package:
+    state: present
+    name:
+      - gvfs-backends
+      - libxfce4ui-utils
+      - thunar
+      - thunar-volman
+      - xfce4-appfinder
+      - xfce4-panel
+      - xfce4-pulseaudio-plugin
+      - xfce4-session
+      - xfce4-settings
+      - xfce4-terminal
+      - xfce4-whiskermenu-plugin
+      - xfconf
+      - xfdesktop4
+      - xfwm4
+  tags: xfce
+  become: true

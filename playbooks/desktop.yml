@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: desktop
   become_method: sudo
   gather_facts: true
   collections:
@@ -41,5 +41,7 @@
     - tmux
     - udev
     - unbound
+    - role: xfce
+      when: enable_xfce | default('false') | bool
     - xorg
     - zsh
