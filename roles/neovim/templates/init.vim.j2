@@ -117,6 +117,7 @@ nmap <S-j> :bprev<CR>
 " codeium settings
 let g:codeium_enabled = v:false
 let g:codeium_no_map_tab = v:true
+imap <script><silent><nowait><expr> <C-g> codeium#Accept()
 let g:codeium_filetypes = {
       \ '*': v:false,
       \ 'bash': v:true,
