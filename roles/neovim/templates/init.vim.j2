@@ -70,7 +70,7 @@ Plug 'exafunction/codeium.vim'
 Plug 'fatih/vim-go'
 Plug 'jceb/vim-orgmode'
 Plug 'jremmen/vim-ripgrep'
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mzlogin/vim-markdown-toc'
 Plug 'nanotech/jellybeans.vim', { 'as': 'jellybeans' }
 Plug 'pearofducks/ansible-vim'
@@ -109,12 +109,6 @@ set pastetoggle=<F2>    "Режим вставки
 
 " cyrilic support
 set langmap=ёйцукенгшщзхъфывапролджэячсмитьбюЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ;`qwertyuiop[]asdfghjkl\\;'zxcvbnm\\,.~QWERTYUIOP{}ASDFGHJKL:\\"ZXCVBNM<>
-
-" external command
-map <F4> :read !/usr/bin/date
-map <F5> :!ipython3 -i -c '\%load %'
-map <F6> :!pry -e "load '%'"
-map <F7> :put =strftime('%F %R')<CR>
 
 " fast buffers navigaion
 nmap <S-k> :bnext<CR>
