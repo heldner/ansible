@@ -25,6 +25,8 @@
     - iwd
     - role: laptop
       when: "'laptop' in group_names"
+    - role: libvirt
+      when: enable_libvirt | default('false') | bool
     - local_bin
     - modprobe
     - mpd

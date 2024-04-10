@@ -3,13 +3,16 @@
   ansible.builtin.package:
     state: present
     name:
+      - dnsmasq-base
       - gir1.2-spiceclientgtk-3.0
       - libvirt-clients
-      - libvirt-daemon
+      - libvirt-daemon-system
+      - spice-client-gtk
+      - qemu-system
       - virt-manager
       - virt-viewer
-      - spice-client-gtk
   become: true
+  tags: libvirt
 
 - name: Create link uuidgen
   ansible.builtin.file:
@@ -17,3 +20,20 @@
     src: /usr/bin/dbus-uuidgen
     dest: /usr/local/bin/uuidgen
   become: true
+  tags: libvirt
+
+- name: Enable and start libvirtd
+  ansible.builtin.systemd:
+    name: libvirtd
+    state: started
+    enabled: true
+  become: true
+  tags: libvirt
+
+- name: Add current user to libvirt group
+  ansible.builtin.user:
+    name: '{{ ansible_user_id }}'
+    groups: libvirt
+    append: true
+  become: true
+  tags: libvirt
