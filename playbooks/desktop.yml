@@ -17,6 +17,7 @@
     - editorconfig
     - feh
     - firefox
+    - flameshot
     - git
     - role: gocryptfs
       when: enable_gocryptfs | default('false') | bool

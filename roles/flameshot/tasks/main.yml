@@ -1,0 +1,14 @@
+---
+- name: Install flameshot package
+  ansible.builtin.package:
+    state: present
+    name: flameshot
+  tags: flameshot
+  become: true
+
+- name: Create shots directory
+  ansible.builtin.file:
+    state: directory
+    path: '{{ flameshot_dir }}'
+    mode: '0755'
+  tags: flameshot

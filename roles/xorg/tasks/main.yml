@@ -8,7 +8,6 @@
       - dbus-x11
       - feh
       - ffmpeg
-      - flameshot
       - fonts-font-awesome
       - fonts-powerline
       - fonts-takao
