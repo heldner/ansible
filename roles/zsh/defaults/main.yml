@@ -11,8 +11,4 @@ zplug_plugins:
   - name: unixorn/fzf-zsh-plugin
     opts: "as:plugin"
   - name: joshskidmore/zsh-fzf-history-search
-  - name: smeagol74/zsh-fzf-pass
-    opts: "as:plugin"
-  - name: Dbz/kube-aliases
-    opts: "as:plugin"
   - name: Tarrasch/zsh-autoenv

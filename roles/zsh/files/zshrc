@@ -29,10 +29,10 @@ bindkey "\033[1~" beginning-of-line
 bindkey "\033[4~" end-of-line
 
 # load parts
-load_file .profile
 load_file .zsh_aliases
 load_file .zshfun
 load_file .zshenv
+load_file .profile
 load_file .zsh_podman
 load_file .zplug/init.zsh
 load_file .zplugrc
