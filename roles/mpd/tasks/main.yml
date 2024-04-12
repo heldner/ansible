@@ -46,9 +46,14 @@
 
 - name: Copy ncmpcpp desktopfile
   ansible.builtin.copy:
-    src: "ncmpcpp.desktop"
-    dest: '{{ ansible_user_dir }}/.local/share/applications/ncmpcpp.desktop'
+    src: '{{ item.src }}'
+    dest: '{{ item.dst }}'
     mode: "0644"
+  loop:
+    - src: ncmpcpp_bindings
+      dst: '{{ ansible_user_dir }}/.config/ncmpcpp/bindings'
+    - src: 'ncmpcpp.desktop'
+      dst: '{{ ansible_user_dir }}/.local/share/applications/ncmpcpp.desktop'
   tags: mpd
 
 - name: Create systemd mpDris2 override
