@@ -7,8 +7,11 @@
       - gir1.2-spiceclientgtk-3.0
       - libvirt-clients
       - libvirt-daemon-system
-      - spice-client-gtk
+      - python3-libvirt
+      - python3-lxml
       - qemu-system
+      - qemu-utils
+      - spice-client-gtk
       - virt-manager
       - virt-viewer
   become: true
@@ -23,7 +26,7 @@
   tags: libvirt
 
 - name: Enable and start libvirtd
-  ansible.builtin.systemd:
+  ansible.builtin.service:
     name: libvirtd
     state: started
     enabled: true
@@ -36,4 +39,33 @@
     groups: libvirt
     append: true
   become: true
+  tags: libvirt
+
+- name: Make default net active
+  community.libvirt.virt_net:
+    name: default
+    state: active
+  become: true
+  tags: libvirt
+
+- name: Make default net autostart
+  community.libvirt.virt_net:
+    name: default
+    autostart: true
+  become: true
+  tags: libvirt
+
+- name: Define a new storage pool
+  community.libvirt.virt_pool:
+    command: define
+    name: vms
+    xml: '{{ lookup("template", "pool.xml.j2") }}'
+  become: true
+  notify:
+    - Enable storage pool
+    - Enable autostart storage pool
+  tags: libvirt
+
+- name: Flush libvirt handlers
+  meta: flush_handlers
   tags: libvirt

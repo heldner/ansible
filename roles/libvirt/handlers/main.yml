@@ -1,0 +1,21 @@
+---
+- name: Restart libvirtd
+  ansible.builtin.service:
+    name: libvirtd
+    state: restarted
+  become: true
+  tags: libvirt
+
+- name: Enable storage pool
+  community.libvirt.virt_pool:
+    command: create
+    name: vms
+  become: true
+  tags: libvirt
+
+- name: Enable autostart storage pool
+  community.libvirt.virt_pool:
+    name: vms
+    autostart: true
+  become: true
+  tags: libvirt
