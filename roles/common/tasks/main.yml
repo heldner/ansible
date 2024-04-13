@@ -20,7 +20,6 @@
       - ipython3
       - jnettop
       - keychain
-      - lsd
       - man
       - ncdu
       - p7zip-full
@@ -28,7 +27,6 @@
       - ripgrep
       - rsync
       - strace
-      - sysstat
       - tcpdump
       - w3m
       - zbar-tools
@@ -36,10 +34,9 @@
   tags: common
 
 - name: Remove avahi
-  ansible.builtin.apt:
+  ansible.builtin.package:
     state: absent
-    pkg:
-      - avahi-autoipd
+    pkg: avahi-autoipd
   become: true
   tags: common
 
@@ -49,4 +46,7 @@
     dest: "{{ ansible_user_dir +
       '/.local/share/applications/jnettop.desktop' }}"
     mode: '0644'
+  tags: common
+
+- ansible.builtin.include_tasks: 'lsd.yml'
   tags: common

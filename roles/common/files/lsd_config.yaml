@@ -1,0 +1,4 @@
+classic: false
+date: '+%b %d %H:%M'
+icons:
+    when: never

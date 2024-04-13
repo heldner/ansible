@@ -1,0 +1,21 @@
+---
+- name: Install lsd package
+  ansible.builtin.package:
+    state: present
+    name: lsd
+  become: true
+  tags: common
+
+- name: Create lsd config dir
+  ansible.builtin.file:
+    state: directory
+    path: "{{ ansible_user_dir + '/.config/lsd' }}"
+    mode: '0755'
+  tags: common
+
+- name: Copy lsd config
+  ansible.builtin.copy:
+    src: 'lsd_config.yaml'
+    dest: "{{ ansible_user_dir + '/.config/lsd/config.yaml' }}"
+    mode: '0644'
+  tags: common
