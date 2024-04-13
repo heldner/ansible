@@ -18,6 +18,7 @@
   loop:
     - '{{ ansible_user_dir }}/.config/mpv'
     - '{{ ansible_user_dir }}/.config/mpv/scripts'
+    - '{{ ansible_user_dir }}/.config/mpv/scripts/sponsorblock_shared'
   tags: [mpv, mplayer]
 
 - name: Copy mpv config
@@ -34,4 +35,8 @@
     mode: '0644'
   loop:
     - scripts/history.lua
+    - scripts/sponsorblock.lua
+    - scripts/sponsorblock_shared/sponsorblock.py
+    - scripts/sponsorblock_shared/main.lua
+    - scripts/sponsorblock_shared/sponsorblock.txt
   tags: [mpv, mplayer]
