@@ -1,5 +1,7 @@
 ---
 - name: restart logind
-  service:
+  ansible.builtin.service:
     name: systemd-logind
     state: restarted
+  become: true
+  tags: logind

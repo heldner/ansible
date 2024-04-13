@@ -1,6 +1,8 @@
 ---
 - name: copy logind.conf
-  copy:
+  ansible.builtin.copy:
     src: logind.conf
     dest: /etc/systemd/logind.conf
+  become: true
+  tags: logind
   notify: restart logind

@@ -1,12 +1,4 @@
 ---
-- name: Copy logind.conf disable suspend at close
-  ansible.builtin.copy:
-    src: logind.conf
-    dest: /etc/systemd/logind.conf
-    mode: '0755'
-  become: true
-  tags: laptop
-
 - name: Ensure tp smapi installed
   ansible.builtin.package:
     state: present
