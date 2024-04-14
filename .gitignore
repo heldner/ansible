@@ -4,3 +4,4 @@ inventories
 .ansible
 .autoenv.sh
 .env
+ansible.log
