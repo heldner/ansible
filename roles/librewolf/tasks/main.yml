@@ -21,7 +21,7 @@
     - librewolf
 
 - name: Flush librewolf handlers
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
   tags:
     - browser
     - librewolf
