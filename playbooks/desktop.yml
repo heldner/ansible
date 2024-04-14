@@ -16,7 +16,7 @@
     - dunst
     - editorconfig
     - feh
-    - firefox
+    - librewolf
     - flameshot
     - git
     - role: gocryptfs

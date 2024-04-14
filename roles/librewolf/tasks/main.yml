@@ -1,0 +1,57 @@
+---
+- name: Download librewolf repo gpg key
+  ansible.builtin.get_url:
+    url: 'https://deb.librewolf.net/keyring.gpg'
+    dest: /etc/apt/trusted.gpg.d/librewolf.gpg
+    mode: '0644'
+  become: true
+  tags:
+    - browser
+    - librewolf
+
+- name: Add apt repository
+  ansible.builtin.apt_repository:
+    state: present
+    filename: librewolf.list
+    repo: 'deb https://deb.librewolf.net {{ ansible_lsb.codename }} main'
+  become: true
+  notify: Update apt cache
+  tags:
+    - browser
+    - librewolf
+
+- name: Flush librewolf handlers
+  meta: flush_handlers
+  tags:
+    - browser
+    - librewolf
+
+- name: Install librewolf packages
+  ansible.builtin.package:
+    state: present
+    name: librewolf
+  become: true
+  tags:
+    - browser
+    - librewolf
+
+- name: Copy bubblewrap librewolf
+  ansible.builtin.copy:
+    src: librewolf-bubblewrap
+    dest: '{{ librewolf_bwrap_path }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+  become: true
+  tags:
+    - browser
+    - librewolf
+
+- name: Update librewolf desktop
+  ansible.builtin.template:
+    src: librewolf.desktop.j2
+    dest: '{{ ansible_user_dir }}/.local/share/applications/librewolf.desktop'
+    mode: '0644'
+  tags:
+    - browser
+    - librewolf
