@@ -1,98 +1,51 @@
 ---
 - name: Install iptables
-  apt:
+  ansible.builtin.package:
     name:
       - ipset
-      - ferm
+      - iptables-persistent
     cache_valid_time: 600
-  tags:
-    - install 
+  become: true
+  tags: iptables
 
-- name: Remove iptables-persistent
-  apt:
-    name: iptables-persistent
-    state: absent
-    purge: yes
-    force: yes
-  tags:
-    - install
+- name: Iptables rules
+  notify: Save iptables rules
+  become: true
+  tags: iptables
+  block:
+    - name: Set the policy for the INPUT chain to DROP
+      ansible.builtin.iptables:
+        chain: INPUT
+        policy: DROP
 
-- name: Copy ipset_reload
-  copy:
-    src: ipset-reload.sh
-    dest: /usr/local/bin/ipset-reload.sh
-    mode: u=rxw,g=r,o=r
-    owner: root
-    group: root
-  tags:
-    - ipset
-    - configure
+    - name: Allow any traffic on lo
+      ansible.builtin.iptables:
+        chain: INPUT
+        in_interface: lo
+        jump: ACCEPT
 
-- name: Create ipset tables
-  template:
-    src: ipset.tables.j2
-    dest: /etc/ipset.tables
-  notify:
-    - Reload ipset tables
-    - Fill up ipsets
-    - Reload ferm
-  tags:
-    - ipset
-    - configure
+    - name: Allow echo replies
+      ansible.builtin.iptables:
+        chain: INPUT
+        protocol: icmp
+        icmp_type: '{{ item }}'
+        jump: ACCEPT
+      loop: [0, 8]
 
-- name: Copy /etc/default/ferm
-  copy:
-    src: default-ferm
-    dest: /etc/default/ferm
-    owner: root
-    group: root
-    mode: u=rw,g=r,o=r
-  notify: Reload ferm
-  tags:
-    - ferm
-    - configure
+    - name: Allow ssh
+      ansible.builtin.iptables:
+        chain: INPUT
+        protocol: tcp
+        destination_port: 22
+        ctstate: NEW
+        jump: ACCEPT
 
-- name: Generate /etc/ferm/ferm.conf
-  template:
-    src: ferm.conf.j2
-    dest: /etc/ferm/ferm.conf
-    mode: u=rw,g=r,o=r
-    owner: root
-    group: root
-  notify: Reload ferm
-  tags:
-    - ferm
-    - configure
-
-- include: autoban.yml
-  when: autoban_dest_ips is defined
-  tags:
-    - iptables
-    - autoban
-
-- name: Update ferm service file
-  template:
-    src: ferm-systemd-unit.j2
-    dest: /lib/systemd/system/ferm.service
-    owner: 'root'
-    group: 'root'
-    mode: '0644'
-  register: result_update_file
-  notify: Systemctl daemon-reload
-  tags:
-    - ferm
-    - iptables
-
-- name: Run systemctl daemon-reload # noqa 503
-  systemd:
-    daemon_reload: yes
-  when: result_update_file.changed
-  tags:
-    - ferm
-    - iptables
-
-- include: healthcheck.yml
-  when: external_healthcheck is defined
+    - name: Allow related and established connections
+      ansible.builtin.iptables:
+        chain: INPUT
+        ctstate: ESTABLISHED,RELATED
+        jump: ACCEPT
 
 - name: Flush iptables handlers
   meta: flush_handlers
+  tags: iptables

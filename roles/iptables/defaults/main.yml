@@ -1,2 +1,8 @@
 ---
-banurl: 'https://s3.amazonaws.com/tradingview-malefactor/ip-ban-list.json'
+# TODO: fix ipset template
+ipset_tables:
+  - name: input_allow
+    maxelem: 1024
+    type: bitmap:port
+    items:
+      - 192.168.10.0/24

@@ -1,10 +1,12 @@
-{% for table in ipset_tables|dictsort %}
-create {{ table[0] }} {{ table[1].set_option }}
-create {{ table[0] }}_tmp {{ table[1].set_option }}
-{% if table[1].entries %}
-{% for entry in table[1].entries|dictsort(false, 'value') %}
-add {{ table[0] }}_tmp {{ entry[1] }}
-{% endfor %}
+{% if ipset_tables is defined %}
+{%   for rule in ipset_tables %}
+create {{ rule['name'] }}_tmp {{ rule['type'] }} maxelem {{ rule['maxelem'] }}
+{%     if rule['items'] is defined %}
+{%       for element in rule['items'] %}
+add {{ rule['name'] }}_tmp {{ element }}
+{%       endfor %}
+swap {{ rule['name'] }}_tmp {{ rule['name'] }}
+destroy {{ rule['name'] }}_tmp
+{%     endif %}
+{%   endfor %}
 {% endif %}
-
-{% endfor %}

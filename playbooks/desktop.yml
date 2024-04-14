@@ -12,13 +12,13 @@
     - chromium
     - console-setup
     - desktop
-    - dwm
     - dunst
+    - dwm
     - editorconfig
     - feh
-    - librewolf
     - flameshot
     - git
+    - iptables
     - role: gocryptfs
       when: enable_gocryptfs | default('false') | bool
     - gpg
@@ -30,6 +30,7 @@
       when: "'laptop' in group_names"
     - role: libvirt
       when: enable_libvirt | default('false') | bool
+    - librewolf
     - local_bin
     - modprobe
     - mpd

@@ -1,28 +1,10 @@
 ---
-- name: Systemctl daemon-reload
-  systemd:
-    daemon_reload: yes
-  when: result_update_file.changed
+- name: Save iptables rules
+  ansible.builtin.shell: iptables-save > /etc/iptables/rules.v4
+  become: true
+  tags: iptables
 
 - name: Reload ipset tables
   command: ipset-reload.sh
   register: command_result
   failed_when: "command_result.rc != 0"
-
-- name: Reload ferm
-  command: /etc/init.d/ferm reload
-
-- name: autoban, execute autoban
-  raw: >-
-    /usr/local/bin/auto_ban \
-      --debug \
-      --url {{ banurl }} 2>&1
-  register: exec_autoban
-
-- name: fill auto_ban result
-  debug: var=exec_autoban.stdout_lines
-
-- name: Fill up ipsets # noqa 301
-  command: "/usr/local/bin/{{ item.name }}.rb -v --service={{ item.service }}"
-  with_items: "{{ external_healthcheck }}"
-  when: external_healthcheck is defined
