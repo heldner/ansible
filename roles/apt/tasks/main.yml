@@ -16,12 +16,6 @@
   become: true
   tags: apt
 
-- name: Collect service facts
-  ansible.builtin.setup:
-  tags:
-    - always
-    - apt
-
 - name: Set arch for apt
   ansible.builtin.copy:
     content: |
