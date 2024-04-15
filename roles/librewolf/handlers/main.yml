@@ -6,3 +6,12 @@
   tags:
     - browser
     - librewolf
+
+- name: Update alternatives, install librewolf
+  ansible.builtin.command: |
+    update-alternatives --install /usr/bin/x-www-browser
+    x-www-browser {{ librewolf_bwrap_path }} 10
+  become: true
+  tags:
+    - browser
+    - librewolf

@@ -15,7 +15,9 @@
     filename: librewolf.list
     repo: 'deb https://deb.librewolf.net {{ ansible_lsb.codename }} main'
   become: true
-  notify: Update apt cache
+  notify:
+    - Update apt cache
+    - Update alternatives, install librewolf
   tags:
     - browser
     - librewolf
@@ -52,6 +54,16 @@
     src: librewolf.desktop.j2
     dest: '{{ ansible_user_dir }}/.local/share/applications/librewolf.desktop'
     mode: '0644'
+  tags:
+    - browser
+    - librewolf
+
+- name: Create links
+  ansible.builtin.file:
+    state: link
+    src: '/usr/bin/librewolf-bubblewrap'
+    path: '/etc/alternatives/x-www-browser'
+  become: true
   tags:
     - browser
     - librewolf
