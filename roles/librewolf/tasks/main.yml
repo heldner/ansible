@@ -55,3 +55,15 @@
   tags:
     - browser
     - librewolf
+
+- name: Create dirs
+  ansible.builtin.file:
+    state: directory
+    path: '{{ item }}'
+    mode: '0750'
+  loop:
+    - "{{ ansible_user_dir }}/.cache/librewolf"
+    - "{{ ansible_user_dir }}/.librewolf"
+  tags:
+    - browser
+    - librewolf
