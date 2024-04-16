@@ -4,17 +4,20 @@
     name: isync
     state: present
   become: true
+  tags: isync
 
 - name: Create mail dir
   ansible.builtin.file:
     state: directory
     path: '{{ ansible_user_dir}}/Private/Mail'
+  tags: isync
 
 - name: Create local inbox
   ansible.builtin.file:
     state: directory
     path: '{{ ansible_user_dir}}/Private/Mail/{{ item.name }}'
   loop: '{{ mbsync_mboxes }}'
+  tags: isync
 
 - name: Install mbsync config
   ansible.builtin.template:
@@ -22,6 +25,7 @@
     dest: '{{ ansible_user_dir}}/Private/Mail/.mbsyncrc'
     owner: '{{ ansible_user_id }}'
     mode: "0600"
+  tags: isync
 
 - name: Create links
   ansible.builtin.file:
@@ -31,18 +35,21 @@
   loop:
     - src: '{{ ansible_user_dir }}/Private/Mail/.mbsyncrc'
       path: '{{ ansible_user_dir }}/.mbsyncrc'
+  tags: isync
 
 - name: Copy update-mail script
   ansible.builtin.template:
     src: update-mail.j2
     dest: '{{ ansible_user_dir }}/.local/bin/update-mail'
     mode: "0755"
+  tags: isync
 
 - name: Fill mailcap
   ansible.builtin.copy:
     dest: '{{ ansible_user_dir }}/Private/Mail/.mailcap'
     content:
       text/html; w3m -I %{charset} -T text/html; copiousoutput;
+  tags: isync
 
 - name: Add cronjob mbsync
   ansible.builtin.cron:
@@ -50,4 +57,4 @@
     name: sync mail
     job: '{{ ansible_user_dir }}/.local/bin/update-mail'
     minute: '*/5'
-  tags: cronjob
+  tags: isync
