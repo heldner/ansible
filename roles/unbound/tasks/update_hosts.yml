@@ -1,7 +1,6 @@
 ---
 - name: Update local zone from hosts
   ansible.builtin.command: build-unbound-localzone-from-hosts.pl
-  become: true
   register: _local_zone_update
   become: true
 

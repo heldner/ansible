@@ -13,7 +13,9 @@
   ansible.builtin.apt_repository:
     state: present
     filename: librewolf.list
-    repo: 'deb https://deb.librewolf.net {{ ansible_lsb.codename }} main'
+    repo: |
+      deb [arch=amd64] https://deb.librewolf.net
+      {{ ansible_lsb.codename }} main
   become: true
   notify:
     - Update apt cache
