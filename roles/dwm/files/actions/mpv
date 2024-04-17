@@ -1,21 +1,18 @@
 #!/bin/sh
 
-IFS=$'\n'
+set -e
 VIDEO_HOME="${HOME}/Videos"
 MPV_HISTORY="${HOME}/.config/mpv/mpvhistory.log"
-
 
 dmenu_local () {
     dmenu -c -i \
         -bw 1 \
         -p video \
-        -fn '-xos4-terminus-medium-*-*--18-*-*-*-*-*-iso10646-*' \
         -l 20
 }
 
-all_videos () {
+local_videos () {
     pattern='.*(avi|mp4|mkv|webm|m4v|m3u)$'
-
     find -L "$VIDEO_HOME" \
         -type f \
         -regextype posix-extended \
@@ -24,29 +21,30 @@ all_videos () {
 }
 
 history_videos() {
-    awk -F'"' '{print $4}' "$MPV_HISTORY" | uniq
+    awk -F'"' '{print $4}' "$MPV_HISTORY" | sort -u
 }
 
 history_search() {
-    awk -v search="$1" -F'"' '$4 ~ search {print $2; exit}' "$MPV_HISTORY"
+    read -r name
+    awk -v search="$name" -F'"' '$4 ~ search {print $2; exit}' "$MPV_HISTORY"
 }
 
-choose_file () {
-    (history_videos && all_videos) \
-        | sort -h \
-        | dmenu_local
+choose_file() {
+    cat - \
+        | sort \
+        | dmenu_local \
+        | sed -e 's,(,\\(,' -e 's,),\\),'
 }
 
-full_path () {
-    file="$1"
-
+full_path() {
+    read -r file
     find -L "$VIDEO_HOME" \
         -regextype posix-extended \
         -name "$file" \
         -printf "${VIDEO_HOME}/%P\n"
 }
 
-mpd_switch () {
+mpd_switch() {
     state="$1"
 
     if [ "$state" = "paused" ]; then
@@ -58,27 +56,48 @@ mpd_switch () {
     fi
 }
 
-start_video () {
-    file="$1"
+start_video() {
+    if [ -t 0 ]; then
+      file="$*"
+    else
+      read -r file
+    fi
     mpd_status=$(mpd_switch)
 
     mpv "$file" >/dev/null 2>&1
     mpd_switch "$mpd_status"
 }
 
-choose_video() {
-    file_name="$(choose_file)"
-    if [ -n "$file_name" ]; then
-        video="$(full_path "$file_name")"
-        if [ -z "$video" ]; then
-            video="$(history_search "$file_name")"
-        fi
-        start_video "$video"
-    fi
+choose_target() {
+    printf '%s\n' 'history' 'local' 'delete history' \
+        | dmenu_local
 }
 
-if [ -z "$1" ]; then
-    choose_video
-else
+del_history() {
+    read -r uri
+    upd_uri=$(echo "$uri" | sed -e 'y/(/?/' -e 'y/)/?/')
+    sed -i "\;${upd_uri};d" "$MPV_HISTORY"
+}
+
+del_history_loop() {
+    target=$(history_videos | choose_file | history_search)
+    until [ -z "$target" ]; do
+        echo "$target" | del_history
+        target=$(history_videos | choose_file | history_search)
+    done
+}
+
+run_target() {
+    target=$(choose_target)
+    case $target in
+        local) local_videos | choose_file | full_path | start_video ;;
+        history) history_videos | choose_file | history_search | start_video ;;
+        "delete history") del_history_loop;;
+    esac
+}
+
+if [ -n "$1" ]; then
     start_video "$1"
+else
+    run_target
 fi
