@@ -63,7 +63,7 @@
 - name: Create links
   ansible.builtin.file:
     state: link
-    src: '/usr/bin/librewolf-bubblewrap'
+    src: '/usr/bin/librewolf'
     path: '/etc/alternatives/x-www-browser'
   become: true
   tags:
