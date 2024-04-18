@@ -12,23 +12,7 @@ mp.register_event('file-loaded', function()
   title = mp.get_property('media-title');
   title = (title == filename and '' or ('%s'):format(title));
 
-  if not string_exists(HISTFILE, filename) then
-    logfile = io.open(HISTFILE, 'a+');
-    logfile:write(('[%s] "%s" "%s"\n'):format(os.date('%d/%b/%y %X'), mp.get_property('path'), title));
-    logfile:close();
-  end
+  logfile = io.open(HISTFILE, 'a+');
+  logfile:write(('[%s] "%s" "%s"\n'):format(os.date('%d/%b/%y %X'), mp.get_property('path'), title));
+  logfile:close();
 end)
-
-function file_exists(path)
-  local file = io.open(path, "rb")
-  if file then file:close() end
-  return file ~= nil
-end
-
-function string_exists(filename, pattern)
-  local fn = io.open(filename, 'r')
-  local content = fn:read("*all")
-  pos = string.find(content, pattern)
-  fn:close()
-  return pos ~= nil
-end
