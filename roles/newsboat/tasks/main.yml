@@ -15,17 +15,17 @@
     - "{{ ansible_user_dir }}/.config/newsboat"
   tags: newsboat
 
-- name: Copy newsboat urls
-  ansible.builtin.template:
-    src: "urls.j2"
-    dest: "{{ ansible_user_dir }}/.config/newsboat/urls"
+- name: Copy newsboat config
+  ansible.builtin.copy:
+    src: "config"
+    dest: "{{ ansible_user_dir }}/.config/newsboat/config"
     mode: "0644"
   tags: newsboat
 
 - name: Copy newsboat urls
-  ansible.builtin.copy:
-    src: "config"
-    dest: "{{ ansible_user_dir }}/.config/newsboat/config"
+  ansible.builtin.template:
+    src: "urls.j2"
+    dest: "{{ ansible_user_dir }}/.config/newsboat/urls"
     mode: "0644"
   tags: newsboat
 
