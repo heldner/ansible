@@ -24,16 +24,21 @@ history_videos() {
     awk -F'"' '{print $4}' "$MPV_HISTORY" | sort -u
 }
 
+linenum_by_name() {
+    grep $2 -F -n "$1" "$MPV_HISTORY" | cut -f1 -d:
+}
+
 history_search() {
+    # return path or url from mpv history log
     read -r name
-    awk -v search="$name" -F'"' '$4 ~ search {print $2; exit}' "$MPV_HISTORY"
+    line_num=$(linenum_by_name "$name" -m1)
+    awk -v linenum="$line_num" -F'"' 'NR == linenum {print $2}' "$MPV_HISTORY"
 }
 
 choose_file() {
     cat - \
         | sort \
-        | dmenu_local \
-        | sed -e 's,(,\\(,' -e 's,),\\),'
+        | dmenu_local
 }
 
 full_path() {
@@ -57,13 +62,11 @@ mpd_switch() {
 }
 
 start_video() {
-    if [ -t 0 ]; then
-      file="$*"
-    else
-      read -r file
-    fi
+    file="$*"
+    [ -z "$file" ] && read -r file
     mpd_status=$(mpd_switch)
 
+    echo "mpv '$file' >/dev/null 2>&1" > /tmp/mpvlog
     mpv "$file" >/dev/null 2>&1
     mpd_switch "$mpd_status"
 }
@@ -74,16 +77,16 @@ choose_target() {
 }
 
 del_history() {
-    read -r uri
-    upd_uri=$(echo "$uri" | sed -e 'y/(/?/' -e 'y/)/?/')
-    sed -i "\;${upd_uri};d" "$MPV_HISTORY"
+    read -r name
+    sed_lines=$(linenum_by_name "$name"| tr '\n' ',' | sed 's:,$::')
+    sed -i "${sed_lines}d" "$MPV_HISTORY"
 }
 
 del_history_loop() {
-    target=$(history_videos | choose_file | history_search)
+    target=$(history_videos | choose_file)
     until [ -z "$target" ]; do
         echo "$target" | del_history
-        target=$(history_videos | choose_file | history_search)
+        target=$(history_videos | choose_file)
     done
 }
 
