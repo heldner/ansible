@@ -14,3 +14,17 @@
     enabled: true
     daemon_reload: true
   tags: syncthing
+
+- name: Iptables allow syncthing connections
+  ansible.builtin.iptables:
+    chain: INPUT
+    protocol: '{{ item }}'
+    destination_port: 22000
+    ctstate: NEW
+    jump: ACCEPT
+  loop:
+    - tcp
+    - udp
+  notify: Save iptables rules
+  become: true
+  tags: syncthing
