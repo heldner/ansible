@@ -1,3 +1,4 @@
+---
 galaxy_info:
   author: Stanislav Korolev
   description: install mpd as user systemd service

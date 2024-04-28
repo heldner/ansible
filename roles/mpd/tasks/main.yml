@@ -83,7 +83,7 @@
   tags: mpd
 
 - name: Start mpd
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     scope: user
     name: '{{ item }}'
     enabled: true
@@ -94,5 +94,5 @@
   tags: mpd
 
 - name: Flush mpd handlers
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
   tags: mpd
