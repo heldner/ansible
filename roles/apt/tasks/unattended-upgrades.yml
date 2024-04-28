@@ -46,3 +46,16 @@
     - apt
     - unattended
     - cron
+
+- name: Create cronfile at reboot
+  ansible.builtin.cron:
+    name: "unattended-upgrades at reboot"
+    special_time: reboot
+    cron_file: "/etc/cron.d/unattended-upgrades"
+    job: "/usr/bin/unattended-upgrade"
+    user: "root"
+  become: true
+  tags:
+    - apt
+    - unattended
+    - cron
