@@ -1,13 +1,12 @@
 ---
-unbound_interface: 127.0.0.1
-#unbound_interface: 0.0.0.0
+unbound_interface: 0.0.0.0
 unbound_port: 53
 access_control:
-  - 127.0.0.0/8 allow
   - 127.0.0.1/32 allow_snoop
   - ::1 allow_snoop
   - 127.0.0.0/8 allow
-  - 192.168.43.0/24 allow
+  - 172.16.0.0/12 allow
+  - 10.0.0.0/8 allow
 default_forward_addresses:
   ## Cloudflare DNS
   - 1.1.1.1@853
