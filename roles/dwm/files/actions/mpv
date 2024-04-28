@@ -78,7 +78,7 @@ choose_target() {
 
 del_history() {
     read -r name
-    sed_lines=$(linenum_by_name "$name"| tr '\n' ',' | sed 's:,$::')
+    sed_lines=$(linenum_by_name "$name"| sed ':a;N;$!ba;s/\n/d;/g')
     sed -i "${sed_lines}d" "$MPV_HISTORY"
 }
 
