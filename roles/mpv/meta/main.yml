@@ -5,11 +5,8 @@ galaxy_info:
   description: Install mpv and mplayer
   company: RootIT
   license: ISC
-  min_ansible_version: 2.12
+  min_ansible_version: '2.12'
   platforms:
     - name: Debian
       versions:
-        - 11
-
-dependencies:
-  - role: xorg
+        - all

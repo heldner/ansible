@@ -7,7 +7,7 @@
       - mpv
       - mpv-mpris
       - youtube-dl
-  tags: [mpv, mplayer]
+  tags: mpv
   become: true
 
 - name: Create mpv config dir
@@ -19,14 +19,14 @@
     - '{{ ansible_user_dir }}/.config/mpv'
     - '{{ ansible_user_dir }}/.config/mpv/scripts'
     - '{{ ansible_user_dir }}/.config/mpv/scripts/sponsorblock_shared'
-  tags: [mpv, mplayer]
+  tags: mpv
 
 - name: Copy mpv config
   ansible.builtin.copy:
     src: mpv.conf
     dest: '{{ ansible_user_dir }}/.config/mpv/mpv.conf'
     mode: '0644'
-  tags: [mpv, mplayer]
+  tags: mpv
 
 - name: Copy mpv scripts
   ansible.builtin.copy:
@@ -39,4 +39,13 @@
     - scripts/sponsorblock_shared/sponsorblock.py
     - scripts/sponsorblock_shared/main.lua
     - scripts/sponsorblock_shared/sponsorblock.txt
-  tags: [mpv, mplayer]
+  tags: mpv
+
+- name: Copy mpv action for dwm
+  ansible.builtin.import_role:
+    name: dwm
+    tasks_from: copy_action
+  vars:
+    dwm_actions:
+      - mpv
+  tags: mpv
