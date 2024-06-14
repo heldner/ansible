@@ -1,14 +1,42 @@
 ---
-- include_vars: "{{ item }}"
+- name: Include os specific vars
+  ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - '{{ ansible_os_family | lower | replace(" ", "_") }}.yml'
   tags:
     - install
+    - wireguard
 
-- import_tasks: install.yml
-  tags:
-    - install
+- name: Install pkg
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ wireguard_packages }}"
+  become: true
+  tags: wireguard
 
-- import_tasks: "configure.yml"
-  tags:
-    - configure
+- name: Create directory
+  ansible.builtin.file:
+    dest: /etc/wireguard
+    state: directory
+    mode: "0700"
+  become: true
+  tags: wireguard
+
+- name: Copy hostname config
+  ansible.builtin.template:
+    src: hostname.wg0.j2
+    dest: /etc/hostname.wg0
+    mode: "0640"
+  become: true
+  when: ansible_distribution == "OpenBSD"
+  tags: wireguard
+
+- name: Copy wg config
+  ansible.builtin.template:
+    src: wg0.conf.j2
+    dest: /etc/wireguard/wg0.conf
+    mode: "0600"
+  notify: Load wireguard conf
+  become: true
+  tags: wireguard

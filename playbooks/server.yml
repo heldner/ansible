@@ -13,4 +13,5 @@
     - ssh
     - tmux
     - unbound
+    - wireguard
     - zsh

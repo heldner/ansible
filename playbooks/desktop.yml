@@ -51,5 +51,6 @@
     - unbound
     - role: xfce
       when: enable_xfce | default('false') | bool
+    - wireguard
     - xorg
     - zsh

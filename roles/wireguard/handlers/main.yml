@@ -1,0 +1,6 @@
+---
+- name: Load wireguard conf
+  ansible.builtin.command:
+    cmd: wg syncconf wg0 /etc/wireguard/wg0.conf
+  become: true
+  tags: wireguard
