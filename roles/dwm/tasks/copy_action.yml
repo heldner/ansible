@@ -5,4 +5,3 @@
     dest: '{{ ansible_user_dir }}/.dwm/actions/{{ item }}'
     mode: '0755'
   loop: '{{ dwm_actions }}'
-  tags: always
