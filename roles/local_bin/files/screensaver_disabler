@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PROCESESS='freetube|firefox|firefox-esr'
+PROCESESS='freetube|firefox|firefox-esr|librewolf'
 MAXCPUUSAGE=8
 SLEEPTIME=30
 LOGFILE="${HOME}/screensaver_disabler.log"

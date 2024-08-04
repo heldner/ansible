@@ -2,7 +2,8 @@
 
 actiondir="${HOME}/.dwm/actions"
 
-run_cmd=$(stest -flx "$actiondir" | sort -u | dmenu)
+run_cmd=$(stest -flx "$actiondir" |
+  grep -vE "_common|$(basename $0)" | sort -u | dmenu)
 [ -z "$run_cmd" ] && exit 0
 
 res=$(${actiondir}/${run_cmd} 2>&1)
