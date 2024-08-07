@@ -25,6 +25,7 @@
     - hardending
     - iwd
     - isync
+    - imapfilter
     - role: laptop
       when: "'laptop' in group_names"
     - role: logind

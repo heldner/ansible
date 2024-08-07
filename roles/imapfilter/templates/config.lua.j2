@@ -7,7 +7,7 @@ options.expunge = true
 {{ item.name }} = IMAP {
   server = "{{ item.server }}",
   username = "{{ item.username }}",
-  password = "{{ item.password }}",
+  password = "{{ item.password | trim }}",
   ssl = "tls13"
 }
 
