@@ -43,7 +43,7 @@ start () {
             sleep $SLEEPTIME
             continue
         fi
-        proc_usage=$(top -b -n 1 \
+        proc_usage=$(top -b -n 1 -w 512 \
         | awk -v maxcpu=$MAXCPUUSAGE '
             /'$PROCESESS'/ {a+=$9}
             END {print a; if (a > maxcpu) exit 1; else exit 0}')
