@@ -6,6 +6,7 @@
       - fuse3
       - gocryptfs
       - libpam-mount
+      - libpam-mount-bin
   tags: gocryptfs
   become: true
 
