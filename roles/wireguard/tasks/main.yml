@@ -40,3 +40,12 @@
   notify: Load wireguard conf
   become: true
   tags: wireguard
+
+- name: Copy wg action for dwm
+  ansible.builtin.import_role:
+    name: dwm
+    tasks_from: copy_action
+  vars:
+    dwm_actions:
+      - wg
+  tags: wireguard
