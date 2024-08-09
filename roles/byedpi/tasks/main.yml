@@ -1,0 +1,25 @@
+---
+- name: Add the user
+  ansible.builtin.user:
+    name: ciadpi
+    shell: /usr/sbin/nologin
+    create_home: false
+  become: true
+  tags: byedpi
+
+- name: Create byedpi service
+  ansible.builtin.copy:
+    src: 'init.d.service'
+    dest: '/etc/init.d/byedpi'
+    mode: '0755'
+  become: true
+  notify: Run systemctl daemon-reload
+  tags: byedpi
+
+- name: Enable and start service byedpi
+  ansible.builtin.systemd_service:
+    name: byedpi
+    enabled: true
+    state: started
+  become: true
+  tags: byedpi

@@ -8,6 +8,7 @@
     - apt
     - acpi
     - bluetooth
+    - byedpi
     - common
     - chromium
     - console-setup

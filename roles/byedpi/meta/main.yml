@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Stanislav Korolev
+  namespace: things
+  description: |
+    Implementation of some DPI bypass methods.
+    The program is a local SOCKS proxy server.
+  company: RootIT
+  license: ISC
+  min_ansible_version: 2.12
+  platforms:
+    - name: Debian
+      versions:
+        - all
