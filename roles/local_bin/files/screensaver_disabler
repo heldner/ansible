@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PROCESESS='freetube|firefox|firefox-esr|librewolf'
+PROCESESS='freetube|firefox|firefox-esr|librewolf|chrome'
 MAXCPUUSAGE=8
 SLEEPTIME=30
 LOGFILE="${HOME}/screensaver_disabler.log"
@@ -21,8 +21,10 @@ usage () {
 
 status () {
     if [ -e $PIDFILE ] && pgrep -F $PIDFILE > /dev/null; then
-        echo "$0 running"
+        echo "$(basename $0) is running"
         exit 2
+    else
+        echo "$(basename $0) stopped"
     fi
 }
 
