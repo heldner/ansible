@@ -38,6 +38,7 @@
     dest: /etc/wireguard/wg0.conf
     mode: "0600"
   notify: Load wireguard conf
+  no_log: true
   become: true
   tags: wireguard
 
@@ -48,4 +49,5 @@
   vars:
     dwm_actions:
       - wg
+  when: "'desktop' in group_names"
   tags: wireguard
