@@ -1,9 +1,17 @@
 ---
 - name: Add the user
   ansible.builtin.user:
-    name: ciadpi
+    name: byedpi
     shell: /usr/sbin/nologin
     create_home: false
+  become: true
+  tags: byedpi
+
+- name: Copy byedpi bin
+  ansible.builtin.copy:
+    src: 'byedpi'
+    dest: '/usr/local/bin/byedpi'
+    mode: '0755'
   become: true
   tags: byedpi
 
