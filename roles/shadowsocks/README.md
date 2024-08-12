@@ -10,3 +10,7 @@ ensure that server side has iptables rule:
 ```shell
 iptables -I INPUT -i eth0 -p tcp -m tcp --dport 3128 -m state --state NEW,ESTABLISHED -j ACCEPT
 ```
+
+## client
+
+Must have parameter `shadowsocks_server`

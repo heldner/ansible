@@ -45,6 +45,7 @@
     - playerctl
     - podman
     - rofi
+    - shadowsocks
     - ssh
     - sxhkd
     - syncthing

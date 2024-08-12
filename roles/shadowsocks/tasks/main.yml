@@ -21,6 +21,9 @@
     name: "shadowsocks-libev"
     state: stopped
     enabled: false
+  tags: shadowsocks
   become: true
 
-- ansible.builtin.include_tasks: "{{ shadowsocks_mode }}.yml"
+- name: Include mode specific tasks
+  ansible.builtin.include_tasks: "{{ shadowsocks_mode }}.yml"
+  tags: shadowsocks

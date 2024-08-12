@@ -3,17 +3,20 @@
   ansible.builtin.file:
     state: directory
     path: /etc/systemd/system/shadowsocks-libev-local@.service.d
+  tags: shadowsocks
   become: true
 
 - name: Copy shadowsocks systemd config
   ansible.builtin.template:
     src: "systemd.conf.j2"
     dest: /etc/systemd/system/shadowsocks-libev-local@.service.d/custom.conf
+  tags: shadowsocks
   become: true
 
 - name: Force systemd to reread configs
   ansible.builtin.systemd:
     daemon_reload: true
+  tags: shadowsocks
   become: true
 
 - name: Copy shadowsocks config
@@ -23,15 +26,15 @@
     owner: shadowsocks
     group: shadowsocks
     mode: "0640"
-  tags: [shadowsocks, config]
+  tags: shadowsocks
   notify: Restart shadowsocks-client
   become: true
-  no_log: true
+  no_log: "{{ nolog | default('true') | bool }}"
 
 - name: Enable and start client ss
   ansible.builtin.systemd:
     name: "shadowsocks-libev-local@{{ shadowsocks_mode }}"
     state: started
     enabled: true
-  tags: [shadowsocks, config]
+  tags: shadowsocks
   become: true
