@@ -1,5 +1,0 @@
-#!/bin/sh
-
-# used in fuzyy-pass
-
-exec xclip -selection clipboard

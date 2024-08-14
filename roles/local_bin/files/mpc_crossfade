@@ -1,9 +1,0 @@
-#!/bin/sh
-
-if [ "$(mpc crossfade | awk '{printf ("%s",$2)}')" -eq 0 ]; then
-    mpc -q crossfade 10
-    mpc -q random on
-else
-    mpc -q crossfade 0
-    mpc -q random off
-fi
