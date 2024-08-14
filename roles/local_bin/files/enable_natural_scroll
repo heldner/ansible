@@ -2,13 +2,27 @@
 #
 # enable natural scrolling
 
-thinkpad_mouse='Elan Touchpad'
-xinput_res=$(xinput list)
+DEVICE_LIST='
+Corsair CORSAIR IRONCLAW RGB Gaming Mouse
+SynPS/2 Synaptics TouchPad
+'
+
+#xinput_res=$(xinput list)
+xinput_res=$(xinput --list --name-only)
 
 get_id() {
-  echo "$xinput_res" | awk -F '(\t|=)' '/'"$1"'/ {print $(NF-1)}'
+  xinput list --id-only "$1"
 }
 
-if echo "$xinput_res" |grep -q "$thinkpad_mouse"; then
-  xinput set-prop "$(get_id "$thinkpad_mouse")" 'libinput Natural Scrolling Enabled' 1
-fi
+enable_ns() {
+  device="$1"
+  if echo "$xinput_res" |grep -x "$device"; then
+    xinput set-prop "$(get_id "$device")" \
+      'libinput Natural Scrolling Enabled' 1
+  fi
+}
+
+echo "$DEVICE_LIST" | while read -r dev; do
+  [ -z "$dev" ] && continue
+  enable_ns "$dev"
+done
