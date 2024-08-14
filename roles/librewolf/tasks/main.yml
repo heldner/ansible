@@ -17,9 +17,7 @@
       deb [arch=amd64] https://deb.librewolf.net
       {{ ansible_lsb.codename }} main
   become: true
-  notify:
-    - Update apt cache
-    - Update alternatives, install librewolf
+  notify: Update apt cache
   tags:
     - browser
     - librewolf
@@ -35,6 +33,7 @@
     state: present
     name: librewolf
   become: true
+  notify: Update alternatives, install librewolf
   tags:
     - browser
     - librewolf
@@ -78,6 +77,12 @@
   loop:
     - "{{ ansible_user_dir }}/.cache/librewolf"
     - "{{ ansible_user_dir }}/.librewolf"
+  tags:
+    - browser
+    - librewolf
+
+- name: Flush librewolf handlers
+  ansible.builtin.meta: flush_handlers
   tags:
     - browser
     - librewolf
