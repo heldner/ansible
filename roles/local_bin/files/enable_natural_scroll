@@ -4,6 +4,7 @@
 
 DEVICE_LIST='
 Corsair CORSAIR IRONCLAW RGB Gaming Mouse
+CORSAIR HARPOON
 SynPS/2 Synaptics TouchPad
 '
 
@@ -16,7 +17,7 @@ get_id() {
 
 enable_ns() {
   device="$1"
-  if echo "$xinput_res" |grep -x "$device"; then
+  if echo "$xinput_res" |grep -q -x "$device"; then
     xinput set-prop "$(get_id "$device")" \
       'libinput Natural Scrolling Enabled' 1
   fi
