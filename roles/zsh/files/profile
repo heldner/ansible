@@ -2,18 +2,19 @@
 PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin
 
 [ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
-[ -d "${HOME}/.cargo/bin" ] && PATH="${HOME}/.cargo/bin:$PATH"
-if [ -d "${HOME}/.cargo/env" ]; then
-    . "${HOME}/.cargo/env"
-fi
 
-if [ -d "$HOME/Projects/gocode" ]; then
-    export GOPATH="${HOME}/Projects/gocode"
+CARGO_PATH="$HOME/.cargo"
+[ -d "$CARGO_PATH/bin" ] && PATH="$CARGO_PATH/bin:$PATH"
+
+GOPATH="$HOME/Projects/gocode"
+if [ -d "$GOPATH" ]; then
+    export GOPATH
     PATH="${PATH}:${GOPATH}/bin"
 fi
-if [ -d "/usr/lib/go-1.22/bin" ]; then
-    PATH="${PATH}:/usr/lib/go-1.22/bin"
-fi
+
+ANDROID_TOOLS_HOME="$HOME/.local/share/android-tool"
+[ -d "$ANDROID_TOOLS_HOME" ] && PATH="${PATH}:$ANDROID_TOOLS_HOME"
+
 
 ## openbsd
 if [ "$(uname)" = "OpenBSD" ]; then
@@ -56,12 +57,13 @@ export \
     PATH \
 
 # load termcap (5)
+# shellcheck disable=SC1091
 . "${HOME}/.termcap"
 
 ## ssh keys
-#keychain ~/.ssh/id_ed25519 2>/dev/null
 keychain --agents ssh 2>/dev/null
 if [ -f "${HOME}/.keychain/$(hostname)-sh" ]; then
+# shellcheck disable=SC1090
     . "${HOME}/.keychain/$(hostname)-sh" #2>/dev/null
 fi
 
@@ -71,3 +73,4 @@ if [ -z "${WAYLAND_DISPLAY}" ] \
     && [ -x "/usr/bin/sway" ]; then
     exec sway
 fi
+
