@@ -5,11 +5,13 @@
       ([ 'git-extras' ] if ansible_distribution != 'OpenBSD' else []) }}"
   vars:
     __pkgs: [git]
+  tags: git
 
 - name: Ensure git package installed
   ansible.builtin.package:
     state: present
     name: '{{ git_pkgs }}'
+  tags: git
   become: true
 
 - name: Install .gitconfig
@@ -18,3 +20,12 @@
     dest: '{{ ansible_user_dir}}/.gitconfig'
     owner: '{{ ansible_user_id }}'
     mode: "0640"
+  tags: git
+
+- name: Install .gitconfig_pass
+  ansible.builtin.template:
+    src: gitconfig_pass.j2
+    dest: '{{ ansible_user_dir}}/.gitconfig_pass'
+    owner: '{{ ansible_user_id }}'
+    mode: "0640"
+  tags: git
