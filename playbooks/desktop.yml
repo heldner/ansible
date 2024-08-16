@@ -19,6 +19,7 @@
     - feh
     - flameshot
     - git
+    - htop
     - iptables
     - role: gocryptfs
       when: enable_gocryptfs | default('false') | bool

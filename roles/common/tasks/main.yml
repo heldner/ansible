@@ -16,7 +16,6 @@
       - exfatprogs
       - fonts-powerline
       - gifsicle
-      - htop
       - ipython3
       - jnettop
       - keychain

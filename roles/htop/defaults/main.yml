@@ -1,0 +1,2 @@
+---
+htop_home_dir: "{{ ansible_user_dir + '/.config/htop' }}"

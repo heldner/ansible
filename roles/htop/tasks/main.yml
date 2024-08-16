@@ -1,0 +1,20 @@
+---
+- name: Ensure common packages installed
+  ansible.builtin.package:
+    state: present
+    name: htop
+  become: true
+  tags: htop
+
+- name: Create htop config directory
+  ansible.builtin.file:
+    state: directory
+    dest: "{{ htop_home_dir }}"
+  tags: htop
+
+- name: Copy htop config
+  ansible.builtin.copy:
+    src: 'htoprc'
+    dest: "{{ htop_home_dir + '/htoprc' }}"
+    mode: '0644'
+  tags: htop
