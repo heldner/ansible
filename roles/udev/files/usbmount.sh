@@ -16,7 +16,7 @@ full_dir() {
 }
 
 do_mount() {
-    mount_options="defaults,relatime"
+    mount_options="users,gid=100,dmask=007,fmask=117,flush,relatime"
     full_dir=$(full_dir "$FS_LABEL")
 
     /usr/bin/install -d "$full_dir"
