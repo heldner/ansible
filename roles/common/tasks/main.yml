@@ -12,6 +12,7 @@
       - dconf-service
       - debsums
       - dirmngr
+      - dosfstools
       - duf
       - exfatprogs
       - fonts-powerline
