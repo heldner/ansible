@@ -1,5 +1,11 @@
 #!/bin/sh
+
 set -e
+
+DEVNODE="$2"
+FS_LABEL="$3"
+
+[ -z "$FS_LABEL" ] && FS_LABEL="$(basename "$DEVNODE")"
 
 userid() {
     loginctl list-sessions | awk '/seat0/ {print $3}'
@@ -9,28 +15,37 @@ full_dir() {
     echo "/run/media/$(userid)/$1"
 }
 
-mount() {
-    devnode="$1"
-    fs_label="$2"
-    mount_options="defaults,relatime,nls=utf8,gid=100,dmask=002,fmask=113"
-    full_dir=$(full_dir "$fs_label")
+do_mount() {
+    mount_options="defaults,relatime"
+    full_dir=$(full_dir "$FS_LABEL")
+
     /usr/bin/install -d "$full_dir"
-    /usr/bin/systemd-mount --no-block --automount=yes \
-        --collect "$devnode" --options "$mount_options" "$full_dir"
+    if ! /usr/bin/systemd-mount --no-block --automount=yes \
+        --collect "$DEVNODE" --options "$mount_options" "$full_dir"; then
+        /bin/rmdir "${full_dir}"
+        exit 1
+    fi
+    /bin/ls "$full_dir"
 }
 
-umount() {
-    fs_label="$1"
-    /usr/bin/systemd-umount -u "$(full_dir "$fs_label")"
+# this part run automaticaly when usb device ejected
+do_umount() {
+    /usr/bin/systemd-umount -u "$(full_dir "$FS_LABEL")"
+    /bin/rmdir "${full_dir}"
+}
+
+usage() {
+    echo "Usage: $0 <options> devname"
+    exit 0
 }
 
 case "$1" in
-    -mount)
-        shift
-        mount "$1" "$2"
+    --mount)
+        do_mount
         ;;
-    -umount)
-        shift
-        umount "$1"
+    --umount)
+        do_umount
         ;;
+    *)
+        usage ;;
 esac
