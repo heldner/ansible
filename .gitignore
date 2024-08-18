@@ -1,7 +1,5 @@
 .venv
 inventories
 .ansible
-.autoenv.sh
-.env
 ansible.log
 ansible_collections
