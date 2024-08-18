@@ -1,10 +1,10 @@
 ---
 namespace: heldner
 name: things
-version: 1.2.0
+version: 1.3.0
 readme: README.md
 authors:
-  - Stanislav Korolev <teeroo@yandex.ru>
+  - Stanislav Korolev <stan.korolev@mail.ru>
 description: some good roles
 license:
   - ISC
