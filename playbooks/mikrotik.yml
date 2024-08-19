@@ -7,6 +7,13 @@
       community.routeros.command:
         commands: /system resource print
 
+    - name: Configure ntp
+      community.routeros.command:
+        commands:
+          - /system ntp client set
+            server-dns-names=ru.pool.ntp.org enabled="yes"
+      tags: ntp
+
     - name: Disable unused services
       community.routeros.command:
         commands:
