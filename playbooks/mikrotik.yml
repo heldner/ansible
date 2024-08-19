@@ -7,6 +7,14 @@
       community.routeros.command:
         commands: /system resource print
 
+    - name: Disable unused services
+      community.routeros.command:
+        commands:
+          - /ip service disable "api"
+          - /ip service disable "api-ssl"
+          - /ip service disable "telnet"
+          - /ip service disable "winbox"
+
     - name: Don't add default route on ether1
       community.routeros.command:
         commands:
