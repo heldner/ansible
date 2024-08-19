@@ -1,0 +1,27 @@
+---
+- hosts: mikrotik
+  connection: ansible.netcommon.network_cli
+  gather_facts: false
+  tasks:
+    - name: Get info
+      community.routeros.command:
+        commands: /system resource print
+
+    - name: Don't add default route on ether1
+      community.routeros.command:
+        commands:
+          /ip dhcp-client set ether1 add-default-route="no"
+
+    - name: Add pppoe connection
+      community.routeros.command:
+        commands:
+          - >-
+            /interface pppoe-client add name={{ pppoe_interface_name }}
+            interface=ether1 ac-name="BRAS" add-default-route=yes
+            user="{{ pppoe_user }}" password="{{ pppoe_pass }}" allow=pap,chap
+          - /interface pppoe-client enable {{ pppoe_interface_name }}
+
+    - name: Set WAN interface
+      community.routeros.command:
+        commands:
+          /interface list member set 1 interface={{ pppoe_interface_name }}

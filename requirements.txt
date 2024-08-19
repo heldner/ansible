@@ -7,8 +7,6 @@ molecule==24.2.0
 molecule-libvirt==0.0.6
 libvirt-python==10.0.0
 
-# please install python-dnf from distribution system
-# dnf
 # for manage docker
 docker
 # for net filters
@@ -27,3 +25,5 @@ cryptography
 # for kubernetes
 kubernetes
 jsonpatch
+# for mikrotik
+paramiko
