@@ -19,7 +19,7 @@
   meta: flush_handlers
   tags: iwd
 
-- name: Enable and start
+- name: Enable and start iwd
   ansible.builtin.service:
     name: iwd
     enabled: true
