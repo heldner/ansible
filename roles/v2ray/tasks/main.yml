@@ -1,0 +1,26 @@
+---
+- name: Install v2ray
+  ansible.builtin.package:
+    state: present
+    name: v2ray
+  tags: v2ray
+  become: true
+
+- name: Generate v2ray config
+  ansible.builtin.template:
+    src: v2ray-{{ v2ray_mode }}.json.j2
+    dest: /etc/v2ray/config.json
+    mode: '0644'
+    owner: 'root'
+    group: 'root'
+  become: true
+  notify: Restart v2ray
+  tags: v2ray
+
+- name: Enable and start v2ray
+  ansible.builtin.service:
+    name: v2ray
+    enabled: true
+    state: started
+  become: true
+  tags: v2ray

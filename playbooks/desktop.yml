@@ -53,8 +53,8 @@
     - tmux
     - udev
     - unbound
-    - role: xfce
-      when: enable_xfce | default('false') | bool
     - wireguard
     - xorg
+    - role: xfce
+      when: enable_xfce | default('false') | bool
     - zsh

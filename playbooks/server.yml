@@ -13,5 +13,6 @@
     - ssh
     - tmux
     - unbound
+    - v2ray
     - wireguard
     - zsh
