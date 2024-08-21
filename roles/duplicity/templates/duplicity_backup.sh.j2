@@ -1,0 +1,7 @@
+#!/bin/sh
+
+duplicity backup --use-agent \
+    --encrypt-key {{ duplicity_gpg_key }} \
+{% for backup in duplicity_targets %}
+    {{ backup }}
+{% endfor %}

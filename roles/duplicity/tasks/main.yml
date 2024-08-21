@@ -1,0 +1,16 @@
+---
+- name: Install duplicity
+  ansible.builtin.package:
+    state: present
+    name:
+      - duplicity
+      - python3-pexpect
+  tags: duplicity
+  become: true
+
+- name: Copy duplicity backup script
+  ansible.builtin.template:
+    src: duplicity_backup.sh.j2
+    dest: '{{ ansible_user_dir }}/.local/bin/duplicity_backup.sh'
+    mode: '0755'
+  tags: duplicity
