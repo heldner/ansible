@@ -45,3 +45,8 @@
       community.routeros.command:
         commands:
           /interface/list/member/set 1 interface={{ pppoe_interface_name }}
+
+    - name: Stop limit wifi power
+      community.routeros.command:
+        commands:
+          /interface/wireless set wlan2 antenna-gain=0
