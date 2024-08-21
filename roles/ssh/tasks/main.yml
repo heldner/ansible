@@ -6,10 +6,11 @@
       - autossh
       - keychain
       - openssh-client
+      - openssh-server
   tags: ssh
   become: true
 
-- name: Create ssh dir
+- name: Copy sshd config
   ansible.builtin.template:
     src: sshd_config.j2
     dest: '/etc/ssh/sshd_config'
