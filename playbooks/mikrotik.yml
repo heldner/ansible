@@ -50,3 +50,9 @@
       community.routeros.command:
         commands:
           /interface/wireless set wlan2 antenna-gain=0
+
+    - name: Set user led indicate pppoe connection status
+      community.routeros.command:
+        commands:
+          /system/leds add type=interface-status leds="user-led"
+          interface="{{ pppoe_interface_name }}"
