@@ -33,7 +33,9 @@
     state: present
     name: librewolf
   become: true
-  notify: Update alternatives, install librewolf
+  notify:
+    - Update alternatives, install librewolf
+    - Set default xdg browser librewolf
   tags:
     - browser
     - librewolf
