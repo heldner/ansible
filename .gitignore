@@ -3,3 +3,4 @@ inventories
 .ansible
 ansible.log
 ansible_collections
+ssl_certificates
