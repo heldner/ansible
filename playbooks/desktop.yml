@@ -53,6 +53,7 @@
     - tmux
     - udev
     - unbound
+    - v2ray
     - wireguard
     - xorg
     - role: xfce
