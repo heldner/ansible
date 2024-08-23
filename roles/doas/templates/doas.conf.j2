@@ -1,4 +1,4 @@
-permit nopass {{ 'nolog ' if _enable_log }}{{ ansible_user_id }} as root
+permit nopass {{ 'nolog ' if _enable_log }}{{ ansible_user_id }}as root
 {% if doas_enable_nobody_poweroff %}
 permit nopass {{ 'nolog ' if _enable_log }}nobody as root cmd poweroff
 {% endif %}
