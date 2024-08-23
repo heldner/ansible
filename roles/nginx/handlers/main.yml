@@ -7,8 +7,7 @@
   tags: nginx
 
 - name: Restart nginx stage 2
-  ansible.builtin.service:
-    name: nginx
-    state: restarted
+  ansible.builtin.command:
+    cmd: nginx -s reload
   become: true
   tags: nginx
