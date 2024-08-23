@@ -9,6 +9,7 @@
     - console-setup
     - hardending
     - modprobe
+    - nginx
     - shadowsocks
     - ssh
     - tmux

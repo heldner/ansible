@@ -1,0 +1,14 @@
+---
+- name: Restart nginx
+  ansible.builtin.command:
+    cmd: nginx -t
+  become: true
+  notify: Restart nginx stage 2
+  tags: nginx
+
+- name: Restart nginx stage 2
+  ansible.builtin.service:
+    name: nginx
+    state: restarted
+  become: true
+  tags: nginx

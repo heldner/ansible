@@ -1,0 +1,62 @@
+---
+- name: Install nginx
+  ansible.builtin.package:
+    state: present
+    name:
+      - nginx
+      - nginx-extras
+  tags: nginx
+  become: true
+
+- name: Remove default config
+  ansible.builtin.file:
+    path: "/etc/nginx/sites-enabled/default"
+    state: absent
+  become: true
+  tags: nginx
+
+- name: Copy nginx config
+  ansible.builtin.template:
+    src: nginx.conf.j2
+    dest: "/etc/nginx/sites-enabled/{{ cert_domain }}.conf"
+    mode: 0644
+  become: true
+  notify: Restart nginx
+  tags: nginx
+
+- name: Generate ssl cert
+  ansible.builtin.import_role:
+    name: certificates
+    tasks_from: gen_cert
+  tags:
+    - nginx
+    - certificates
+
+- name: Create nginx ssl directory
+  ansible.builtin.file:
+    state: directory
+    path: "/etc/nginx/ssl"
+    mode: '0755'
+  become: true
+  tags: nginx
+
+- name: Copy ssl cert chain to dest server
+  ansible.builtin.copy:
+    src: "{{ cert_base_filepath + '.chain.crt' }}"
+    dest: "/etc/nginx/ssl/{{ cert_domain + '.chain.crt' }}"
+    mode: "0644"
+  notify: Restart nginx
+  no_log: "{{ nolog | default('true') | bool }}"
+  become: true
+  tags: nginx
+
+- name: Copy ssl key
+  ansible.builtin.copy:
+    src: "{{ cert_base_filepath + '.key' }}"
+    dest: "/etc/nginx/ssl/{{ cert_domain + '.key' }}"
+    group: www-data
+    mode: "0640"
+  notify: Restart nginx
+  no_log: "{{ nolog | default('true') | bool }}"
+  become: true
+  tags: nginx
