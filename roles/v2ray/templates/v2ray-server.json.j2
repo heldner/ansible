@@ -2,7 +2,7 @@
   "log": {
     "loglevel": "info"
   },
-  "inbounds": [
+    "inbounds": [
     {
       "listen": "127.0.0.1",
       "port": 1234 ,
@@ -10,7 +10,7 @@
       "settings": {
         "clients": [
           {
-            "id": "36e47aac-ad4d-d5fb-34c8-0ca666c49536"
+            "id": "{{ v2ray_id }}"
           }
         ],
         "decryption": "none"
@@ -18,28 +18,28 @@
       "streamSettings": {
         "network": "ws",
         "wsSettings": {
-          "path": "/Path2WS"
+          "path": "/{{ v2ray_ws_path }}"
         }
       },
-			"sniffing": {
-				"enabled": true,
-				"destOverride": [
-					"http",
-					"tls"
-				]
-			}
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+        "tls"
+        ]
+      }
     }
   ],
   "outbounds": [
-    {
-      "tag": "direct",
-      "protocol": "freedom",
-      "settings": {}
-    },
-    {
-      "tag": "blocked",
-      "protocol": "blackhole",
-      "settings": {}
-    }
+  {
+    "tag": "direct",
+    "protocol": "freedom",
+    "settings": {}
+  },
+  {
+    "tag": "blocked",
+    "protocol": "blackhole",
+    "settings": {}
+  }
   ]
 }

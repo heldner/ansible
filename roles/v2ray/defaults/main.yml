@@ -1,2 +1,4 @@
 ---
 v2ray_mode: server
+v2ray_socks_port: 1081
+v2ray_http_port: 1082

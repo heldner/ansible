@@ -1,0 +1,59 @@
+{
+  "log": {},
+  "inbounds": [
+    {
+      "port": "{{ v2ray_socks_port }}",
+      "protocol": "socks",
+      "settings": {
+        "auth": "noauth",
+        "udp": true
+      }
+    },
+    {
+      "port": "{{ v2ray_http_port }}",
+      "protocol": "http",
+      "settings": {}
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "{{ v2ray_address }}",
+            "port": 443,
+            "users": [
+              {
+                "id": "{{ v2ray_id }}",
+                "encryption": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "wsSettings": {
+          "path": "/{{ v2ray_ws_path }}"
+        },
+        "tlsSettings": {
+          "allowInsecure": true,
+          "serverName": "{{ v2ray_address }}",
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "tag": "direct",
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "tag": "blocked",
+      "protocol": "blackhole",
+      "settings": {}
+    }
+  ]
+}
