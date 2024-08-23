@@ -1,0 +1,20 @@
+---
+- name: Create certificates directory
+  ansible.builtin.file:
+    state: directory
+    path: '{{ certs_dir }}'
+    mode: '0750'
+  delegate_to: localhost
+  tags: certificates
+
+- name: Generate CA certificate
+  ansible.builtin.command:
+    cmd:
+      openssl req -x509 -sha256 -days 3650 -newkey rsa:2048
+      -keyout "{{ certs_dir + '/ca.key' }}" -out "{{ certs_dir + '/ca.crt' }}"
+      -passout pass:{{ ssl_ca_passphrase | trim }}
+      -subj "{{ ssl_ca_subj }}"
+    creates: "{{ certs_dir + '/ca.key' }}"
+  delegate_to: localhost
+  no_log: "{{ nolog | default('true') | bool }}"
+  tags: certificates

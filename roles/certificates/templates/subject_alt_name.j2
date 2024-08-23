@@ -1,0 +1,10 @@
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = {{ cert_domain }}
+{% if cert_alt_domains is defined %}
+{% for domain in cert_alt_domains %}
+DNS.{{ loop.index + 1 }} = {{ domain }}
+{% endfor %}
+{% endif %}

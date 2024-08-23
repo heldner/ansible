@@ -1,0 +1,8 @@
+---
+- name: Generate CA cert
+  ansible.builtin.include_tasks: gen_ca.yml
+  tags: certificates
+
+- name: Generate and sign certificate
+  ansible.builtin.include_tasks: gen_cert.yml
+  tags: certificates

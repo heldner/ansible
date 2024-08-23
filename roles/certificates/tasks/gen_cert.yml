@@ -1,0 +1,50 @@
+---
+- name: Create SAN extension
+  ansible.builtin.template:
+    src: subject_alt_name.j2
+    dest: "{{ certs_dir + '/' + cert_domain + '.ext' }}"
+    mode: 0644
+  delegate_to: localhost
+  tags: certificates
+
+- name: Create a certificate signing request
+  ansible.builtin.command:
+    cmd:
+      openssl req -newkey rsa:2048 -noenc
+      -days {{ cert_days | default('3650') }}
+      -keyout {{ cert_base_filepath }}.key
+      -out {{ cert_base_filepath }}.csr
+      -subj "{{ cert_subj }}"
+    creates: "{{ cert_base_filepath + '.csr' }}"
+  delegate_to: localhost
+  no_log: "{{ nolog | default('true') | bool }}"
+  tags: certificates
+
+- name: Sign CSR with root CA
+  ansible.builtin.command:
+    cmd:
+      openssl x509 -req
+      -days {{ cert_days | default('3650') }}
+      -CA "{{ certs_dir + '/ca.crt' }}"
+      -CAkey "{{ certs_dir + '/ca.key' }}"
+      -passin pass:'{{ ssl_ca_passphrase | trim }}'
+      -in "{{ cert_base_filepath + '.csr' }}"
+      -out "{{ cert_base_filepath + '.crt' }}"
+      -extfile "{{ cert_base_filepath + '.ext' }}"
+      -CAcreateserial
+    creates: "{{ cert_base_filepath + '.crt' }}"
+  delegate_to: localhost
+  no_log: "{{ nolog | default('true') | bool }}"
+  tags: certificates
+
+- name: Create certificate chain
+  ansible.builtin.shell:
+    cmd:
+      /bin/cat
+      "{{ cert_base_filepath + '.crt' }}"
+      "{{ certs_dir + '/ca.crt' }}"
+      > "{{ certs_dir + '/' + cert_domain + '.chain.crt' }}"
+    creates: "{{ certs_dir + '/' + 'cert_domain' + '.chain.crt' }}"
+  delegate_to: localhost
+  no_log: "{{ nolog | default('true') | bool }}"
+  tags: certificates
