@@ -5,8 +5,7 @@ if [ "$1" = '--video' ]; then
   shift
 fi
 exec bwrap \
-     --ro-bind /usr/bin/chromium /usr/bin/chromium \
-     --ro-bind /usr/lib/chromium /usr/lib/chromium \
+     --ro-bind /usr/lib/ungoogled-chromium /usr/lib/ungoogled-chromium \
      --ro-bind /usr/bin/sh /usr/bin/sh \
      --ro-bind /usr/share /usr/share \
      --ro-bind /usr/lib /usr/lib \
@@ -50,4 +49,4 @@ exec bwrap \
      --share-net \
      --new-session \
      --hostname mypc \
-     /usr/bin/chromium "$@"
+     /usr/lib/ungoogled-chromium/chromium "$@"
