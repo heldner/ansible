@@ -45,6 +45,7 @@
     - openntpd
     - playerctl
     - podman
+    - proxychains
     - rofi
     - ssh
     - sxhkd

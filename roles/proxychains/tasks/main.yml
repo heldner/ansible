@@ -1,0 +1,15 @@
+---
+- name: Install proxychains
+  ansible.builtin.package:
+    state: present
+    name: proxychains4
+  tags: proxychains
+  become: true
+
+- name: Copy proxychains config
+  ansible.builtin.template:
+    src: proxychains4.conf.j2
+    dest: '/etc/proxychains4.conf'
+    mode: '0644'
+  tags: proxychains
+  become: true
