@@ -1,0 +1,31 @@
+---
+- hosts: mikrotik
+  connection: ansible.netcommon.network_cli
+  gather_facts: false
+  tasks:
+    - name: Peer with antifilter.download
+      community.routeros.command:
+        commands:
+          - /routing/bgp/template add
+            name=default
+            as=64524
+            disabled=no
+            input.ignore-as-path-len=yes
+            router-id=95.53.222.186
+            routing-table=main
+          - /routing/bgp/connection add
+            name=antifilter
+            as=64524
+            disabled=no
+            input.ignore-as-path-len=yes
+            local.role=ebgp
+            multihop=yes
+            remote.address=45.154.73.71
+            remote.as=65432
+            routing-table=main
+            templates=default
+            input.filter=bgp_in
+          - /routing/filter/rule/add
+            chain=bgp_in
+            rule="if (bgp-communities equal 65432:400) {reject} else {set gw %wg1; accept}"
+            comment="Route all bgp routes throw wiregurad"
