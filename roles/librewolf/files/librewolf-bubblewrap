@@ -9,6 +9,8 @@ exec bwrap \
      --dev /dev \
      --dev-bind-try /dev/char /dev/char \
      --dev-bind-try /dev/dri /dev/dri \
+     --bind /dev/video0 /dev/video0 \
+     --bind /dev/video1 /dev/video1 \
      --ro-bind /etc/passwd /etc/passwd \
      --ro-bind /etc/group /etc/group \
      --ro-bind /etc/hostname /etc/hostname \
