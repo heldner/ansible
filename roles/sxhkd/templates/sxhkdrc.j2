@@ -1,11 +1,11 @@
 XF86Audio{Lower,Raise}Volume
-  wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%{-,+} --limit 1
+  vol_dunst.sh {down,up}
 
 XF86AudioMute
   wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
 XF86Audio{Prev,Next,Play}
-  mpc -q {prev,next,toggle} > /dev/null
+  playerctl {previous,next,play-pause}
 
 XF86Launch1
   /usr/local/bin/firefox
