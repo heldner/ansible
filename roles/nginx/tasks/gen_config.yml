@@ -1,0 +1,9 @@
+---
+- name: Copy nginx config
+  ansible.builtin.template:
+    src: "{{ nginx_template }}"
+    dest: "/etc/nginx/conf.d/{{ cert_domain }}.conf"
+    mode: 0644
+  become: true
+  notify: Restart nginx
+  tags: nginx

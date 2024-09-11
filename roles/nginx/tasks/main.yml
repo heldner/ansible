@@ -15,15 +15,6 @@
   become: true
   tags: nginx
 
-- name: Copy nginx config
-  ansible.builtin.template:
-    src: nginx.conf.j2
-    dest: "/etc/nginx/sites-enabled/{{ cert_domain }}.conf"
-    mode: 0644
-  become: true
-  notify: Restart nginx
-  tags: nginx
-
 - name: Generate ssl cert
   ansible.builtin.import_role:
     name: certificates

@@ -24,3 +24,13 @@
     state: started
   become: true
   tags: v2ray
+
+- name: Configure nginx
+  ansible.builtin.import_role:
+    name: nginx
+    tasks_from: gen_config
+  vars:
+    nginx_template: v2ray_nginx.conf.j2
+  tags:
+    - nginx
+    - v2ray
