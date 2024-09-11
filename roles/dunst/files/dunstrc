@@ -9,7 +9,7 @@
     icon_path = /usr/share/icons/gnome/32x32/status/:/usr/share/icons/gnome/32x32/devices/
     dmenu = /usr/local/bin/dmenu -p dunst:
     mouse_left_click = open_url, close_current
-    max_icon_size = 500
+    max_icon_size = 128
 
 [urgency_low]
     background = "#222222"
