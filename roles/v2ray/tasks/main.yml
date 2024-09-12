@@ -31,6 +31,7 @@
     tasks_from: gen_config
   vars:
     nginx_template: v2ray_nginx.conf.j2
+  when: v2ray_mode != 'client'
   tags:
     - nginx
     - v2ray
