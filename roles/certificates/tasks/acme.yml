@@ -1,0 +1,48 @@
+---
+- name: Download acme.sh
+  ansible.builtin.get_url:
+    url:
+      'https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh'
+    dest: '/usr/local/bin/acme.sh'
+    mode: '0755'
+  become: true
+  tags:
+    - certificates
+    - acme
+
+- name: Generate letsencrypt certificate
+  ansible.builtin.command:
+    cmd:
+      acme.sh
+        --issue
+        --standalone
+        --server https://acme-v02.api.letsencrypt.org/directory
+        --webroot {{ www_root | default('/var/www/html') }}
+        --domain {{ cert_domain }}
+        --log /var/log/acme.sh.log
+    creates: "{{ certs_dir + '/ca.key' }}"
+  no_log: "{{ nolog | default('true') | bool }}"
+  become: true
+  notify: Install letsencrypt certificate
+  register: _acme_install
+  failed_when: _acme_install.rc != 2 and _acme_install.rc != 0
+  changed_when: _acme_install.rc == 0
+  tags:
+    - certificates
+    - acme
+
+- name: Renew certificate with acme
+  ansible.builtin.cron:
+    name: "renew cert with acme"
+    minute: "{{ acme_update_min|default('10') }}"
+    hour: "{{ acme_update_hour|default('2') }}"
+    day: "{{ acme_update_day_of_month|default('*') }}"
+    month: "{{ acme_update_month|default('*') }}"
+    weekday: "{{ acme_update_day_of_week|default('*') }}"
+    cron_file: "/etc/cron.d/acme_renew_cert"
+    job: "/usr/local/bin/acme.sh --cron --home /root/.acme.sh"
+    user: "root"
+  become: true
+  tags:
+    - certificates
+    - acme

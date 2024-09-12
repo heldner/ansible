@@ -15,14 +15,6 @@
   become: true
   tags: nginx
 
-- name: Generate ssl cert
-  ansible.builtin.import_role:
-    name: certificates
-    tasks_from: gen_cert
-  tags:
-    - nginx
-    - certificates
-
 - name: Create nginx ssl directory
   ansible.builtin.file:
     state: directory
@@ -31,12 +23,20 @@
   become: true
   tags: nginx
 
+- name: Certificates routines
+  ansible.builtin.import_role:
+    name: certificates
+  tags:
+    - nginx
+    - certificates
+
 - name: Copy ssl cert chain to dest server
   ansible.builtin.copy:
     src: "{{ cert_base_filepath + '.chain.crt' }}"
     dest: "/etc/nginx/ssl/{{ cert_domain + '.chain.crt' }}"
     mode: "0644"
   notify: Restart nginx
+  when: not acme_enabled
   no_log: "{{ nolog | default('true') | bool }}"
   become: true
   tags: nginx
@@ -48,6 +48,7 @@
     group: www-data
     mode: "0640"
   notify: Restart nginx
+  when: not acme_enabled
   no_log: "{{ nolog | default('true') | bool }}"
   become: true
   tags: nginx

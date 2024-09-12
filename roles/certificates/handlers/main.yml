@@ -1,0 +1,18 @@
+---
+- name: Install letsencrypt certificate
+  ansible.builtin.command:
+    cmd:
+      acme.sh
+        --install-cert
+        --key-file "/etc/nginx/ssl/{{ cert_domain + '.key' }}"
+        --fullchain-file "/etc/nginx/ssl/{{ cert_domain + '.chain.crt' }}"
+        --domain {{ cert_domain }}
+        --log /var/log/acme.sh.log
+    creates: "{{ certs_dir + '/ca.key' }}"
+  no_log: "{{ nolog | default('true') | bool }}"
+  notify: Restart nginx
+  become: true
+  tags:
+    - certificates
+    - acme
+
