@@ -1,0 +1,19 @@
+#!/usr/bin/awk -f
+BEGIN {
+  "playerctl --format \
+    '{{playerName}} :; {{mpris:artUrl}} :; {{artist}} :; {{title}}' metadata" | \
+  getline now_play
+  split(now_play, a, " :; ")
+  res_title = a[4]
+  # check and add artist
+  if (length(a[3]) != 0) {
+    res_title = a[3] " - " res_title
+  }
+  # add playername
+  res_params = " \"" a[1] "\" \"" res_title "\""
+  # check and add picture
+  if (length(a[2]) != 0) {
+    res_params = "-i " a[2] " " res_params
+  }
+  system("notify-send "res_params"")
+}
