@@ -1,15 +1,16 @@
 [global]
-    font = URW Gothic L
-    markup = full
-    origin = top-right
-    offset = 20x40
-    sort = yes
-    frame_width = 1
-    frame_color = "#888888"
-    icon_path = /usr/share/icons/gnome/32x32/status/:/usr/share/icons/gnome/32x32/devices/
     dmenu = /usr/local/bin/dmenu -p dunst:
-    mouse_left_click = open_url, close_current
+    font = URW Gothic L
+    frame_color = "#888888"
+    frame_width = 1
+    icon_path = /usr/share/icons/gnome/32x32/status/:/usr/share/icons/gnome/32x32/devices/
+    markup = full
     max_icon_size = 128
+    mouse_left_click = open_url, close_current
+    offset = 22x42
+    origin = top-right
+    sort = yes
+    width = 340
 
 [urgency_low]
     background = "#222222"
