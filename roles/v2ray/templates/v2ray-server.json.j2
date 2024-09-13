@@ -2,7 +2,7 @@
   "log": {
     "loglevel": "{{ v2ray_loglevel | default('none') }}"
   },
-    "inbounds": [
+  "inbounds": [
     {
       "listen": "127.0.0.1",
       "port": 1234 ,
@@ -12,8 +12,8 @@
           {% for user in v2ray_users -%}
           {
             "id": "{{ user.id }}"
-          }{% if not loop.last %},{% endif %}
-          {% endfor %}
+          }{%- if not loop.last -%},{%- endif -%}
+          {% endfor -%}
         ],
         "decryption": "none"
       },
@@ -27,7 +27,7 @@
         "enabled": true,
         "destOverride": [
           "http",
-        "tls"
+          "tls"
         ]
       }
     }
