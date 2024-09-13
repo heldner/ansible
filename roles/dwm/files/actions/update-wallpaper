@@ -3,12 +3,18 @@
 PATH=/bin:/usr/bin
 export DISPLAY=:0.0
 
-wallpaper_dir="${HOME}/Pictures/Wallpapers"
+choose_dir() {
+  echo "${HOME}/Pictures/Wallpapers
+    ${HOME}/Pictures/Camera" \
+    | shuf -n1 \
+    | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'
+}
 
-default_bg() {
+set_wallpaper() {
   timeout 5 feh -z --no-fehbg --bg-max "$wallpaper_dir" > /dev/null 2>&1
 }
 
+wallpaper_dir="$(choose_dir)"
 [ ! -d "$wallpaper_dir" ] && exit 0
 [ "$1" = "--cron" ] && sleep "$(date +"%H")m"
-default_bg
+set_wallpaper
