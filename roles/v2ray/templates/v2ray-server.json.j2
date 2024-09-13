@@ -9,9 +9,11 @@
       "protocol": "vless",
       "settings": {
         "clients": [
+          {% for user in v2ray_users -%}
           {
-            "id": "{{ v2ray_id }}"
-          }
+            "id": "{{ user.id }}"
+          }{% if not loop.last %},{% endif %}
+          {% endfor %}
         ],
         "decryption": "none"
       },
