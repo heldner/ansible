@@ -1,5 +1,7 @@
 {
-  "log": {},
+  "log": {
+    "loglevel": "{{ v2ray_loglevel | default('none') }}"
+  },
   "inbounds": [
     {
       "port": "{{ v2ray_socks_port }}",
