@@ -2,7 +2,7 @@ XF86Audio{Lower,Raise}Volume
   vol_dunst.sh {down,up}
 
 XF86AudioMute
-  wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+  vol_dunst.sh toggle
 
 XF86Audio{Prev,Next}
   playerctl {previous,next}
