@@ -1,20 +1,13 @@
 #!/bin/sh
 
-PATH=/bin:/usr/bin
+PATH=/usr/bin
 export DISPLAY=:0.0
 
-choose_dir() {
-  echo "${HOME}/Pictures/Wallpapers
-    ${HOME}/Pictures/Camera" \
-    | shuf -n1 \
-    | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'
-}
+wallpaper_dirs="\
+${HOME}/Pictures/Wallpapers \
+${HOME}/Pictures/Camera
+"
 
-set_wallpaper() {
-  timeout 5 feh -z --no-fehbg --bg-max "$wallpaper_dir" > /dev/null 2>&1
-}
-
-wallpaper_dir="$(choose_dir)"
-[ ! -d "$wallpaper_dir" ] && exit 0
 [ "$1" = "--cron" ] && sleep "$(date +"%H")m"
-set_wallpaper
+# shellcheck disable=SC2086
+timeout 5 feh -z --no-fehbg --bg-max $wallpaper_dirs > /dev/null 2>&1
