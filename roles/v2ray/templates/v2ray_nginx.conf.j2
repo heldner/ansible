@@ -1,3 +1,7 @@
+upstream v2ray {
+    server unix:{{ v2ray_server_socket }};
+}
+
 server {
   listen 80;
   listen 443 ssl http2;
@@ -15,7 +19,7 @@ server {
     if ($http_upgrade != "websocket") {
       return 404;
     }
-    proxy_pass http://127.0.0.1:1234;
+    proxy_pass http://v2ray;
     proxy_redirect off;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;

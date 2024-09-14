@@ -18,6 +18,33 @@
   notify: Restart v2ray
   tags: v2ray
 
+- name: Create a v2ray.service override directory
+  ansible.builtin.file:
+    path: /etc/systemd/system/v2ray.service.d
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+  become: true
+  tags: v2ray
+
+- name: Set up v2ray.service override
+  ansible.builtin.ini_file:
+    dest: /etc/systemd/system/v2ray.service.d/chmod_socket.conf
+    owner: root
+    group: root
+    mode: 0644
+    section: Service
+    option: ExecStartPost
+    value: /usr/bin/chmod 0666 {{ v2ray_server_socket }}
+  notify: Systemctl daemon-reload
+  become: true
+  tags: v2ray
+
+- name: Flush v2ray handlers
+  meta: flush_handlers
+  tags: v2ray
+
 - name: Enable and start v2ray
   ansible.builtin.service:
     name: v2ray

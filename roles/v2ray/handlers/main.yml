@@ -5,3 +5,9 @@
     state: restarted
   become: true
   tags: v2ray
+
+- name: Systemctl daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: true
+  become: true
+  tags: v2ray
