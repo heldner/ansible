@@ -8,14 +8,15 @@ reload() {
     setlist=$(awk '/^create / && $2 !~ /_tmp/ {print $2}' $IPSET_RULES)
     ipset -exist restore < $IPSET_RULES
     for list in $setlist; do
-        ipset swap ${list}_tmp $list
-        ipset destroy ${list}_tmp
+        ipset swap "${list}_tmp" "$list"
+        ipset destroy "${list}_tmp"
     done
 }
 
 main() {
-    reload
-    [ $? -eq 0 ] && cp $IPSET_RULES $TMP_IPSET_RULES
+    if reload; then
+        cp $IPSET_RULES $TMP_IPSET_RULES
+    fi
 }
 
 
