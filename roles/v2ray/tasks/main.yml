@@ -6,18 +6,6 @@
   tags: v2ray
   become: true
 
-- name: Generate v2ray config
-  ansible.builtin.copy:
-    content: "{{ lookup('template',
-      'templates/v2ray-{{ v2ray_mode }}.json.j2') | to_nice_json('  ') }}"
-    dest: /etc/v2ray/config.json
-    mode: '0644'
-    owner: 'root'
-    group: 'root'
-  become: true
-  notify: Restart v2ray
-  tags: v2ray
-
 - name: Create a v2ray.service override directory
   ansible.builtin.file:
     path: /etc/systemd/system/v2ray.service.d
@@ -25,6 +13,7 @@
     group: root
     mode: 0755
     state: directory
+  when: v2ray_mode != 'client'
   become: true
   tags: v2ray
 
@@ -36,13 +25,27 @@
     mode: 0644
     section: Service
     option: ExecStartPost
-    value: /usr/bin/chmod 0666 {{ v2ray_server_socket }}
+    value: sleep 4 ; /usr/bin/chmod 0666 {{ v2ray_server_socket }}
   notify: Systemctl daemon-reload
+  when: v2ray_mode != 'client'
   become: true
   tags: v2ray
 
 - name: Flush v2ray handlers
   meta: flush_handlers
+  when: v2ray_mode != 'client'
+  tags: v2ray
+
+- name: Generate v2ray config
+  ansible.builtin.copy:
+    content: "{{ lookup('template',
+      'templates/v2ray-{{ v2ray_mode }}.json.j2') | to_nice_json('  ') }}"
+    dest: /etc/v2ray/config.json
+    mode: '0644'
+    owner: 'root'
+    group: 'root'
+  become: true
+  notify: Restart v2ray
   tags: v2ray
 
 - name: Enable and start v2ray
