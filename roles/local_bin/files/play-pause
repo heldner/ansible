@@ -1,0 +1,7 @@
+#!/bin/sh
+if [ "$(playerctl status)" = "Paused" ]; then
+    playerctl play
+    ~/.dwm/actions/now_playing
+else
+    playerctl pause
+fi

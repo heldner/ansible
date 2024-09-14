@@ -4,8 +4,11 @@ XF86Audio{Lower,Raise}Volume
 XF86AudioMute
   wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
-XF86Audio{Prev,Next,Play}
-  playerctl {previous,next,play-pause}
+XF86Audio{Prev,Next}
+  playerctl {previous,next}
+
+XF86AudioPlay
+  play-pause
 
 XF86Launch1
   /usr/local/bin/firefox
