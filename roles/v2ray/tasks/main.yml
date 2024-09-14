@@ -7,8 +7,9 @@
   become: true
 
 - name: Generate v2ray config
-  ansible.builtin.template:
-    src: v2ray-{{ v2ray_mode }}.json.j2
+  ansible.builtin.copy:
+    content: "{{ lookup('template',
+      'templates/v2ray-{{ v2ray_mode }}.json.j2') | to_nice_json('  ') }}"
     dest: /etc/v2ray/config.json
     mode: '0644'
     owner: 'root'
