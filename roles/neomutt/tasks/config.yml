@@ -55,6 +55,7 @@
       with_items:
         - signature_official
         - vombatidae.mutt
+        - black_theme.mutt
 
   tags:
     - config
