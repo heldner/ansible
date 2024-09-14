@@ -15,7 +15,6 @@
     cmd:
       acme.sh
         --issue
-        --standalone
         --server https://acme-v02.api.letsencrypt.org/directory
         --webroot {{ www_root | default('/var/www/html') }}
         --domain {{ cert_domain }}
