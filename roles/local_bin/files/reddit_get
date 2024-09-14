@@ -1,22 +1,28 @@
 #!/bin/sh
 
-[ $# -eq 0 ] && exit 1
-
-SUBREDDIT="$1"
-SUB=$(echo "$SUBREDDIT" | sed 's,/$,,')
+# TODO: fill ALL_SUBS variable
+ALL_SUBS=""
 BASE_URL='https://www.reddit.com/r'
-OUT_DIR="${HOME}/Pictures/reddit"
+OUT_DIR="${HOME}/Pictures/Boost"
 
 run() {
+  sub="$1"
+  echo "Fetch imgaes from $sub"
   curl -H "Accept: application/json" -s \
     --retry 2 --retry-delay 4 \
-    "${BASE_URL}/${SUB}.json" \
-    | jshon -e data -e children -a -e data -e url -u \
-    | grep '.\(gif\|gifv\|jpe\|jp\|pn\)g$' \
-    | xargs -n 1 curl --output-dir "$OUT_DIR" -O
+    "${BASE_URL}/${sub}.json" \
+    | jq -r '.data.children[].data.url
+      | select(.|test(".(gif|gifv|jpg|jpeg|png|mp4|webm)$"))' \
+    | xargs -n 1 curl -sS --retry 2 -C - --output-dir "$OUT_DIR" -O
 }
 
-until run; do
-    echo "retry get $SUBREDDIT"
+multi_run() {
+  until run "$1"; do
+    echo "retry get $1"
     sleep 1
+  done
+}
+
+for s in $ALL_SUBS; do
+  multi_run "$s"
 done
