@@ -1,2 +1,2 @@
 ---
-flameshot_dir: '{{ ansible_user_dir }}/Pictures/shots'
+flameshot_dir: '~/Pictures/Screenshots'
