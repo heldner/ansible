@@ -21,10 +21,9 @@
 feh \
     --fullscreen \
     --slideshow-delay -3 \
-    --action1 "[gifview]gifview -a --min-delay 5 %f 2>- 1>-" \
+    --action1 "[mpv]mpv %f" \
     --action2 "[gimp]gimp '%f' 2>- &" \
-    --action3 "[png2jpg]png2jpg %f" \
-    --action4 "[mpv]mpv %f"
+    --action3 "[png2jpg]png2jpg %f"
 
 # Multiple options can of course be used. If they are not in one line,
 # the lines after the theme name must start with a tab character. Like:
