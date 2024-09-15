@@ -19,9 +19,6 @@
       - imagemagick
       - inotify-tools
       - libpam-gnome-keyring
-      - libreoffice-calc
-      - libreoffice-impress
-      - libreoffice-writer
       - pcmanfm
       - pinentry-gnome3
       - rtkit
