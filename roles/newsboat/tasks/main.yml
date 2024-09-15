@@ -22,6 +22,13 @@
     mode: "0644"
   tags: newsboat
 
+- name: Copy scripts
+  ansible.builtin.copy:
+    src: "newsboat_youtube_play"
+    dest: '{{ ansible_user_dir }}/.local/bin/newsboat_youtube_play'
+    mode: '0755'
+  tags: newsboat
+
 - name: Copy newsboat urls
   ansible.builtin.template:
     src: "urls.j2"

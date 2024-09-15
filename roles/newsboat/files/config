@@ -1,3 +1,6 @@
+browser w3m
+
+# bind keys
 unbind-key j
 unbind-key k
 unbind-key J
@@ -7,7 +10,7 @@ bind-key k up
 bind-key l open
 bind-key h quit
 
-# color theme dracule
+# color theme dracula
 color background default default
 color listnormal color255 default
 color listfocus color238 color255 standout
@@ -24,6 +27,10 @@ highlight article "\\[embedded flash: [0-9][0-9]*\\]" green default bold
 highlight article ":.*\\(link\\)$" cyan default
 highlight article ":.*\\(image\\)$" blue default
 highlight article ":.*\\(embedded flash\\)$" magenta default
+
+# proxy settings
+proxy-type socks5
+proxy localhost:2080
 
 # press ,v to run mpv and pass first url
 macro v set browser "setsid -f mpv --really-quiet --no-terminal --osd-level=3 --player-operation-mode=pseudo-gui -- %u" ; one ; set browser x-www-browser

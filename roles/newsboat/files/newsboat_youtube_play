@@ -1,0 +1,45 @@
+#!/bin/sh
+
+set -e
+
+DATABASE="${HOME}/.local/share/newsboat/cache.db"
+
+# shellcheck disable=SC2028
+print_usage() {
+  echo "$(basename "$0") view all youtube videos from newsboat youtube rss feeds\n"\
+    "\nUSAGE: $(basename "$0") [OPTIONS]\n"\
+    "\nOPTIONS:\n" \
+    "    -h,         show this help message and exit\n"\
+    "    -a AUTHOR,  filter by author\n"
+  exit 0
+}
+
+get_urls() {
+  REGEXP_QUERY='url regexp ".*youtube.*"'
+  query="select url from rss_item where unread=1 and ${REGEXP_QUERY}"
+  if [ -n "$AUTHOR" ]; then
+      query="$query and author='$AUTHOR'"
+  fi
+  sqlite3 "$DATABASE" "$query"
+}
+
+mark_video_read() {
+  url="$1"
+  UPDATEQUERY="update rss_item set unread=0 where unread=1 and url='$url';"
+  sqlite3 "$DATABASE" "$UPDATEQUERY"
+}
+
+while getopts 'ah' flag; do
+  case "${flag}" in
+  h) print_usage ;;
+  a) AUTHOR="$2" ;;
+  *) exit 0 ;;
+  esac
+done
+
+for url in $(get_urls); do
+  echo "Playing $url"
+  proxychains mpv "$url" >/dev/null 2>&1
+  echo "Mark $url as read"
+  mark_video_read "$url"
+done
