@@ -9,8 +9,8 @@ exec bwrap \
      --dev /dev \
      --dev-bind-try /dev/char /dev/char \
      --dev-bind-try /dev/dri /dev/dri \
-     --bind /dev/video0 /dev/video0 \
-     --bind /dev/video1 /dev/video1 \
+     --dev-bind-try /dev/video0 /dev/video0 \
+     --dev-bind-try /dev/video1 /dev/video1 \
      --ro-bind /etc/passwd /etc/passwd \
      --ro-bind /etc/group /etc/group \
      --ro-bind /etc/hostname /etc/hostname \
@@ -40,6 +40,7 @@ exec bwrap \
      --ro-bind-try "${XDG_RUNTIME_DIR}/pipewire-0.lock" "${XDG_RUNTIME_DIR}/pipewire-0.lock" \
      --ro-bind-try "${XDG_RUNTIME_DIR}/pulse" "${XDG_RUNTIME_DIR}/pulse" \
      --bind-try ~/Downloads ~/Downloads \
+     --bind-try ~/Documents/pages ~/Documents/pages \
      --bind-try ~/.librewolf ~/.librewolf \
      --bind-try ~/.cache/librewolf ~/.cache/librewolf \
      --ro-bind-try /run/user/"${UID}"/bus /run/user/"${UID}"/bus \
