@@ -12,7 +12,7 @@ if [ -d "$GOPATH" ]; then
     PATH="${PATH}:${GOPATH}/bin"
 fi
 
-ANDROID_TOOLS_HOME="$HOME/.local/share/android-tool"
+ANDROID_TOOLS_HOME="$HOME/.local/share/android-tools"
 [ -d "$ANDROID_TOOLS_HOME" ] && PATH="${PATH}:$ANDROID_TOOLS_HOME"
 
 

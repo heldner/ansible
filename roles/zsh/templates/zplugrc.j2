@@ -1,8 +1,13 @@
 # {{ ansible_managed }}
-
 {% for plugin in zplug_plugins %}
-zplug "{{ plugin.name }}"{% if plugin.opts is defined %}, {{ plugin.opts }}{% endif %}
 
+zplug "{{ plugin.name }}"{% if plugin.opts is defined %}, {{ plugin.opts }}{% endif %}
+{% if plugin.config is defined %}
+
+{% for command in plugin.config %}
+{{ command }}
+{% endfor %}
+{% endif %}
 {% endfor %}
 
 # Install plugins if there are plugins that have not been installed

@@ -8,7 +8,10 @@ zplug_plugins:
     opts: "defer:1"
   - name: rupa/z
     opts: "use:z.sh"
-  - name: unixorn/fzf-zsh-plugin
-    opts: "as:plugin"
-  - name: joshskidmore/zsh-fzf-history-search
   - name: Tarrasch/zsh-autoenv
+  - name: pasky/speedread
+    opts: "use:speedread.plugin.zsh"
+  - name: aperezdc/zsh-fzy
+    opts: "as:plugin"
+    config:
+      - bindkey '^R'  fzy-history-widget
