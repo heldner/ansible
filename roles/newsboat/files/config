@@ -1,4 +1,5 @@
 browser w3m
+reload-threads 10
 
 # bind keys
 unbind-key j

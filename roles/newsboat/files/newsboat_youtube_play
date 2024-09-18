@@ -2,7 +2,10 @@
 
 set -e
 
+# home of newsboat database
 DATABASE="${HOME}/.local/share/newsboat/cache.db"
+# select only youtube urls from newsboat db
+YOUTUBE_FILTER='url regexp ".*youtube.*"'
 
 # shellcheck disable=SC2028
 print_usage() {
@@ -15,10 +18,10 @@ print_usage() {
 }
 
 get_urls() {
-  REGEXP_QUERY='url regexp ".*youtube.*"'
-  query="select url from rss_item where unread=1 and ${REGEXP_QUERY}"
-  if [ -n "$AUTHOR" ]; then
-      query="$query and author='$AUTHOR'"
+  author="$1"
+  query="select url from rss_item where unread=1 and ${YOUTUBE_FILTER}"
+  if [ -n "$author" ]; then
+      query="$query and author='$author'"
   fi
   sqlite3 "$DATABASE" "$query"
 }
@@ -29,15 +32,24 @@ mark_video_read() {
   sqlite3 "$DATABASE" "$UPDATEQUERY"
 }
 
-while getopts 'ah' flag; do
+select_author() {
+  sqlite3 /home/daysun/.local/share/newsboat/cache.db \
+    'select title from rss_feed where url REGEXP ".*youtube.*";' | \
+    dmenu -bw 1 -p authors -l 10
+}
+
+while getopts 'a|h' flag; do
   case "${flag}" in
   h) print_usage ;;
-  a) AUTHOR="$2" ;;
+  a) AUTHOR="$2" && [ -z "$AUTHOR" ] && AUTHOR=$(select_author) ;;
   *) exit 0 ;;
   esac
 done
 
-for url in $(get_urls); do
+all_unreads=$(get_urls "$AUTHOR")
+[ -z "$all_unreads" ] && (echo nothing found && exit 1)
+
+for url in $all_unreads; do
   echo "Playing $url"
   proxychains mpv "$url" >/dev/null 2>&1
   echo "Mark $url as read"
