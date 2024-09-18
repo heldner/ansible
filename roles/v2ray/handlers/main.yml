@@ -1,5 +1,12 @@
 ---
 - name: Restart v2ray
+  ansible.builtin.command:
+    cmd: v2ray -test -config /etc/v2ray/config.json
+  become: true
+  notify: Restart v2ray stage 2
+  tags: v2ray
+
+- name: Restart v2ray stage 2
   ansible.builtin.service:
     name: v2ray
     state: restarted

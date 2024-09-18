@@ -32,15 +32,34 @@
     }
   ],
   "outbounds": [
-  {
-    "tag": "direct",
-    "protocol": "freedom",
-    "settings": {}
-  },
-  {
-    "tag": "blocked",
-    "protocol": "blackhole",
-    "settings": {}
+    {
+      "tag": "direct",
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "tag": "tor",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 9050
+          }
+        ]
+      }
+    }
+  ],
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "type": "field",
+        "outboundTag": "tor",
+        "domain": [
+          "domain:onion"
+        ]
+      }
+    ]
   }
-  ]
 }
