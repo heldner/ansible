@@ -1,0 +1,9 @@
+[server]
+hosts = 127.0.0.1:{{ radicale_listen_port|default('5232') }}
+
+[storage]
+filesystem_folder = /var/www/radicale
+
+[encoding]
+request = utf-8
+stock = utf-8

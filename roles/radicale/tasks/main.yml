@@ -1,0 +1,93 @@
+---
+- name: Install python venv
+  ansible.builtin.package:
+    state: present
+    name: python3-venv
+  become: true
+  tags: radicale
+
+- name: Install radicale in virtualenv
+  ansible.builtin.pip:
+    name: radicale
+    virtualenv: /opt/radicale/.venv
+    virtualenv_command: /usr/bin/python3 -m venv
+  become: true
+  tags: radicale
+
+- name: Create radicale user
+  ansible.builtin.user:
+    name: radicale
+    home: /nonexistent
+    shell: /sbin/nologin
+  tags: radicale
+  become: true
+
+- name: Create radicale config dir
+  ansible.builtin.file:
+    state: directory
+    path: '/etc/radicale'
+    mode: '0755'
+  become: true
+  tags: radicale
+
+- name: Create radicale data dir
+  ansible.builtin.file:
+    state: directory
+    path: '/var/www/radicale'
+    owner: 'radicale'
+    mode: '0750'
+  become: true
+  tags: radicale
+
+- name: Create radicale config
+  ansible.builtin.template:
+    src: radicale.conf.j2
+    dest: '/etc/radicale/config'
+    mode: '0644'
+  notify: Restart radicale
+  become: true
+  tags: radicale
+
+- name: Copy radicale systemd unit
+  ansible.builtin.copy:
+    src: radicale_systemd.service
+    dest: /etc/systemd/system/radicale.service
+    mode: '0644'
+    owner: 'root'
+    group: 'root'
+  notify:
+    - Systemctl daemon-reload
+    - Restart radicale
+  become: true
+  tags: radicale
+
+- name: Flush radicale handlers
+  meta: flush_handlers
+  tags: radicale
+
+- name: Enable and start radicale
+  ansible.builtin.service:
+    name: radicale
+    state: started
+    enabled: true
+  become: true
+  tags: radicale
+
+- name: Install passlib for htpasswd module
+  ansible.builtin.pip:
+    name: passlib
+  become: true
+  tags: radicale
+
+- name: Add a user to a password file and ensure permissions are set
+  community.general.htpasswd:
+    path: /etc/radicale/passwdfile
+    name: '{{ item.name }}'
+    password: '{{ item.pass }}'
+    owner: radicale
+    group: www-data
+    mode: 0440
+  loop: '{{ radicale_users }}'
+  no_log: "{{ nolog | default('true') | bool }}"
+  become: true
+  tags: radicale

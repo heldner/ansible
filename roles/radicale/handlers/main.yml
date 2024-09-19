@@ -1,0 +1,13 @@
+---
+- name: Restart radicale
+  ansible.builtin.service:
+    name: radicale
+    state: restarted
+  become: true
+  tags: radicale
+
+- name: Systemctl daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: true
+  become: true
+  tags: radicale

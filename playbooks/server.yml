@@ -9,11 +9,12 @@
     - console-setup
     - hardending
     - modprobe
+    - neovim
     - nginx
+    - radicale
     - ssh
     - tmux
     - unbound
     - v2ray
-    - neovim
     - wireguard
     - zsh

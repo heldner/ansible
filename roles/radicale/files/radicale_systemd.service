@@ -1,0 +1,28 @@
+[Unit]
+Description=The radicale caldav server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Restart=always
+User=radicale
+ExecStart=/opt/radicale/.venv/bin/radicale
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+DevicePolicy=closed
+ProtectSystem=strict
+ProtectHome=read-only
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+ProtectKernelTunables=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+MemoryDenyWriteExecute=yes
+LockPersonality=yes
+ReadWritePaths=/var/www/radicale
+
+[Install]
+WantedBy=multi-user.target
