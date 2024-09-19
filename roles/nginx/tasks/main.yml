@@ -52,3 +52,12 @@
   no_log: "{{ nolog | default('true') | bool }}"
   become: true
   tags: nginx
+
+- name: Setup nginx.conf
+  ansible.builtin.template:
+    src: "nginx.conf.j2"
+    dest: "/etc/nginx/nginx.conf"
+    mode: 0644
+  become: true
+  notify: Restart nginx
+  tags: nginx
