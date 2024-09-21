@@ -12,7 +12,7 @@
 
 NAME=byedpi
 DAEMON=/usr/local/bin/"$NAME"
-DAEMON_OPTS="--split 2 --disorder 2 --ip 127.0.0.1 --port 2080"
+DAEMON_OPTS="--tfo --split 1 --disorder 3+s --mod-http=h,d --auto none --tlsrec 1+s --ip 127.0.0.1 --port 2080"
 USER=byedpi
 PIDFILE=/var/run/${NAME}.pid
 
