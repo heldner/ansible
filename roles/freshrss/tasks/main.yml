@@ -1,0 +1,46 @@
+---
+- name: Install php-fpm
+  ansible.builtin.package:
+    state: present
+    name:
+      - php-curl
+      - php-fpm
+      - php-mbstring
+      - php-sqlite3
+      - php-xml
+  become: true
+  tags: freshrss
+
+- name: Git clone freshrss
+  ansible.builtin.git:
+    repo: 'https://github.com/FreshRSS/FreshRSS.git'
+    dest: '{{ fresh_rss_home }}'
+    version: 1.24.3
+  become: true
+  tags: freshrss
+
+- name: Create link to www-data home
+  ansible.builtin.file:
+    state: link
+    src: '{{ fresh_rss_home }}/p'
+    dest: /var/www/html/freshrss
+  become: true
+  tags: freshrss
+
+- name: Set permissions home
+  ansible.builtin.file:
+    dest: '{{ fresh_rss_home }}'
+    owner: root
+    group: www-data
+    mode: u=rwX,g=rX,o=rX
+    recurse: true
+  become: true
+  tags: freshrss
+
+- name: Set permissions to data
+  ansible.builtin.file:
+    dest: '{{ fresh_rss_home }}/data'
+    owner: www-data
+    recurse: true
+  become: true
+  tags: freshrss
