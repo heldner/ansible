@@ -45,3 +45,8 @@ fi
 
 # run isync when local dirs changed
 watch_mail_dir
+
+# run tool for corsair mouse
+if command -v ckb-next >/dev/null; then
+    setsid -f ckb-next -b >/dev/null 2>&1
+fi
