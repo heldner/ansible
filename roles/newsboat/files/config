@@ -21,6 +21,7 @@ color info color141 color236
 highlight all "---.*---" yellow
 highlight feedlist ".*(0/0))" black
 highlight article "(^Feed:|^Title:|^Date:|^Link:|^Author:)" cyan default bold
+highlight article "^Podcast Download URL:" cyan default bold
 highlight article "https?://[^ ]+" yellow default
 highlight article "\\[[0-9][0-9]*\\]" magenta default bold
 highlight article "\\[image\\ [0-9]+\\]" green default bold
@@ -34,6 +35,6 @@ proxy-type socks5
 proxy localhost:2080
 
 # press ,v to run mpv and pass first url
-macro v set browser "setsid -f mpv --really-quiet --no-terminal --osd-level=3 --player-operation-mode=pseudo-gui -- %u" ; one ; set browser x-www-browser
+macro v set browser "setsid -f mpv --really-quiet --no-terminal --osd-level=3 --player-operation-mode=pseudo-gui -- %u" ; one ; set browser w3m
 # press ,y for open youtube with mpv
-macro y set browser "setsid -f proxychains4 mpv --really-quiet --no-terminal -- %u > /dev/null 2>&1" ; open-in-browser ; set browser x-www-browser
+macro y set browser "setsid -f proxychains4 mpv --really-quiet --no-terminal -- %u > /dev/null 2>&1" ; open-in-browser ; set browser w3m
