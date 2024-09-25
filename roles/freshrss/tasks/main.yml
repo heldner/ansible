@@ -15,7 +15,7 @@
 - name: Git clone freshrss
   ansible.builtin.git:
     repo: 'https://github.com/FreshRSS/FreshRSS.git'
-    dest: '{{ fresh_rss_home }}'
+    dest: '{{ freshrss_home }}'
     version: 1.24.3
   become: true
   tags: freshrss
@@ -23,23 +23,32 @@
 - name: Create link to www-data home
   ansible.builtin.file:
     state: link
-    src: '{{ fresh_rss_home }}/p'
+    src: '{{ freshrss_home }}/p'
     dest: /var/www/html/freshrss
+  become: true
+  tags: freshrss
+
+- name: Create log www-data home
+  ansible.builtin.file:
+    state: directory
+    path: /var/log/freshrss
+    owner: 'www-data'
+    mode: '0755'
   become: true
   tags: freshrss
 
 - name: Set permissions
   ansible.builtin.shell:
-    chdir: '{{ fresh_rss_home }}'
+    chdir: '{{ freshrss_home }}'
     cmd: 'cli/access-permissions.sh && touch .permissions_set.done'
-    creates: '{{ fresh_rss_home }}/.permissions_set.done'
+    creates: '{{ freshrss_home }}/.permissions_set.done'
   become: true
   tags: freshrss
 
 - name: Copy config
   ansible.builtin.template:
     src: config.php.j2
-    dest: '{{ fresh_rss_home }}/data/config.php'
+    dest: '{{ freshrss_home }}/data/config.php'
     owner: 'www-data'
     group: 'www-data'
     mode: '0644'
@@ -49,14 +58,14 @@
 - name: Update rss freeds
   ansible.builtin.cron:
     name: "update rss freeds"
-    minute: "{{ freshrss_update_min|default('*/30') }}"
-    hour: "{{ freshrss_update_hour|default('*') }}"
-    day: "{{ freshrss_update_day_of_month|default('*') }}"
-    month: "{{ freshrss_update_month|default('*') }}"
-    weekday: "{{ freshrss_update_day_of_week|default('*') }}"
+    minute: "{{ freshrss_update_min | default('*/30') }}"
+    hour: "{{ freshrss_update_hour | default('*') }}"
+    day: "{{ freshrss_update_day_of_month | default('*') }}"
+    month: "{{ freshrss_update_month | default('*') }}"
+    weekday: "{{ freshrss_update_day_of_week | default('*') }}"
     cron_file: "/etc/cron.d/freshrss_update_feeds"
     job: "/usr/share/freshrss/app/actualize_script.php
-      > /var/log/freshrss_update.log 2>&1"
+      > /var/log/freshrss/update.log 2>&1"
     user: "www-data"
   become: true
   tags: freshrss
