@@ -8,6 +8,7 @@
       - php-mbstring
       - php-sqlite3
       - php-xml
+      - php-zip
   become: true
   tags: freshrss
 
@@ -27,20 +28,35 @@
   become: true
   tags: freshrss
 
-- name: Set permissions home
-  ansible.builtin.file:
-    dest: '{{ fresh_rss_home }}'
-    owner: root
-    group: www-data
-    mode: u=rwX,g=rX,o=rX
-    recurse: true
+- name: Set permissions
+  ansible.builtin.shell:
+    chdir: '{{ fresh_rss_home }}'
+    cmd: 'cli/access-permissions.sh && touch .permissions_set.done'
+    creates: '{{ fresh_rss_home }}/.permissions_set.done'
   become: true
   tags: freshrss
 
-- name: Set permissions to data
-  ansible.builtin.file:
-    dest: '{{ fresh_rss_home }}/data'
-    owner: www-data
-    recurse: true
+- name: Copy config
+  ansible.builtin.template:
+    src: config.php.j2
+    dest: '{{ fresh_rss_home }}/data/config.php'
+    owner: 'www-data'
+    group: 'www-data'
+    mode: '0644'
+  become: true
+  tags: freshrss
+
+- name: Update rss freeds
+  ansible.builtin.cron:
+    name: "update rss freeds"
+    minute: "{{ freshrss_update_min|default('*/30') }}"
+    hour: "{{ freshrss_update_hour|default('*') }}"
+    day: "{{ freshrss_update_day_of_month|default('*') }}"
+    month: "{{ freshrss_update_month|default('*') }}"
+    weekday: "{{ freshrss_update_day_of_week|default('*') }}"
+    cron_file: "/etc/cron.d/freshrss_update_feeds"
+    job: "/usr/share/freshrss/app/actualize_script.php
+      > /var/log/freshrss_update.log 2>&1"
+    user: "www-data"
   become: true
   tags: freshrss
