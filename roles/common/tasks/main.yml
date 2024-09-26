@@ -15,6 +15,7 @@
       - dosfstools
       - duf
       - exfatprogs
+      - fonts-hermit
       - fonts-powerline
       - ipython3
       - jnettop
