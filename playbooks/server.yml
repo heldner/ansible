@@ -10,6 +10,7 @@
     - freshrss
     - hardending
     - modprobe
+    - motd
     - neovim
     - nginx
     - radicale

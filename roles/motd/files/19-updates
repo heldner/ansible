@@ -1,0 +1,23 @@
+#!/bin/sh
+
+###############################################################
+#  Script     : 19-updates
+#  Author     : Petr Všetečka <vsetecka@cesnet.cz>
+#               Stanislav Korolev <stan.korolev@mail.ru>
+#  Date       : 27/11/2018
+#  Description: prints a total number of packages that
+#               can be upgraded as well as total number
+#               of security upgrades
+#  Args       : none
+###############################################################
+
+
+printf "\n"
+
+apt-get -s upgrade 2>&1 | \
+  awk '
+    BEGIN {a=0}
+    /newly installed,/ { print $1 " packages can be updated." }
+    /security/ {a++}
+    END {print a/2 " security updates."}
+  '

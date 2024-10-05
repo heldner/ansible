@@ -1,5 +1,13 @@
 ---
-- name: update banner file
-  copy: src=30-banner dest=/etc/update-motd.d/30-banner
-- name: update motd
+- name: Update banner files
+  ansible.builtin.copy:
+    src: .
+    dest: /etc/update-motd.d/
+    mode: 0755
+  become: true
+  tags: motd
+
+- name: Update motd
   command: update-motd
+  become: true
+  tags: motd
