@@ -21,7 +21,7 @@ local_videos () {
 }
 
 history_videos() {
-    awk -F'"' '{print $4}' "$MPV_HISTORY" | sort -u
+    awk -F'"' '{print $4}' "$MPV_HISTORY" | uniq | tac
 }
 
 linenum_by_name() {
@@ -36,8 +36,7 @@ history_search() {
 }
 
 choose_file() {
-    cat - \
-        | sort \
+    sed '/^$/d' \
         | dmenu_local
 }
 
@@ -49,26 +48,14 @@ full_path() {
         -printf "${VIDEO_HOME}/%P\n"
 }
 
-mpd_switch() {
-    state="$1"
-
-    if [ "$state" = "paused" ]; then
-        mpc -q play
-        return
-    elif [ "$(mpc | awk 'NR==2 {print $1}')" = "[playing]" ]; then
-        mpc -q pause
-        echo paused
-    fi
-}
-
 start_video() {
     file="$*"
     [ -z "$file" ] && read -r file
-    mpd_status=$(mpd_switch)
-
-    echo "mpv '$file' >/dev/null 2>&1" > /tmp/mpvlog
-    mpv "$file" >/dev/null 2>&1
-    mpd_switch "$mpd_status"
+    playerctl pause
+    if echo "$file" | grep -q youtube; then
+        proxy=proxychains
+    fi
+    setsid -f $proxy mpv "$file" >/dev/null 2>&1
 }
 
 choose_target() {
