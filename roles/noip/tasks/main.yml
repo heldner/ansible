@@ -1,0 +1,22 @@
+---
+- name: Copy noip udpate script
+  ansible.builtin.template:
+    src: noip-update.sh.j2
+    dest: /usr/local/bin/noip-update.sh
+    mode: "0750"
+  become: true
+  tags: noip
+
+- name: Add cronjob for update noip
+  ansible.builtin.cron:
+    name: "renew noip ddns"
+    minute: "{{ noip_update_min|default('1') }}"
+    hour: "{{ noip_update_hour|default('1') }}"
+    day: "{{ noip_update_day_of_month|default('*') }}"
+    month: "{{ noip_update_month|default('*') }}"
+    weekday: "{{ noip_update_day_of_week|default('*') }}"
+    cron_file: "/etc/cron.d/renew_noip_ddns"
+    job: "/usr/local/bin/noip-update.sh"
+    user: "root"
+  become: true
+  tags: noip

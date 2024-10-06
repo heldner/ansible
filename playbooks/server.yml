@@ -13,6 +13,7 @@
     - motd
     - neovim
     - nginx
+    - noip
     - radicale
     - ssh
     - tmux

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+DDNS_UPDATE_HOST=dynupdate.no-ip.com
+DDNS_HOST={{ ddns_host }}
+MYIP=$(hostname -I | cut -d ' ' -f1)
+B64_AUTH={{ ddns_b64_auth }}
+PATH=/usr/bin
+
+curl -s -o /dev/null "https://${DDNS_UPDATE_HOST}/nic/update?hostname=${DDNS_HOST}&myip=${MYIP}" \
+  -H "Authorization: Basic ${B64_AUTH}" \
+  -H "User-Agent: noip-update 1.0"
