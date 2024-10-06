@@ -6,8 +6,3 @@
     mode: 0755
   become: true
   tags: motd
-
-- name: Update motd
-  command: update-motd
-  become: true
-  tags: motd
