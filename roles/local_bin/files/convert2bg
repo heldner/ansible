@@ -1,52 +1,51 @@
 #!/bin/sh
 
-
-usage () {
-    cat <<-EOF
+usage() {
+  cat <<-EOF
   Resize images to screen resolution
 
-  Usage: $0 <file|directory> 
+  Usage: $0 <file|directory>
       file - will convert one file
       directory - will convert all images in specified dir
 EOF
-    exit
+  exit
 }
 
 [ $# -eq 0 ] && usage
 
-RESOLUTION=$(xrandr | awk -F' |+' 'NR==2 {print $3}')
+RESOLUTION=$(xdpyinfo | grep -oP 'dimensions:\s+\K\S+')
 
-conv () {
-    image=$1
-    target_dir=$(dirname "$image")
-    image_name=$(basename "$image")
-    height=$(echo $RESOLUTION | cut -dx -f 1)
-    tmp_img="${image}.tmp"
-    dst_img="${target_dir}/${RESOLUTION}_${image_name}"
+conv() {
+  image=$1
+  target_dir=$(dirname "$image")
+  image_name=$(basename "$image")
+  height=$(echo "$RESOLUTION" | cut -dx -f 1)
+  tmp_img="${image}.tmp"
+  dst_img="${target_dir}/${RESOLUTION}_${image_name}"
 
-    echo "Converting: $image_name to $dst_img"
-    convert "$image" -resize $height "$tmp_img"
-    convert "$tmp_img" -crop ${RESOLUTION}+0 "$dst_img"
-    rm "$tmp_img"
+  echo "Converting: $image_name to $dst_img"
+  convert "$image" -resize "$height" "$tmp_img"
+  convert "$tmp_img" -crop ${RESOLUTION}+0 "$dst_img"
+  rm "$tmp_img"
 }
 
-find_for_image () {
-    dir=$1
-    identify -format "%f %wx%h\n" ${dir}/*.jpg | awk -v path=$dir '
+find_for_image() {
+  dir=$1
+  identify -format "%f %wx%h\n" ${dir}/*.jpg | awk -v path=$dir '
     ($2 != "'$RESOLUTION'") && (length($2) !=0) {printf ("%s\n",path"/"$1)}'
 }
 
-mass_convert () {
-    dir=$1
-    for image in $(find_for_image $dir); do
-        conv "$image"
-    done
+mass_convert() {
+  dir=$1
+  for image in $(find_for_image $dir); do
+    conv "$image"
+  done
 }
 
 src=${1%%/}
 
 if [ -d "$src" ]; then
-    mass_convert "$src"
+  mass_convert "$src"
 else
-    conv "$src"
+  conv "$src"
 fi
