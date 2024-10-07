@@ -17,14 +17,12 @@
         src: 'sxhkdrc.j2'
         dest: '{{ ansible_env.HOME }}/.config/sxhkd/sxhkdrc'
         mode: "0640"
-      register: _sxhkdrc
-
-    - name: Reload sxhkd
-      ansible.builtin.command:
-        cmd: pkill -HUP sxhkd
-      when: _sxhkdrc.changed
-      ignore_errors: true
+      notify: Reload sxhkd
 
   tags:
     - xorg
     - sxhkd
+
+- name: Flush sxhkd handlers
+  meta: flush_handlers
+  tags: sxhkd

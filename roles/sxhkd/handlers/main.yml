@@ -1,0 +1,8 @@
+---
+- name: Reload sxhkd
+  ansible.builtin.command:
+    cmd: pkill -USR1 sxhkd
+  ignore_errors: true
+  tags:
+    - xorg
+    - sxhkd
