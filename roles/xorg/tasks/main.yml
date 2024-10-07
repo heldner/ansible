@@ -45,6 +45,12 @@
   tags: xorg
   become: true
 
+- name: Install urxvt
+  ansible.builtin.include_tasks: urxvt.yml
+  tags:
+    - urxvt
+    - xorg
+
 - name: Install slim
   ansible.builtin.include_tasks: slim.yml
   tags:
