@@ -1,37 +1,56 @@
 ---
-- name: Download librewolf repo gpg key
-  ansible.builtin.get_url:
-    url: 'https://deb.librewolf.net/keyring.gpg'
-    dest: /etc/apt/trusted.gpg.d/librewolf.gpg
-    mode: '0644'
+- name: Remove old librewolf files
+  ansible.builtin.file:
+    state: absent
+    path: '/etc/apt/{{ item }}'
+  become: true
+  loop:
+    - sources.list.d/librewolf.list.list
+    - trusted.gpg.d/librewolf.gpg
+  tags:
+    - browser
+    - librewolf
+
+- name: Install extrepo package
+  ansible.builtin.apt:
+    state: present
+    name: extrepo
   become: true
   tags:
     - browser
     - librewolf
 
-- name: Add apt repository
-  ansible.builtin.apt_repository:
-    state: present
-    filename: librewolf.list
-    repo: |
-      deb [arch=amd64] https://deb.librewolf.net
-      {{ ansible_lsb.codename }} main
+- name: Check librewolf repository enabled
+  ansible.builtin.stat:
+    path: /etc/apt/sources.list.d/extrepo_librewolf.sources
+  register: _librewolf_repo_enabled
+  tags:
+    - browser
+    - librewolf
+
+- name: Enable librewolf repository
+  ansible.builtin.command:
+    cmd: extrepo enable librewolf
   become: true
-  notify: Update apt cache
+  when: not _librewolf_repo_enabled.stat.exists
+  register: _librewolf_extrepo
   tags:
     - browser
     - librewolf
 
-- name: Flush librewolf handlers
-  ansible.builtin.meta: flush_handlers
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+  become: true
+  when: _librewolf_extrepo.changed
   tags:
     - browser
     - librewolf
 
-- name: Install librewolf packages
-  ansible.builtin.package:
+- name: Install librewolf package
+  ansible.builtin.apt:
     state: present
-    name: librewolf
+    name: extrepo
   become: true
   notify:
     - Update alternatives, install librewolf
@@ -57,16 +76,6 @@
     src: librewolf.desktop.j2
     dest: '{{ ansible_user_dir }}/.local/share/applications/librewolf.desktop'
     mode: '0644'
-  tags:
-    - browser
-    - librewolf
-
-- name: Create links
-  ansible.builtin.file:
-    state: link
-    src: '/usr/bin/librewolf'
-    path: '/etc/alternatives/x-www-browser'
-  become: true
   tags:
     - browser
     - librewolf
