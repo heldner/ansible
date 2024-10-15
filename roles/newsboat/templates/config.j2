@@ -44,7 +44,7 @@ proxy-type socks5
 proxy localhost:2080
 
 # browser settings
-browser w3m
+browser "w3m -o confirm_qq=false %u"
 # press ,v to run mpv and pass first url
 macro v set browser "setsid -f mpv --really-quiet --no-terminal --osd-level=3 --player-operation-mode=pseudo-gui -- %u" ; one ; set browser w3m
 # press ,y for open youtube with mpv
