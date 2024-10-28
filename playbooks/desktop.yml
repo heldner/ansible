@@ -8,7 +8,6 @@
     - apt
     - acpi
     - bluetooth
-    - byedpi
     - common
     - chromium
     - console-setup
@@ -54,7 +53,6 @@
     - udev
     - unbound
     - v2ray
-    - wireguard
     - xorg
     - role: xfce
       when: enable_xfce | default('false') | bool
