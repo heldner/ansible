@@ -1,11 +1,13 @@
 #!/bin/sh
 if [ "$1" = '--video' ]; then
   VIDEO_OPT="--dev-bind /dev/video1 /dev/video1
-  --dev-bind /dev/video2 /dev/video2"
+  --dev-bind /dev/video0 /dev/video0"
   shift
 fi
 exec bwrap \
+     --ro-bind /usr/include/X11/dri /usr/include/X11/dri \
      --ro-bind /usr/lib/ungoogled-chromium /usr/lib/ungoogled-chromium \
+     --ro-bind /usr/bin/ungoogled-chromium /usr/bin/ungoogled-chromium \
      --ro-bind /usr/bin/sh /usr/bin/sh \
      --ro-bind /usr/share /usr/share \
      --ro-bind /usr/lib /usr/lib \
@@ -16,6 +18,7 @@ exec bwrap \
      --symlink /usr/bin /sbin \
      --proc /proc \
      --dev /dev \
+     $VIDEO_OPT \
      --dev-bind /dev/char /dev/char \
      --dev-bind /dev/dri /dev/dri \
      --ro-bind-try /sys/bus/usb /sys/bus/usb \
