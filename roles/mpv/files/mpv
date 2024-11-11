@@ -51,7 +51,7 @@ full_path() {
 start_video() {
     file="$*"
     [ -z "$file" ] && read -r file
-    playerctl pause
+    playerctl pause > /dev/null 2>&1|| true
     if echo "$file" | grep -q youtube; then
         proxy=proxychains
     fi
