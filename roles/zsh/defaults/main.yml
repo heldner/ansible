@@ -11,7 +11,4 @@ zplug_plugins:
   - name: Tarrasch/zsh-autoenv
   - name: pasky/speedread
     opts: "use:speedread.plugin.zsh"
-  - name: aperezdc/zsh-fzy
-    opts: "as:plugin"
-    config:
-      - bindkey '^R'  fzy-history-widget
+  - name: joshskidmore/zsh-fzf-history-search
