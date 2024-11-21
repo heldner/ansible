@@ -1,1 +1,1 @@
-autostash ANSIBLE_VAULT_PASSWORD_FILE=./vault-pass.sh
+autostash ANSIBLE_VAULT_PASSWORD_FILE="$(pwd)/vault-pass.sh"
