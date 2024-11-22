@@ -1,0 +1,36 @@
+---
+- name: Install openssh-client
+  ansible.builtin.package:
+    state: present
+    name:
+      - autossh
+      - keychain
+      - openssh-client
+  tags: ssh
+  become: true
+
+- name: Create ssh dir
+  ansible.builtin.file:
+    state: directory
+    path: '{{ ansible_user_dir }}/.ssh'
+    mode: "0700"
+  tags: ssh
+
+- name: Copy ssh config
+  ansible.builtin.template:
+    src: 'ssh_config.j2'
+    dest: '{{ ansible_user_dir }}/.ssh/config'
+    mode: "0640"
+  tags:
+    - ssh
+    - config
+
+- name: Copy ssh tunnel script
+  ansible.builtin.template:
+    src: 'tunnel'
+    dest: '{{ ansible_user_dir }}/.local/bin/ssh_tunnel'
+    mode: "0755"
+  when: copy_ssh_tunnel_script | default('false') | bool
+  tags:
+    - ssh
+    - config
