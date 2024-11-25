@@ -4,6 +4,6 @@ Version=1.0
 Terminal=false
 Type=Application
 Name=Youtube
-Exec=sh -c "export http_proxy=http://localhost:1081; export https_proxy=https://localhost:1081; /usr/bin/chromium-bubblewrap --force-dark-mode --profile-directory=Youtube --app=https://youtube.com"
+Exec=/usr/bin/chromium-bubblewrap --force-dark-mode --app=https://youtube.com
 Icon=youtube
 Actions=Explore;Subscriptions

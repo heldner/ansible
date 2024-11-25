@@ -4,6 +4,6 @@ Version=1.0
 Terminal=false
 Type=Application
 Name=Matrix
-Exec=/usr/bin/chromium-bubblewrap --proxy-server="socks5://localhost:1080" --force-dark-mode --profile-directory=Matrix --app=https://app.cinny.in/
+Exec=/usr/bin/chromium-bubblewrap --force-dark-mode --app=https://app.cinny.in/
 Icon=cinny
 Actions=Explore;Subscriptions
