@@ -1,7 +1,8 @@
 ---
 - name: Install nftables
   ansible.builtin.package:
-    name: nftables
+    name:
+      - nftables
     cache_valid_time: 600
   become: true
   tags: nftables
@@ -13,4 +14,15 @@
     mode: "0744"
   become: true
   notify: Reload nft
+  tags: nftables
+
+- name: Enable service nftables
+  ansible.builtin.service:
+    name: nftables
+    enabled: true
+  become: true
+  tags: nftables
+
+- name: Flush nftables handlers
+  meta: flush_handlers
   tags: nftables
