@@ -8,6 +8,7 @@
     - apt
     - acpi
     - bluetooth
+    - byedpi
     - common
     - chromium
     - console-setup
@@ -19,7 +20,6 @@
     - flameshot
     - git
     - htop
-    - iptables
     - role: gocryptfs
       when: enable_gocryptfs | default('false') | bool
     - gpg
@@ -41,6 +41,7 @@
     - neomutt
     - neovim
     - newsboat
+    - nftables
     - openntpd
     - playerctl
     - podman

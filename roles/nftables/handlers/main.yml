@@ -1,0 +1,6 @@
+---
+- name: Reload nft
+  ansible.builtin.command:
+    cmd: /usr/sbin/nft -f /etc/nftables.conf
+  tags: nftables
+  become: true
