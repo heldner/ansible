@@ -24,9 +24,10 @@
       when: enable_gocryptfs | default('false') | bool
     - gpg
     - hardending
-    - iwd
-    - isync
     - imapfilter
+    - iptables
+    - isync
+    - iwd
     - role: laptop
       when: "'laptop' in group_names"
     - role: logind
@@ -41,7 +42,6 @@
     - neomutt
     - neovim
     - newsboat
-    - nftables
     - openntpd
     - playerctl
     - podman
