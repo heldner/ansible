@@ -18,6 +18,9 @@
     - editorconfig
     - feh
     - flameshot
+    - role: fwknop
+      vars:
+        client: true
     - git
     - htop
     - role: gocryptfs
