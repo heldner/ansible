@@ -32,16 +32,3 @@
   tags:
     - fwknop
     - fwknop-server
-
-- name: Iptables allow fwknop connections
-  ansible.builtin.iptables:
-    chain: INPUT
-    protocol: '{{ fwknop_proto }}'
-    destination_port:
-    ctstate: NEW
-    jump: ACCEPT
-  notify: Save iptables rules
-  become: true
-  tags:
-    - fwknop
-    - fwknop-server
