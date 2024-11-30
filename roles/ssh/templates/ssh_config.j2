@@ -11,6 +11,9 @@ Host {{ host.host }}
 {%     if host.dynamic_forward is defined %}
   DynamicForward {{ host.dynamic_forward }}
 {%     endif -%}
+{%     if host.match_rule is defined %}
+  {{ host.match_rule }}
+{%     endif -%}
 {%   endfor -%}
 {% endif %}
 
