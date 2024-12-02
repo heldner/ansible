@@ -1,0 +1,48 @@
+#!/bin/sh -e
+
+
+# output from 'xrandr' stdout
+[ -z "$OUTPUT" ] && OUTPUT='DP-1'
+[ -z "$MODE" ] && MODE='1920x1080'
+
+if [ "$2" = 'hdmi' ]; then
+    OUTPUT='HDMI-1'
+    MODE='1920x1080'
+fi
+
+
+status () {
+    xrandr | grep -q "${OUTPUT}.*${MODE}"
+}
+
+off () {
+    xrandr --output $OUTPUT --off
+    exit 0
+}
+
+on () {
+    xrandr \
+        --output $OUTPUT \
+        --right-of LVDS-1 \
+        --mode $MODE
+}
+
+toggle () {
+    if status; then
+        off
+    else
+        on
+    fi
+}
+
+failed () {
+    echo "Couldn know your command"
+    exit 1
+}
+
+case "$1" in
+    status) status;;
+    off) off;;
+    on) on;;
+    *) failed;;
+esac
