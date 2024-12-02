@@ -1,0 +1,34 @@
+---
+- name: Install fwknop server
+  ansible.builtin.package:
+    state: present
+    name: fwknop-server
+  become: true
+  tags:
+    - fwknop
+    - fwknop-server
+
+- name: Copy fwknop server config
+  ansible.builtin.template:
+    src: '{{ item }}.j2'
+    dest: '/etc/fwknop/{{ item }}'
+    mode: 0600
+    owner: root
+  loop:
+    - fwknopd.conf
+    - access.conf
+  become: true
+  notify: Reload fwknop-server
+  tags:
+    - fwknop
+    - fwknop-server
+
+- name: Enable fwknopd service
+  ansible.builtin.service:
+    name: fwknop-server
+    enabled: true
+    state: started
+  become: true
+  tags:
+    - fwknop
+    - fwknop-server

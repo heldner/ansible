@@ -1,0 +1,9 @@
+---
+- name: Reload fwknop-server
+  ansible.builtin.service:
+    name: fwknop-server
+    state: reloaded
+  become: true
+  tags:
+    - fwknop
+    - fwknop-server

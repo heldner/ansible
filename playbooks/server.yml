@@ -8,6 +8,9 @@
     - apt
     - console-setup
     - freshrss
+    - role: fwknop
+      vars:
+        server: true
     - hardending
     - modprobe
     - motd

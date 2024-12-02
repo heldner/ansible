@@ -1,0 +1,14 @@
+---
+- name: Include client tasks
+  ansible.builtin.include_tasks: client.yml
+  when: client is true
+  tags:
+    - fwknop
+    - fwknop-client
+
+- name: Include server tasks
+  ansible.builtin.include_tasks: server.yml
+  when: server is true
+  tags:
+    - fwknop
+    - fwknop-client
