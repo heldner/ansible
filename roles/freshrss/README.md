@@ -1,6 +1,6 @@
 # freshrss
 
-Install freshrss
+Install [freshrss](https://www.freshrss.org/)
 
 ## Table of content
 
