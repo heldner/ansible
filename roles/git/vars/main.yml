@@ -1,6 +1,7 @@
 ---
 # @var git_custom_configs:description: >
 # list with custom git prefernces for spicific repositories
+# uses [includeIf](https://git-scm.com/docs/git-config)
 # @end
 # @var git_custom_configs:example: >
 # git_custom_configs:

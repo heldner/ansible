@@ -23,6 +23,7 @@ Install git packages add copy .gitconfig
 ### git_custom_configs
 
 list with custom git prefernces for spicific repositories
+uses [includeIf](https://git-scm.com/docs/git-config)
 
 #### Example usage
 
