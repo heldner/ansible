@@ -46,11 +46,6 @@
   tags: apt
   register: _apt_conf
 
-- name: Apt update
-  ansible.builtin.apt:
-    update_cache: true
-  become: true
-
 - name: Apt ppa support
   ansible.builtin.apt:
     state: present
@@ -58,6 +53,7 @@
       - apt-file
       - software-properties-common
       - python3-launchpadlib
+    update_cache: true
   become: true
 
 - name: Import tasks from the unattended-upgrades
