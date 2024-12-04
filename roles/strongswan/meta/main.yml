@@ -1,0 +1,11 @@
+---
+galaxy_info:
+  author: Stanislav Korolev
+  description: install ipsec vpn [strongswan](https://strongswan.org/)
+  company: RootIT
+  license: ISC
+  min_ansible_version: '2.12'
+  platforms:
+    - name: Debian
+      versions:
+        - all

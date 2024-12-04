@@ -1,0 +1,7 @@
+---
+- name: Install strongswan
+  ansible.builtin.package:
+    name: strongswan
+    state: present
+  become: true
+  tags: strongswan
