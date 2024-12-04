@@ -31,10 +31,6 @@
     - iptables
     - isync
     - iwd
-    - role: laptop
-      when: "'laptop' in group_names"
-    - role: logind
-      when: "'laptop' in group_names"
     - role: libvirt
       when: enable_libvirt | default('false') | bool
     - librewolf
@@ -61,3 +57,12 @@
     - role: xfce
       when: enable_xfce | default('false') | bool
     - zsh
+
+- hosts: laptop
+  become_method: sudo
+  gather_facts: true
+  collections:
+    - heldner.things
+  roles:
+    - laptop
+    - logind
