@@ -1,30 +1,35 @@
-# gnupg
+# gpg
 
-Install and configure command line gpg tool with agent.
+Install and configure gpg agent
 
-## usage
+## Table of content
 
-https://keys.openpgp.org/about/usage
+- [Requirements](#requirements)
+- [Discovered Tags](#discovered-tags)
+- [Dependencies](#dependencies)
+- [License](#license)
+- [Author](#author)
 
-### retrive key
+---
 
-To locate the key of a user, by email address:
+## Requirements
 
-```sh
-gpg --auto-key-locate keyserver --locate-keys user@example.net
-```
+- Minimum Ansible version: `2.12`
 
-To refresh all your keys (e.g. new revocation certificates and subkeys):
 
-```sh
-gpg --refresh-keys
-```
+## Discovered Tags
 
-### upload key
+**_gpg_**
 
-Keys can be uploaded with GnuPG's --send-keys command, but identity information
-can't be verified that way to make the key searchable by email address
 
-```sh
-gpg --export your_address@example.net | curl -T - https://keys.openpgp.org
-```
+## Dependencies
+
+None.
+
+## License
+
+ISC
+
+## Author
+
+Stanislav Korolev
