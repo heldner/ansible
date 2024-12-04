@@ -21,11 +21,6 @@ pip3 install -r requirements.txt
 
 ```
 
-Set path to ansible collection:
-```shell
-sed -i "s,collections_paths.*,collections_paths = $(realpath ansible_collections)," ansible.cfg
-```
-
 ## vault
 
 You can use a script to provide vault password.
