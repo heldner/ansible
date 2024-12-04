@@ -16,6 +16,13 @@
     mode: "0700"
   tags: ssh
 
+- name: Merge ssh hosts
+  merge_vars:
+    suffix_to_merge: ssh_hosts__to_merge
+    merged_var_name: ssh_hosts
+    expected_type: 'dict'
+  tags: ssh
+
 - name: Copy ssh config
   ansible.builtin.template:
     src: 'ssh_config.j2'
