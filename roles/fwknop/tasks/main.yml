@@ -11,4 +11,4 @@
   when: server is true
   tags:
     - fwknop
-    - fwknop-client
+    - fwknop-server
