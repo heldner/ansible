@@ -1,2 +1,12 @@
 ---
+# @var freshrss_home:description: >
+# freshrss deploy directory
+# @end
+# @var freshrss_home:value: $ "test"
 freshrss_home: /usr/share/freshrss
+
+# @var freshrss_update_min:value: $ "*/30"
+# @var freshrss_update_hour:value: $ "*"
+# @var freshrss_update_day_of_month:value: $ "*"
+# @var freshrss_update_month:value: $ "*"
+# @var freshrss_update_day_of_week:value: $ "*"

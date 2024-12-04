@@ -2,7 +2,7 @@
 galaxy_info:
   author: Stanislav Korolev
   namespace: things
-  description: Install freshrss
+  description: Install [freshrss](https://www.freshrss.org/)
   company: RootIT
   license: ISC
   min_ansible_version: '2.12'
