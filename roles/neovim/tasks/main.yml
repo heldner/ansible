@@ -22,14 +22,11 @@
         - name: neovim-ppa-ubuntu-stable.list.j2
           dest: /etc/apt/sources.list.d/neovim-ppa-ubuntu-stable.list
 
-    - name: Apt update
-      ansible.builtin.apt:
-        update_cache: true
-
 - name: Install neovim
   ansible.builtin.package:
     state: present
     name: neovim
+    update_cache: true
   become: true
   tags: neovim
 
