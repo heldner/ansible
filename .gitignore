@@ -4,3 +4,4 @@ inventories
 ansible.log
 ansible_collections
 ssl_certificates
+plugins/*/__pycache__/
