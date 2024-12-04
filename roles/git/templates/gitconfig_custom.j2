@@ -1,0 +1,9 @@
+[user]
+  name = {{ item.name }}
+  email = {{ item.email }}
+
+[commit]
+  gpgSign = {{ item.gpg_sign | default('false') }}
+
+[tag]
+  gpgSign = {{ item.gpg_sign | default('false') }}

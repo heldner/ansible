@@ -1,0 +1,12 @@
+---
+# @var git_custom_configs:description: >
+# list with custom git prefernces for spicific repositories
+# @end
+# @var git_custom_configs:example: >
+# git_custom_configs:
+#   - name: pass
+#     email: my@email.com
+#     config_name: kinescope
+#     gpg_sign: true
+#     gitdir: ~/.password-store/
+# @end

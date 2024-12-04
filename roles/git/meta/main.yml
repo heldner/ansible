@@ -2,7 +2,7 @@
 galaxy_info:
   author: Stanislav Korolev
   namespace: things
-  description: Install git add copy .gitconfig
+  description: Install git packages add copy .gitconfig
   company: RootIT
   license: ISC
   min_ansible_version: 2.12

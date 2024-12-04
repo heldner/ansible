@@ -127,6 +127,10 @@
 
 [pull]
   rebase = false
+{% if git_custom_configs is defined -%}
+{% for config in git_custom_configs %}
 
-[includeIf "gitdir:~/.password-store/"]
-  path = ~/.gitconfig_pass
+[includeIf "gitdir:{{ config.gitdir }}"]
+  path = ~/.gitconfig_{{ config.config_name }}
+{% endfor %}
+{% endif %}

@@ -11,6 +11,7 @@
   ansible.builtin.package:
     state: present
     name: '{{ git_pkgs }}'
+    update_cache: true
   tags: git
   become: true
 
@@ -22,10 +23,12 @@
     mode: "0640"
   tags: git
 
-- name: Install .gitconfig_pass
+- name: Install git custom configs
   ansible.builtin.template:
-    src: gitconfig_pass.j2
-    dest: '{{ ansible_user_dir}}/.gitconfig_pass'
+    src: gitconfig_custom.j2
+    dest: '{{ ansible_user_dir}}/.gitconfig_{{ item.config_name }}'
     owner: '{{ ansible_user_id }}'
     mode: "0640"
+  loop: '{{ git_custom_configs }}'
+  when: git_custom_configs is defined
   tags: git
