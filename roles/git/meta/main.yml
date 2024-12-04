@@ -5,8 +5,8 @@ galaxy_info:
   description: Install git packages add copy .gitconfig
   company: RootIT
   license: ISC
-  min_ansible_version: 2.12
+  min_ansible_version: '2.12'
   platforms:
     - name: Debian
       versions:
-        - 11
+        - all

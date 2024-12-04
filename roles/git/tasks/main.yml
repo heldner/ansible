@@ -2,7 +2,7 @@
 - name: Set packages list
   ansible.builtin.set_fact:
     git_pkgs: "{{ __pkgs +
-      ([ 'git-extras' ] if ansible_distribution != 'OpenBSD' else []) }}"
+      (['git-extras'] if ansible_distribution != 'OpenBSD' else []) }}"
   vars:
     __pkgs: [git]
   tags: git
@@ -18,7 +18,7 @@
 - name: Install .gitconfig
   ansible.builtin.template:
     src: gitconfig.j2
-    dest: '{{ ansible_user_dir}}/.gitconfig'
+    dest: '{{ ansible_user_dir }}/.gitconfig'
     owner: '{{ ansible_user_id }}'
     mode: "0640"
   tags: git
@@ -26,7 +26,7 @@
 - name: Install git custom configs
   ansible.builtin.template:
     src: gitconfig_custom.j2
-    dest: '{{ ansible_user_dir}}/.gitconfig_{{ item.config_name }}'
+    dest: '{{ ansible_user_dir }}/.gitconfig_{{ item.config_name }}'
     owner: '{{ ansible_user_id }}'
     mode: "0640"
   loop: '{{ git_custom_configs }}'
