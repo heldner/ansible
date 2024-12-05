@@ -1,0 +1,33 @@
+#!/bin/sh
+
+set -e
+
+URL="$1"
+[ -z "$URL" ] && exit 0
+
+YOUTUBE_URL='^https://www.youtube.com'
+
+check_url() {
+  if ! echo "$1" | grep -Eq "$2"; then
+    return 1
+  fi
+}
+
+run_chromium() {
+  uri=$(echo "$1" | sed 's,watch?v=,embed/,')
+  exec setsid -f /usr/bin/chromium-bubblewrap \
+    --force-dark-mode \
+    --app="$uri" >/dev/null 2>&1
+}
+
+run_librewolf() {
+  exec setsid -f librewolf "$URL" >/dev/null 2>&1
+}
+
+if check_url "$URL" "$YOUTUBE_URL"; then
+  run_chromium "$URL"
+elif check_url "$URL" "\.(png|jpeg)"; then
+  exec setsid -f feh "$URL"
+else
+  run_librewolf "$URL"
+fi
