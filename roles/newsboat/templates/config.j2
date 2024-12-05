@@ -45,3 +45,5 @@ highlight article ":.*\\(embedded flash\\)$" magenta default
 browser newsboat_browser
 # press ,v to run mpv and pass first url
 macro v set browser "setsid -f mpv --really-quiet --no-terminal --osd-level=3 --player-operation-mode=pseudo-gui -- %u" ; one ; set browser newsboat_browser
+# press ,y for open youtube with mpv
+macro y set browser "setsid -f proxychains4 mpv --really-quiet --no-terminal -- %u > /dev/null 2>&1" ; open-in-browser ; set browser newsboat_browser
