@@ -12,19 +12,23 @@
 
 NAME=byedpi
 DAEMON=/usr/local/bin/"$NAME"
-DAEMON_OPTS="--tfo --split 1 --disorder 3+s --mod-http=h,d --auto none --tlsrec 1+s --ip 127.0.0.1 --port 2080"
+DAEMON_OPTS=""
 USER=byedpi
 PIDFILE=/var/run/${NAME}.pid
 
 set -e
 
+if [ -f /etc/default/byedpi ]; then
+    . /etc/default/byedpi
+fi
+
 start() {
-  if [ -f "$PIDFILE" ] && kill -0 $(cat "$PIDFILE"); then
+  if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")"; then
     echo "Service $NAME already running"
     return 1
   fi
   echo 'Starting service…' >&2
-  runuser --user $USER -- setsid -f $DAEMON $DAEMON_OPTS
+  runuser --user "$USER" -- setsid -f "$DAEMON" $DAEMON_OPTS
   until pgrep -f "$DAEMON" > "$PIDFILE"; do
     sleep 0.2
   done

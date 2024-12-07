@@ -15,6 +15,14 @@
   become: true
   tags: byedpi
 
+- name: Copy byedpi defaults
+  ansible.builtin.copy:
+    src: 'default'
+    dest: '/etc/default/byedpi'
+    mode: '0644'
+  become: true
+  tags: byedpi
+
 - name: Create byedpi service
   ansible.builtin.copy:
     src: 'init.d.service'
