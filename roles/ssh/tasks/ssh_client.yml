@@ -6,7 +6,9 @@
       - autossh
       - keychain
       - openssh-client
-  tags: ssh
+  tags:
+    - ssh
+    - ssh_client
   become: true
 
 - name: Create ssh dir
@@ -14,14 +16,18 @@
     state: directory
     path: '{{ ansible_user_dir }}/.ssh'
     mode: "0700"
-  tags: ssh
+  tags:
+    - ssh
+    - ssh_client
 
 - name: Merge ssh hosts
   merge_vars:
     suffix_to_merge: ssh_hosts__to_merge
     merged_var_name: ssh_hosts
     expected_type: 'dict'
-  tags: ssh
+  tags:
+    - ssh
+    - ssh_client
 
 - name: Copy ssh config
   ansible.builtin.template:
@@ -30,7 +36,7 @@
     mode: "0640"
   tags:
     - ssh
-    - config
+    - ssh_client
 
 - name: Copy ssh tunnel script
   ansible.builtin.template:
@@ -40,4 +46,4 @@
   when: copy_ssh_tunnel_script | default('false') | bool
   tags:
     - ssh
-    - config
+    - ssh_client

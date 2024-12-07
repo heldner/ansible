@@ -2,7 +2,7 @@
 galaxy_info:
   author: Stanislav Korolev
   namespace: things
-  description: Install ssh client configure user config
+  description: Install ssh client, server and configure it
   company: RootIT
   license: ISC
   min_ansible_version: 2.12
