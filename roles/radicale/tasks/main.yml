@@ -2,7 +2,9 @@
 - name: Install python venv
   ansible.builtin.package:
     state: present
-    name: python3-venv
+    name:
+      - python3-venv
+      - python3-passlib
   become: true
   tags: radicale
 
@@ -70,12 +72,6 @@
     name: radicale
     state: started
     enabled: true
-  become: true
-  tags: radicale
-
-- name: Install passlib for htpasswd module
-  ansible.builtin.pip:
-    name: passlib
   become: true
   tags: radicale
 
