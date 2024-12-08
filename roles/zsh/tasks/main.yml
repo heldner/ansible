@@ -39,3 +39,10 @@
   tags:
     - zsh
     - config
+
+- name: Set shell for current user to zsh
+  ansible.builtin.user:
+    name: '{{ ansible_user_id  }}'
+    shell: /usr/bin/zsh
+  become: true
+  tags: zsh
