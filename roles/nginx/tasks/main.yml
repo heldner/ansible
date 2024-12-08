@@ -4,7 +4,6 @@
     state: present
     name:
       - nginx
-      - nginx-extras
   tags: nginx
   become: true
 
@@ -61,3 +60,12 @@
   become: true
   notify: Restart nginx
   tags: nginx
+
+- name: Configure nginx
+  ansible.builtin.import_role:
+    name: nginx
+    tasks_from: gen_config
+  vars:
+    nginx_template: custom_nginx.conf.j2
+  tags:
+    - nginx
