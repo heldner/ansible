@@ -13,11 +13,13 @@
       vars:
         server: true
     - hardending
+    - iptables
     - modprobe
     - motd
     - neovim
     - nginx
     - noip
+    - portsentry
     - radicale
     - ssh
     - tmux

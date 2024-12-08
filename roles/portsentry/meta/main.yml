@@ -1,0 +1,11 @@
+---
+galaxy_info:
+  author: Stanislav Korolev
+  description: Portsentry https://github.com/portsentry/portsentry is a tool to detect and respond to port scans against a target host in real-time.
+  company: RootIT
+  license: ISC
+  min_ansible_version: '2.12'
+  platforms:
+    - name: Debian
+      versions:
+        - all

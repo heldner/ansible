@@ -1,0 +1,35 @@
+---
+- name: Install portsentry
+  ansible.builtin.package:
+    state: present
+    name: portsentry
+  tags: portsentry
+  become: true
+
+- name: Allow tcp portsentry
+  ansible.builtin.iptables:
+    chain: INPUT
+    match_set: portsentry_tcp
+    match_set_flags: dst
+    protocol: tcp
+    jump: ACCEPT
+  become: true
+  tags: portsentry
+
+- name: Allow udp portsentry
+  ansible.builtin.iptables:
+    chain: INPUT
+    match_set: portsentry_udp
+    match_set_flags: dst
+    protocol: udp
+    jump: ACCEPT
+  become: true
+  tags: portsentry
+
+- name: Allow udp portsentry
+  ansible.builtin.template:
+    src: portsentry.conf.j2
+    dest: /etc/portsentry/portsentry.conf
+    mode: "0644"
+  become: true
+  tags: portsentry
