@@ -29,6 +29,7 @@
       - strace
       - tcpdump
       - w3m
+      - xkcdpass
       - zbar-tools
   become: true
   tags: common

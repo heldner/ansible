@@ -32,6 +32,10 @@ myip() {
 }
 
 genpass() {
+  xkcdpass -n 2 -C capitalize -R
+}
+
+genpass2() {
   < /dev/urandom tr -dc "_A-Z-a-z-0-9\?\$\." \
     | head -c ${1:-18}; echo;
 }
