@@ -5,12 +5,12 @@ TMP_IPSET_RULES=/tmp/ipset.tables.tmp
 
 reload() {
     set -e
-    setlist=$(awk '/^create / && $2 !~ /_tmp/ {print $2}' $IPSET_RULES)
-    ipset -exist restore < $IPSET_RULES
-    for list in $setlist; do
-        ipset swap "${list}_tmp" "$list"
-        ipset destroy "${list}_tmp"
+    awk '/^create / {sub(/_tmp/,""); print $0}' $IPSET_RULES | \
+    while read ip_set; do
+        ipset -exist $ip_set
     done
+    ipset -exist restore < $IPSET_RULES
+
 }
 
 main() {

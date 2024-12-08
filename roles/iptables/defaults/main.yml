@@ -1,8 +1,13 @@
 ---
-# TODO: fix ipset template
-ipset_tables:
-  - name: input_allow
-    maxelem: 1024
-    type: bitmap:port
-    items:
-      - 192.168.10.0/24
+# @var ipset_tables:example: >
+# ipset_tables:
+#   - name: portsentry_tcp
+#     set_option: bitmap:port range 0-65535
+#     items:
+#       - 111
+#       - 123
+# @end
+# @var ipset_config_file:description: >
+# location with ipset rules
+# @end
+ipset_config_file: /etc/ipset.tables

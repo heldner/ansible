@@ -1,10 +1,12 @@
 ---
 - name: Save iptables rules
-  ansible.builtin.shell: iptables-save > /etc/iptables/rules.v4
+  ansible.builtin.shell: iptables-save > /etc/iptables.up.rules
   become: true
   tags: iptables
 
 - name: Reload ipset tables
-  command: ipset-reload.sh
+  command: ipset-reload.sh --force-reload
   register: command_result
   failed_when: "command_result.rc != 0"
+  become: true
+  tags: iptables

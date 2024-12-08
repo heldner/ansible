@@ -1,6 +1,6 @@
 {% if ipset_tables is defined %}
 {%   for rule in ipset_tables %}
-create {{ rule['name'] }}_tmp {{ rule['type'] }} maxelem {{ rule['maxelem'] }}
+create {{ rule['name'] }}_tmp {{ rule.set_option }}
 {%     if rule['items'] is defined %}
 {%       for element in rule['items'] %}
 add {{ rule['name'] }}_tmp {{ element }}
@@ -8,5 +8,6 @@ add {{ rule['name'] }}_tmp {{ element }}
 swap {{ rule['name'] }}_tmp {{ rule['name'] }}
 destroy {{ rule['name'] }}_tmp
 {%     endif %}
+
 {%   endfor %}
 {% endif %}
