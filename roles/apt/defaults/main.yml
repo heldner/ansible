@@ -1,4 +1,5 @@
 ---
+apt_mirror: http://mirror.yandex.ru/debian/
 apt_unattended_upgrade_remove_unused_kernel_packages: true
 apt_unattended_upgrade_remove_unused_dependencies: true
 apt_unattended_upgrade_remove_new_unused_dependencies: true
