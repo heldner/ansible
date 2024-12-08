@@ -1,0 +1,7 @@
+---
+- name: Restart fmd
+  ansible.builtin.service:
+    name: fmd
+    state: restarted
+  become: true
+  tags: fmd

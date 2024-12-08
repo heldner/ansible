@@ -1,0 +1,25 @@
+---
+- name: Download findmydeviceserver package
+  ansible.builtin.get_url:
+    url: https://github.com/heldner/findmydeviceserver-debian/releases/download/{{ findmydeviceserver_version }}/findmydeviceserver_{{ findmydeviceserver_version }}-1_amd64.deb
+    dest: /tmp/findmydeviceserver.deb
+    mode: '0644'
+  become: true
+  tags: findmydeviceserver
+
+- name: Install findmydeviceserver
+  ansible.builtin.apt:
+    state: present
+    deb: /tmp/findmydeviceserver.deb
+  become: true
+  tags: findmydeviceserver
+
+- name: Setup fmd.conf
+  ansible.builtin.template:
+    src: "fmd.yml.j2"
+    dest: "/etc/findmydeviceserver/config.yml"
+    owner: "fmd"
+    mode: 0640
+  notify: Restart fmd
+  become: true
+  tags: findmydeviceserver

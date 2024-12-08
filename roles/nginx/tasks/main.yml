@@ -14,6 +14,18 @@
   become: true
   tags: nginx
 
+- name: Allow ssh
+  ansible.builtin.iptables:
+    action: insert
+    chain: INPUT
+    protocol: tcp
+    destination_port: '{{ item }}'
+    ctstate: NEW
+    jump: ACCEPT
+  loop: [80, 443]
+  become: true
+  tags: nginx
+
 - name: Create nginx ssl directory
   ansible.builtin.file:
     state: directory
