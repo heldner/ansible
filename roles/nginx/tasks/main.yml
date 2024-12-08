@@ -19,10 +19,9 @@
     action: insert
     chain: INPUT
     protocol: tcp
-    destination_port: '{{ item }}'
+    destination_ports: [80,443]
     ctstate: NEW
     jump: ACCEPT
-  loop: [80, 443]
   become: true
   tags: nginx
 
