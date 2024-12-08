@@ -6,6 +6,7 @@ install mpd as user systemd service
 
 - [Requirements](#requirements)
 - [Default Variables](#default-variables)
+  - [findmydeviceserver_socket](#findmydeviceserver_socket)
   - [findmydeviceserver_version](#findmydeviceserver_version)
 - [Discovered Tags](#discovered-tags)
 - [Dependencies](#dependencies)
@@ -20,7 +21,19 @@ install mpd as user systemd service
 
 ## Default Variables
 
+### findmydeviceserver_socket
+
+unix socket path where fmd listen
+
+#### Default value
+
+```YAML
+findmydeviceserver_socket: /dev/shm/fmd.sock
+```
+
 ### findmydeviceserver_version
+
+version of fmd
 
 #### Default value
 

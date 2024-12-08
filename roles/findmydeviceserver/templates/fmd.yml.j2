@@ -1,5 +1,5 @@
 # Path to listening UNIX socket. If empty, no unix sockets will be used.
-UnixSocketPath: "/dev/shm/fmd.sock"
+UnixSocketPath: "{{ findmydeviceserver_socket }}"
 # Permissions to set on the socket after it is created. If < 0, no
 # modifications are made. This considered insecure practice, if you
 # do it, consider setting a umask for the daemon user before starting it.

@@ -1,3 +1,7 @@
 ---
+# @var findmydeviceserver_version:description: version of fmd
 findmydeviceserver_version: 0.8.0
-# defaults file for findmydeviceserver
+# @var findmydeviceserver_socket:description: >
+# unix socket path where fmd listen
+# @end
+findmydeviceserver_socket: /dev/shm/fmd.sock
