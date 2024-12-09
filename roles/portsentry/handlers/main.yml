@@ -1,2 +1,7 @@
 ---
-# handlers file for portsentry
+- name: Restart portsentry
+  ansible.builtin.service:
+    name: "portsentry"
+    state: restarted
+  tags: portsentry
+  become: true

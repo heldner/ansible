@@ -32,4 +32,5 @@
     dest: /etc/portsentry/portsentry.conf
     mode: "0644"
   become: true
+  notify: Restart portsentry
   tags: portsentry

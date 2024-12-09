@@ -25,22 +25,22 @@ Portsentry https://github.com/portsentry/portsentry is a tool to detect and resp
 
 ### portsentry_block_tcp
 
-1 - block, 0 - not block iptables if detect tcp scans
+1 - block, 0 - not block iptables if detect tcp scans, 2 - only run command, don't add to hosts.deny
 
 #### Default value
 
 ```YAML
-portsentry_block_tcp: 1
+portsentry_block_tcp: 2
 ```
 
 ### portsentry_block_udp
 
-1 - block, 0 - not block iptables if detect udp scans
+1 - block, 0 - not block iptables if detect udp scans, 2 - only run command, don't add to hosts.deny
 
 #### Default value
 
 ```YAML
-portsentry_block_udp: 1
+portsentry_block_udp: 2
 ```
 
 ### portsentry_tcp_ports

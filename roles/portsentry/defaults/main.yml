@@ -3,7 +3,7 @@
 portsentry_tcp_ports: 1,11,15,79,111,119,143,540,635,1080,1524,2000,5742,6667,12345,12346,20034,27665,31337,32771,32772,32773,32774,40421,49724,54320
 # @var portsentry_udp_ports:description: comma separated list of listening tcp ports
 portsentry_udp_ports: 1,7,9,69,161,162,513,635,640,641,700,37444,34555,31335,32770,32771,32772,32773,32774,31337,54321
-# @var portsentry_block_tcp:description: 1 - block, 0 - not block iptables if detect tcp scans
-portsentry_block_tcp: 1
-# @var portsentry_block_udp:description: 1 - block, 0 - not block iptables if detect udp scans
-portsentry_block_udp: 1
+  # @var portsentry_block_tcp:description: 1 - block, 0 - not block iptables if detect tcp scans, 2 - only run command, don't add to hosts.deny
+portsentry_block_tcp: 2
+# @var portsentry_block_udp:description: 1 - block, 0 - not block iptables if detect udp scans, 2 - only run command, don't add to hosts.deny
+portsentry_block_udp: 2
