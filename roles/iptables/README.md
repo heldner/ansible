@@ -7,7 +7,7 @@ Configure iptables and ipset ![iptables default flow](iptables.svg)
 
 - [Requirements](#requirements)
 - [Default Variables](#default-variables)
-  - [ipset_config_file](#ipset_config_file)
+  - [ipset_config_dir](#ipset_config_dir)
   - [ipset_tables](#ipset_tables)
 - [Discovered Tags](#discovered-tags)
 - [Dependencies](#dependencies)
@@ -22,14 +22,14 @@ Configure iptables and ipset ![iptables default flow](iptables.svg)
 
 ## Default Variables
 
-### ipset_config_file
+### ipset_config_dir
 
-location with ipset rules
+dir with all ipset instruction files
 
 #### Default value
 
 ```YAML
-ipset_config_file: /etc/ipset.tables
+ipset_config_dir: /etc/ipset
 ```
 
 ### ipset_tables
