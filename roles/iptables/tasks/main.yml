@@ -16,15 +16,6 @@
   become: true
   tags: iptables
 
-- name: Generating ipset Rules {{ ipset_config_file }}
-  ansible.builtin.template:
-    src: ipset.tables.j2
-    dest: "{{ ipset_config_file }}"
-    mode: "0644"
-  become: true
-  notify: Reload ipset tables
-  tags: iptables
-
 - name: Iptables rules
   notify: Save iptables rules
   become: true

@@ -1,0 +1,15 @@
+---
+- name: Ensuring ipset directory exists
+  ansible.builtin.file:
+    path: "{{ ipset_config_dir }}"
+    state: directory
+  become: true
+
+- name: Generating ipset rules
+  ansible.builtin.template:
+    src: ipset.tables.j2
+    dest: "{{ ipset_config_dir }}/{{ ipset_name }}.tables"
+    mode: "0644"
+  become: true
+  notify: Reload ipset tables
+  tags: iptables

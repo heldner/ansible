@@ -11,3 +11,5 @@
 # location with ipset rules
 # @end
 ipset_config_file: /etc/ipset.tables
+# @var ipset_config_dir:description: dir with all ipset instruction files
+ipset_config_dir: /etc/ipset

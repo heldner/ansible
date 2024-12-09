@@ -34,3 +34,18 @@
   become: true
   notify: Restart portsentry
   tags: portsentry
+
+- name: Generate ipset for portsentry
+  ansible.builtin.import_role:
+    name: iptables
+    tasks_from: gen_ipset
+  vars:
+    ipset_name: portsentry
+    ipset_tables:
+      - name: portsentry_tcp
+        set_option: bitmap:port range 0-65535
+        items: "{{ portsentry_tcp_ports.split(',') }}"
+      - name: portsentry_udp
+        set_option: bitmap:port range 0-65535
+        items: "{{ portsentry_udp_ports.split(',') }}"
+  tags: portsentry

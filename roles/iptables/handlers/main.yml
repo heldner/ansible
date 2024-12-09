@@ -5,7 +5,7 @@
   tags: iptables
 
 - name: Reload ipset tables
-  command: ipset-reload.sh --force-reload
+  command: ipset-reload.sh
   register: command_result
   failed_when: "command_result.rc != 0"
   become: true
