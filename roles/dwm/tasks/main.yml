@@ -1,13 +1,16 @@
 ---
+- name: Download dwm package
+  ansible.builtin.get_url:
+    url: https://github.com/heldner/dwm-deb/releases/download/{{ dwm_version }}/dwm_{{ dwm_version }}-1_amd64.deb
+    dest: /tmp/dwm.deb
+    mode: '0644'
+  become: true
+  tags: dwm
+
 - name: Install build tools
   ansible.builtin.package:
     state: present
-    name:
-      - libc6-dev
-      - libx11-dev
-      - libxft-dev
-      - libxinerama-dev
-  when: build_tools is defined
+    deb: /tmp/dwm.deb
   become: true
   tags: dwm
 
