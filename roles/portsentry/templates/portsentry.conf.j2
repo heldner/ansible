@@ -206,7 +206,7 @@ BLOCK_TCP="{{ portsentry_block_tcp }}"
 #KILL_ROUTE="/sbin/ipchains -I input -s $TARGET$ -j DENY"
 #
 # iptables support for Linux
-KILL_ROUTE="/usr/sbin/iptables -I INPUT -s $TARGET$ -j DROP"
+KILL_ROUTE="/usr/sbin/ipset add portsentry_deny_hosts $TARGET$"
 #
 # iptables support for Linux with limit and LOG support. Logs only
 # a limited number of packets to avoid a denial of service attack.

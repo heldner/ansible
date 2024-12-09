@@ -26,7 +26,17 @@
   become: true
   tags: portsentry
 
-- name: Allow udp portsentry
+- name: Drop portsentry ipset
+  ansible.builtin.iptables:
+    action: insert
+    chain: INPUT
+    match_set: portsentry_deny_hosts
+    match_set_flags: src
+    jump: DROP
+  become: true
+  tags: portsentry
+
+- name: Copy portsentry config
   ansible.builtin.template:
     src: portsentry.conf.j2
     dest: /etc/portsentry/portsentry.conf
@@ -48,4 +58,6 @@
       - name: portsentry_udp
         set_option: bitmap:port range 0-65535
         items: "{{ portsentry_udp_ports.split(',') }}"
+      - name: portsentry_deny_hosts
+        set_option: hash:ip timeout 86400
   tags: portsentry
