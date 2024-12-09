@@ -193,21 +193,6 @@ BLOCK_TCP="{{ portsentry_block_tcp }}"
 # KILL_ROUTE option.
 ##
 
-# ipfwadm support for Linux
-#KILL_ROUTE="/sbin/ipfwadm -I -i deny -S $TARGET$ -o"
-#
-# ipfwadm support for Linux (no logging of denied packets)
-#KILL_ROUTE="/sbin/ipfwadm -I -i deny -S $TARGET$"
-#
-# ipchain support for Linux
-#KILL_ROUTE="/sbin/ipchains -I input -s $TARGET$ -j DENY -l"
-#
-# ipchain support for Linux (no logging of denied packets)
-#KILL_ROUTE="/sbin/ipchains -I input -s $TARGET$ -j DENY"
-#
-# iptables support for Linux
-KILL_ROUTE="/usr/sbin/ipset add portsentry_deny_hosts $TARGET$"
-#
 # iptables support for Linux with limit and LOG support. Logs only
 # a limited number of packets to avoid a denial of service attack.
 # KILL_ROUTE="/sbin/iptables -I INPUT -s $TARGET$ -j DROP && /sbin/iptables -I INPUT -s $TARGET$ -m limit --limit 3/minute --limit-burst 5 -j LOG --log-level DEBUG --log-prefix 'Portsentry: dropping: '"
@@ -265,7 +250,7 @@ KILL_HOSTS_DENY="ALL: $TARGET$ : DENY"
 #KILL_RUN_CMD_FIRST = "0"
 #
 #
-#KILL_RUN_CMD="/some/path/here/script $TARGET$ $PORT$ $MODE$"
+KILL_RUN_CMD="/usr/sbin/ipset add portsentry_deny_hosts $TARGET$"
 # for examples see /usr/share/doc/portsentry/examples/
 
 
