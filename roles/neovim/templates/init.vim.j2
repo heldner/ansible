@@ -114,6 +114,11 @@ set langmap=ёйцукенгшщзхъфывапролджэячсмитьбюЁ
 nmap <S-k> :bnext<CR>
 nmap <S-j> :bprev<CR>
 
+" insert datetime in debian way format
+map <F3> :put =strftime('%a, %d %b %Y %T %z')<CR>
+" run interactive python with current file
+map <F5> :!ipython3 -i -c '\%load %'
+
 " codeium settings
 let g:codeium_enabled = v:false
 let g:codeium_no_map_tab = v:true
