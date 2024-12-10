@@ -1,7 +1,35 @@
 ---
 - name: Install strongswan
   ansible.builtin.package:
-    name: strongswan
+    name:
+      - strongswan
+      - strongswan-swanctl
+      - libstrongswan-standard-plugins
+        #- strongswan-pki
     state: present
   become: true
   tags: strongswan
+
+- name: Copy swanctl config
+  ansible.builtin.template:
+    src: "swanctl_ikev2.conf.j2"
+    dest: "/etc/swanctl/swanctl.conf"
+      #owner: strongswan
+      #group: strongswan
+      #mode: "0640"
+  tags: strongswan
+  #notify: Restart strongswan-client
+  become: true
+  no_log: "{{ nolog | default('true') | bool }}"
+
+- name: Copy strongswan config
+  ansible.builtin.template:
+    src: "strongswan.conf.j2"
+    dest: "/etc/strongswan.conf"
+      #owner: strongswan
+      #group: strongswan
+      #mode: "0640"
+  tags: strongswan
+  #notify: Restart strongswan-client
+  become: true
+  no_log: "{{ nolog | default('true') | bool }}"
