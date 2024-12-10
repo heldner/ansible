@@ -47,6 +47,7 @@
     - proxychains
     - rofi
     - ssh
+    - slstatus
     - sxhkd
     - syncthing
     - tmux

@@ -1,0 +1,15 @@
+---
+- name: Download slstatus package
+  ansible.builtin.get_url:
+    url: https://github.com/heldner/slstatus-deb/releases/download/{{ slstatus_version }}/slstatus_{{ slstatus_version }}-2_amd64.deb
+    dest: /tmp/slstatus.deb
+    mode: '0644'
+  become: true
+  tags: slstatus
+
+- name: Install slstatus package
+  ansible.builtin.apt:
+    state: present
+    deb: /tmp/slstatus.deb
+  become: true
+  tags: slstatus
