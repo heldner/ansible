@@ -29,7 +29,8 @@
 - name: Drop portsentry ipset
   ansible.builtin.iptables:
     action: insert
-    chain: INPUT
+    table: raw
+    chain: PREROUTING
     match_set: portsentry_deny_hosts
     match_set_flags: src
     jump: DROP
