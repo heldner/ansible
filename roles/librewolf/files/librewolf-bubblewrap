@@ -51,4 +51,4 @@ exec bwrap \
      --share-net \
      --hostname mypc \
      --new-session \
-     /usr/share/librewolf/librewolf "$@"
+     /usr/share/librewolf/librewolf "$@" > /dev/null 2>&1

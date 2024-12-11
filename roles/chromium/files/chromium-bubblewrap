@@ -51,4 +51,4 @@ exec bwrap \
      --share-net \
      --new-session \
      --hostname mypc \
-     /usr/lib/ungoogled-chromium/chromium "$@"
+     /usr/lib/ungoogled-chromium/chromium "$@" > /dev/null 2>&1
