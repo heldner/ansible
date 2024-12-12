@@ -1,0 +1,3 @@
+---
+# @var webdav_directory:description: directory for webdav storage
+webdav_directory: /var/www/dav
