@@ -7,26 +7,20 @@
   loop:
     - sources.list.d/librewolf.list.list
     - trusted.gpg.d/librewolf.gpg
-  tags:
-    - browser
-    - librewolf
+  tags: [browser, librewolf]
 
 - name: Install extrepo package
   ansible.builtin.apt:
     state: present
     name: extrepo
   become: true
-  tags:
-    - browser
-    - librewolf
+  tags: [browser, librewolf]
 
 - name: Check librewolf repository enabled
   ansible.builtin.stat:
     path: /etc/apt/sources.list.d/extrepo_librewolf.sources
   register: _librewolf_repo_enabled
-  tags:
-    - browser
-    - librewolf
+  tags: [browser, librewolf]
 
 - name: Enable librewolf repository
   ansible.builtin.command:
@@ -34,9 +28,7 @@
   become: true
   when: not _librewolf_repo_enabled.stat.exists
   register: _librewolf_extrepo
-  tags:
-    - browser
-    - librewolf
+  tags: [browser, librewolf]
 
 - name: Update apt cache
   ansible.builtin.apt:
@@ -52,9 +44,7 @@
     state: present
     name: extrepo
   become: true
-  notify:
-    - Update alternatives, install librewolf
-    - Set default xdg browser librewolf
+  notify: Update alternatives, install librewolf
   tags:
     - browser
     - librewolf
@@ -76,9 +66,7 @@
     src: librewolf.desktop.j2
     dest: '{{ ansible_user_dir }}/.local/share/applications/librewolf.desktop'
     mode: '0644'
-  tags:
-    - browser
-    - librewolf
+  tags: [browser, librewolf]
 
 - name: Create dirs
   ansible.builtin.file:
@@ -88,12 +76,25 @@
   loop:
     - "{{ ansible_user_dir }}/.cache/librewolf"
     - "{{ ansible_user_dir }}/.librewolf"
-  tags:
-    - browser
-    - librewolf
+  tags: [browser, librewolf]
 
 - name: Flush librewolf handlers
   ansible.builtin.meta: flush_handlers
   tags:
     - browser
     - librewolf
+
+- name: Get default browser
+  ansible.builtin.command: xdg-settings get default-web-browser
+  changed_when: false
+  register: _default_browser
+  tags: [browser, librewolf]
+
+- name: Set default browser
+  ansible.builtin.assert:
+    that: true
+    quiet: true
+  changed_when: true
+  when: _default_browser.stdout != 'librewolf.desktop'
+  notify: Set default xdg browser librewolf
+  tags: [browser, librewolf]

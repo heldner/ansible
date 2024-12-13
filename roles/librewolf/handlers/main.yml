@@ -17,8 +17,7 @@
     - librewolf
 
 - name: Set default xdg browser librewolf
-  ansible.builtin.command: |
+  ansible.builtin.command:
     xdg-settings set default-web-browser librewolf.desktop
-  become: true
   tags:
     - librewolf
