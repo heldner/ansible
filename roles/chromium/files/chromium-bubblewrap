@@ -38,6 +38,7 @@ exec bwrap \
      --ro-bind-try /etc/fonts /etc/fonts \
      --ro-bind-try /etc/mime.types /etc/mime.types \
      --ro-bind-try /etc/alsa /etc/alsa \
+     --ro-bind-try ~/Pictures/Screenshots ~/Pictures/Screenshots \
      --tmpfs /tmp \
      --bind-try "$TEMPDIR" "$TEMPDIR" \
      --dir "$XDG_RUNTIME_DIR" \
