@@ -4,6 +4,7 @@
     state: present
     name:
       - nginx
+      - libnginx-mod-http-dav-ext
   tags: nginx
   become: true
 
@@ -70,6 +71,15 @@
     mode: 0644
   become: true
   notify: Restart nginx
+  tags: nginx
+
+- name: Create webdav dir
+  ansible.builtin.file:
+    state: directory
+    path: "{{ webdav_directory }}"
+    owner: www-data
+    mode: "0750"
+  become: true
   tags: nginx
 
 - name: Configure nginx

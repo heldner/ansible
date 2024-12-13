@@ -76,12 +76,14 @@ server {
   }
 
   location /dav {
-    root                  /var/tmp;
+    autoindex             on;
+    root                  {{ webdav_directory.split('/')[0:-1]|join('/') }};
     client_body_temp_path /tmp;
     dav_methods PUT DELETE MKCOL COPY MOVE;
+    dav_ext_methods PROPFIND OPTIONS;
     create_full_put_path  on;
-    dav_access            group:rw  all:r;
-    allow all;
+    client_max_body_size  0;
+    dav_access            user:rw group:rw  all:r;
     auth_basic           "Webdav - Password Required";
     auth_basic_user_file /etc/radicale/passwdfile;
   }
