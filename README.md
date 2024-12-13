@@ -42,5 +42,5 @@ ansible-playbook test.yml --vault-password-file path_to/vault_secret.sh
 Encrypt sensitive data with ansible-vault:
 
 ```shell
-ansible-vault encrypt_string $string
+ansible-vault encrypt_string $string -n fredsSecretString
 ```

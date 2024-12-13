@@ -48,6 +48,7 @@
     - rofi
     - ssh
     - slstatus
+    - spt
     - sxhkd
     - syncthing
     - tmux
