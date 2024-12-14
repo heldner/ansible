@@ -46,9 +46,10 @@
     - podman
     - proxychains
     - rofi
-    - ssh
+    - slock
     - slstatus
     - spt
+    - ssh
     - sxhkd
     - syncthing
     - tmux

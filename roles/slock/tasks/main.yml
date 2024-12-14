@@ -1,0 +1,15 @@
+---
+- name: Download slock package
+  ansible.builtin.get_url:
+    url: https://github.com/heldner/slock-deb/releases/download/{{ slock_version }}/slock_{{ slock_version }}-2_amd64.deb
+    dest: /tmp/slock.deb
+    mode: '0644'
+  become: true
+  tags: slock
+
+- name: Install slock package
+  ansible.builtin.apt:
+    state: present
+    deb: /tmp/slock.deb
+  become: true
+  tags: slock
