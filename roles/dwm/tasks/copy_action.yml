@@ -2,6 +2,6 @@
 - name: Copy dwm action
   ansible.builtin.copy:
     src: "{{ item }}"
-    dest: '{{ ansible_user_dir }}/.dwm/actions/{{ item }}'
+    dest: '{{ ansible_user_dir }}/.dwm/actions/{{ item | basename }}'
     mode: '0755'
   loop: '{{ dwm_actions }}'

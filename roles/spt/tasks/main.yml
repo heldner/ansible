@@ -13,3 +13,12 @@
     deb: /tmp/spt.deb
   become: true
   tags: spt
+
+- name: Copy mpv action for dwm
+  ansible.builtin.import_role:
+    name: dwm
+    tasks_from: copy_action
+  vars:
+    dwm_actions:
+      - action/spt
+  tags: spt
