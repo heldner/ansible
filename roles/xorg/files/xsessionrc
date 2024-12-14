@@ -12,9 +12,9 @@ urxvtd -q -f -o
 export GTK_THEME='Adwaita-dark'
 
 # use x11 ssh askpass
-if [ -x /usr/local/bin/dmenu_pass ]; then
-    export SSH_ASKPASS=/usr/local/bin/dmenu_pass
-    export SUDO_ASKPASS=/usr/local/bin/dmenu_pass
+if command -v dmenu_pass >/dev/null; then
+    export SSH_ASKPASS=/usr/bin/dmenu_pass
+    export SUDO_ASKPASS=/usr/bin/dmenu_pass
     export SSH_ASKPASS_REQUIRE=force
 fi
 
@@ -25,10 +25,14 @@ enable_natural_scroll
 amixer set Capture nocap >/dev/null
 
 # key combiantions
-SXHKD_SHELL=/bin/sh sxhkd &
+if command -v sxhkd >/dev/null; then
+    SXHKD_SHELL=/bin/sh setsid -f sxhkd
+fi
 
 # dwm status
-slstatus &
+if command -v slstatus >/dev/null; then
+    slstatus &
+fi
 
 # language
 export LC_ALL=en_US.UTF-8
