@@ -1,15 +1,7 @@
 ---
-- name: Download dmenu package
-  ansible.builtin.get_url:
-    url: https://github.com/heldner/dmenu-deb/releases/download/{{ dmenu_version }}/dmenu_{{ dmenu_version }}-2_amd64.deb
-    dest: /tmp/dmenu.deb
-    mode: '0644'
-  become: true
-  tags: dmenu
-
 - name: Install dmenu package
   ansible.builtin.apt:
-    state: present
-    deb: /tmp/dmenu.deb
+    deb: https://github.com/heldner/dmenu-deb/releases/download/{{ dmenu_version }}/dmenu_{{ dmenu_deb_version }}_amd64.deb
   become: true
+  when: ansible_facts.packages['dmenu'][0]['version'] != dmenu_deb_version
   tags: dmenu

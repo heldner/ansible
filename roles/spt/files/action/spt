@@ -1,13 +1,12 @@
 #!/bin/sh
 
-set -e
-
 if [ "$1" = "off" ]; then
   pkill spt
   notify-send "spt" "stopped"
   exit 0
 elif [ "$1" = "pause" ]; then
-  pkill -USR2 spt
+  pkill -SIGUSR2 spt
+  pkill -SIGUSR1 spt
 fi
 
 if pgrep -fx spt > /dev/null; then

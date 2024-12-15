@@ -1,24 +1,9 @@
 ---
-- name: Download dwm package
-  ansible.builtin.get_url:
-    url: https://github.com/heldner/dwm-deb/releases/download/{{ dwm_version }}/dwm_{{ dwm_version }}-2_amd64.deb
-    dest: /tmp/dwm.deb
-    mode: '0644'
-  become: true
-  tags: dwm
-
 - name: Install dwm package
   ansible.builtin.apt:
-    state: present
-    deb: /tmp/dwm.deb
+    deb: https://github.com/heldner/dwm-deb/releases/download/{{ dwm_version }}/dwm_{{ dwm_deb_version }}_amd64.deb
+  when: ansible_facts.packages['dwm'][0]['version'] != dwm_deb_version
   become: true
-  tags: dwm
-
-- name: Update wallpaper every hour
-  ansible.builtin.cron:
-    name: update wallpaper
-    job: '{{ dmw_home }}/actions/update-wallpaper --cron'
-    minute: '0'
   tags: dwm
 
 - name: Create dwm actions dir
@@ -34,4 +19,11 @@
     dest: '{{ ansible_user_dir }}/.dwm/actions/{{ item.path }}'
     mode: '0755'
   with_community.general.filetree: "files/actions/"
+  tags: dwm
+
+- name: Update wallpaper every hour
+  ansible.builtin.cron:
+    name: update wallpaper
+    job: '{{ dmw_home }}/actions/update-wallpaper --cron'
+    minute: '0'
   tags: dwm

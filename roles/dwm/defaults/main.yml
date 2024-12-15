@@ -1,3 +1,4 @@
 ---
 dwm_version: '6.4'
+dwm_deb_version: '{{ dwm_version }}-2'
 dmw_home: '{{ ansible_user_dir }}/.dwm'

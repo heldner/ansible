@@ -1,2 +1,3 @@
 ---
 dmenu_version: 5.3
+dmenu_deb_version: '{{ dmenu_version }}-2'

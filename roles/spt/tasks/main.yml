@@ -1,16 +1,8 @@
 ---
-- name: Download spt package
-  ansible.builtin.get_url:
-    url: https://github.com/heldner/spt-deb/releases/download/{{ spt_version }}/spt_{{ spt_version }}-2_amd64.deb
-    dest: /tmp/spt.deb
-    mode: '0644'
-  become: true
-  tags: spt
-
 - name: Install spt package
   ansible.builtin.apt:
-    state: present
-    deb: /tmp/spt.deb
+    deb: https://github.com/heldner/spt-deb/releases/download/{{ spt_version }}/spt_{{ spt_deb_version }}_amd64.deb
+  when: ansible_facts.packages['spt'][0]['version'] != spt_deb_version
   become: true
   tags: spt
 

@@ -1,3 +1,0 @@
-#!/bin/sh
-[ "$1" = "off" ] && ( pkill spt && exit 0 )
-nohup spt > /dev/null 2>&1 &
