@@ -8,6 +8,7 @@
     - apt
     - console-setup
     - findmydeviceserver
+    - forgejo
     - freshrss
     - role: fwknop
       vars:

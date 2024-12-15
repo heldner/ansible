@@ -1,0 +1,3 @@
+---
+forgejo_version: 9.0.3
+forgejo_deb_version: '{{ forgejo_version }}-2'

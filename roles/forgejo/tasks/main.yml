@@ -1,0 +1,7 @@
+---
+- name: Install a forgejo from the github
+  ansible.builtin.apt:
+    deb: https://github.com/heldner/forgejo-deb/releases/download/{{ forgejo_version }}/forgejo_{{ forgejo_deb_version}}_amd64.deb
+  become: true
+  when: ansible_facts.packages['forgejo'][0]['version'] != forgejo_deb_version
+  tags: forgejo
