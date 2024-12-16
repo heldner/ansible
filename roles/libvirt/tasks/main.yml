@@ -55,6 +55,12 @@
   become: true
   tags: libvirt
 
+- name: Create Vms directory
+  ansible.builtin.file:
+    state: directory
+    path: '{{ libvirt_vms_dir }}'
+  tags: libvirt
+
 - name: Define a new storage pool
   community.libvirt.virt_pool:
     command: define

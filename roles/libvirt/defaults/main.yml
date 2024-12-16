@@ -1,0 +1,2 @@
+---
+libvirt_vms_dir: "{{ ansible_user_dir + '/Vms' }}"
