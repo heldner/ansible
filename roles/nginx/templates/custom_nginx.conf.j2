@@ -1,13 +1,17 @@
 upstream v2ray {
-    server unix:{{ v2ray_server_socket }};
+  server unix:{{ v2ray_server_socket }};
 }
 
 upstream fmd {
-    server unix:/dev/shm/fmd.sock;
+  server unix:/dev/shm/fmd.sock;
 }
 
 upstream radicale {
   server 127.0.0.1:5232;
+}
+
+upstream forgejo {
+  server 127.0.0.1:3000;
 }
 
 server {
@@ -34,6 +38,22 @@ server {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_read_timeout 5d;
     access_log off;
+  }
+
+  location /code/ { # Replace /code here with your subpath
+      rewrite ^ $request_uri;
+      rewrite ^/code(/.*) $1 break;
+      return 400;
+      proxy_pass http://forgejo$uri;
+
+      proxy_set_header Connection $http_connection;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+
+      client_max_body_size 512M;
   }
 
   # Proxy to findmydevice
