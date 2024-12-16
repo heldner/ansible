@@ -6,7 +6,7 @@
   become: true
   tags: spt
 
-- name: Copy mpv action for dwm
+- name: Copy spt action for dwm
   ansible.builtin.import_role:
     name: dwm
     tasks_from: copy_action

@@ -4,8 +4,8 @@ CMD="$*"
 OPTS='-t '
 
 ssh_cmd () {
-    if [ -x "$(which rtmux)" ]; then
-        echo 'rtmux'
+    if [ -x "$(which autossh)" ]; then
+        echo 'autossh -M 0'
     else
         echo 'ssh'
     fi
