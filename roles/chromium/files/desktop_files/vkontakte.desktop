@@ -4,6 +4,6 @@ Version=1.0
 Terminal=false
 Type=Application
 Name=Vkontakte
-Exec=/usr/bin/chromium-bubblewrap --force-dark-mode --app=https://vk.com
+Exec=/usr/bin/chromium-bubblewrap --profile-directory=Default --force-dark-mode --app=https://vk.com
 Icon=vk
 Actions=Explore;Subscriptions

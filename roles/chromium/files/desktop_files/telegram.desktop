@@ -4,6 +4,6 @@ Version=1.0
 Terminal=false
 Type=Application
 Name=Telegram Web
-Exec=/usr/bin/chromium-bubblewrap --app=https://web.telegram.org/
+Exec=/usr/bin/chromium-bubblewrap --profile-directory=Default --app=https://web.telegram.org/
 Icon=telegram
 Actions=Explore;Subscriptions

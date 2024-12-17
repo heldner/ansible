@@ -4,6 +4,6 @@ Version=1.0
 Terminal=false
 Type=Application
 Name=VK Видео
-Exec=/usr/bin/chromium-bubblewrap --force-dark-mode --app=https://vkvideo.ru
+Exec=/usr/bin/chromium-bubblewrap --profile-directory=Default --force-dark-mode --app=https://vkvideo.ru
 Icon=vkvideo
 Actions=Explore;Subscriptions
