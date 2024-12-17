@@ -4,15 +4,12 @@
     state: directory
     dest: '{{ ansible_user_dir }}/.urxvt/ext'
     mode: '0755'
-  tags:
-    - xorg
-    - urxvt
+  tags: [xorg, urxvt]
 
 - name: Copy urxvt extensions
   ansible.builtin.copy:
     src: 'urxvt-vtwheel'
     dest: '{{ ansible_user_dir }}/.urxvt/ext/vtwheel'
     mode: '0644'
-  tags:
-    - xorg
-    - urxvt
+  notify: set x-terminal-emulator urxvt
+  tags: [xorg, urxvt]
