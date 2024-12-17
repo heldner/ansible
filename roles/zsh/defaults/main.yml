@@ -13,4 +13,6 @@ zplug_plugins:
     opts: "use:speedread.plugin.zsh"
   - name: joshskidmore/zsh-fzf-history-search
     config:
-      - ZSH_FZF_HISTORY_SEARCH_FZF_ARGS="+s +m -x -e --preview-window=hidden --layout reverse"
+      - >-
+        ZSH_FZF_HISTORY_SEARCH_FZF_ARGS="+s +m -x
+        --preview-window=hidden --layout=reverse --color=hl+:magenta"

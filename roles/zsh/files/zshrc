@@ -38,6 +38,12 @@ load_file .zplug/init.zsh
 load_file .zplugrc
 load_file .p10k.zsh
 
+# get new binaries into PATH
+zstyle ':completion:*' rehash true
+
+# show menu entries on completion
+zstyle ':completion:*' menu yes=long select
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
