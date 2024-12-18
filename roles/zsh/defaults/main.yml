@@ -15,4 +15,4 @@ zplug_plugins:
     config:
       - >-
         ZSH_FZF_HISTORY_SEARCH_FZF_ARGS="+s +m -x
-        --preview-window=hidden --layout=reverse --color=hl+:magenta"
+        --preview-window=hidden --layout=reverse --color=hl+:yellow"
