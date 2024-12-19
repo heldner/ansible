@@ -16,15 +16,16 @@ status () {
 }
 
 off () {
-    xrandr --output $OUTPUT --off
+    xrandr --output "$OUTPUT" --off
     exit 0
 }
 
 on () {
     xrandr \
-        --output $OUTPUT \
+        --output "$OUTPUT" \
         --right-of LVDS-1 \
-        --mode $MODE
+        --mode "$MODE" \
+        --gamma 0.8:0.8:0.8
 }
 
 toggle () {
@@ -35,8 +36,8 @@ toggle () {
     fi
 }
 
-failed () {
-    echo "Couldn know your command"
+usage() {
+    echo "Provide command [on|off]"
     exit 1
 }
 
@@ -44,5 +45,5 @@ case "$1" in
     status) status;;
     off) off;;
     on) on;;
-    *) failed;;
+    *) usage;;
 esac
