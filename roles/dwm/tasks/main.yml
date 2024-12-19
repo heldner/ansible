@@ -1,8 +1,12 @@
 ---
 - name: Install dwm package
   ansible.builtin.apt:
-    deb: https://github.com/heldner/dwm-deb/releases/download/{{ dwm_version }}/dwm_{{ dwm_deb_version }}_amd64.deb
-  when: ansible_facts.packages['dwm'][0]['version'] != dwm_deb_version
+    deb: "{{ 'https://github.com/heldner/dwm-deb/releases/download/' +
+      dwm_version + '/dwm_' + dwm_deb_version + '_amd64.deb' }}"
+  when: >
+    (ansible_facts.packages['dwm'] is defined and
+    ansible_facts.packages['dwm'][0]['version'] != dwm_deb_version) or
+    ansible_facts.packages['dwm'] is not defined
   become: true
   tags: dwm
 
