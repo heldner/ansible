@@ -1,16 +1,26 @@
 #!/bin/sh
+#
+# copy login to clipboard and notify
 
 pass_find () {
-    cd "${HOME}/.password-store" && \
+  cd "${HOME}/.password-store" && \
     find . \
-        -regextype posix-awk \
-        -regex ".*gpg$" \
-        -type f \
+    -regextype posix-awk \
+    -regex ".*gpg$" \
+    -type f \
     | sed -e 's:\.gpg$::' -e 's:\.\/::'
 }
 
-password=$(pass_find | dmenu -p login:)
-[ -z "$password" ] && exit
-pass "$password" \
-  | awk '/^login:/ {printf $2}' \
-  | xclip -selection clipboard
+pass_login() {
+  pass "$key" \
+    | awk '/^login:/ {printf $2}' \
+    | xclip -selection clipboard
+}
+
+key=$(pass_find | dmenu -p login:)
+[ -z "$key" ] && exit 0
+
+if pass_login; then
+  notify-send -i /usr/share/icons/gnome/32x32/status/dialog-password.png \
+    -u low "login" "$key copied"
+fi
