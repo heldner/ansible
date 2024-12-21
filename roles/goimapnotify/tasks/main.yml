@@ -1,0 +1,13 @@
+---
+- name: Create goimapnotify config dir
+  ansible.builtin.file:
+    state: directory
+    dest: '{{ ansible_user_dir }}/.config/goimapnotify'
+  tags: goimapnotify
+
+- name: Generate goimapnotify config
+  ansible.builtin.template:
+    src: goimapnotify.yaml.j2
+    dest: '{{ ansible_user_dir }}/.config/goimapnotify/goimapnotify.yaml'
+    mode: "0640"
+  tags: goimapnotify

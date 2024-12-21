@@ -37,9 +37,9 @@ fi
 # language
 export LC_ALL=en_US.UTF-8
 
-# imapfilter
-if command -v imapfilter >/dev/null; then
-    imapfilter -c ~/.imapfilter/yandex.lua >> ~/.imapfilter/log 2>&1 &
+# goimapnotify
+if command -v goimapnotify >/dev/null; then
+    setsid -f goimapnotify &
 fi
 
 # update wallpaper

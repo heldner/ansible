@@ -23,12 +23,12 @@
       vars:
         client: true
     - git
-    - htop
+    - goimapnotify
+    - gpg
     - role: gocryptfs
       when: enable_gocryptfs | default('false') | bool
-    - gpg
     - hardending
-    - imapfilter
+    - htop
     - iptables
     - isync
     - iwd
