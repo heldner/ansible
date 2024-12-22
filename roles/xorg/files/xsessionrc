@@ -37,11 +37,6 @@ if command -v slstatus >/dev/null; then
     slstatus &
 fi
 
-# goimapnotify
-if command -v goimapnotify >/dev/null; then
-    setsid -f goimapnotify &
-fi
-
 # update wallpaper
 if [ -f "${HOME}/.dwm/actions/update-wallpaper" ]; then
     "${HOME}/.dwm/actions/update-wallpaper"
