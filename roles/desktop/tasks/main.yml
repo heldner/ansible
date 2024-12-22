@@ -29,4 +29,5 @@
   with_items:
     - 'alsamixer.desktop'
     - 'pulsemixer.desktop'
+    - 'wireshark.desktop'
   tags: desktop
