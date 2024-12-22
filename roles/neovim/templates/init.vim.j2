@@ -41,12 +41,10 @@ set nobackup
 set noswapfile
 
 "Автоматическое удаление пробелов в конце строки
-autocmd BufWritePre * :%s/\s\+$//e
-"Перед сохранением вырезаем пробелы на концах (только в .py файлах)
-"autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
+autocmd BufWritePre * if index(['markdown', 'vim'], &ft) < 0 | :%s/\s\+$//e
 
 "Автоподгрузка ~/.vimrc
-"autocmd! bufwritepost {{ neovim_home }}/init.vim source %
+autocmd! bufwritepost {{ neovim_home }}/init.vim source %
 
 " Назначить на Esc выход из терминала
 tnoremap <Esc> <C-\><C-n>
