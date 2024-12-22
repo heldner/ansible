@@ -38,10 +38,9 @@
   tags: isync
 
 - name: Copy update-mail script
-  ansible.builtin.template:
-    src: update-mail.j2
+  ansible.builtin.file:
+    state: absent
     dest: '{{ ansible_user_dir }}/.local/bin/update-mail'
-    mode: "0755"
   tags: isync
 
 - name: Add cron update mail
@@ -61,10 +60,8 @@
       -o color=TRUE %s; copiousoutput;
   tags: isync
 
-- name: Add cronjob mbsync
-  ansible.builtin.cron:
-    state: absent
-    name: sync mail
-    job: '{{ ansible_user_dir }}/.local/bin/update-mail'
-    minute: '*/5'
+- name: Fill mailcap
+  ansible.builtin.copy:
+    src: watch_mail_dir
+    dest: '{{ ansible_user_dir }}/.local/bin/watch_mail_dir'
   tags: isync

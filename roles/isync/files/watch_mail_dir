@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# watch mail directory and update mail counter file
+
+MAIL_COUNTER="$HOME/.new_mail_counter"
+MAILDIR=${HOME}/Private/Mail
+
+mail_watcher () {
+  inotifywait \
+    --recursive "$MAILDIR" \
+    --event create,delete \
+    --include ".*new" >/dev/null 2>&1
+}
+
+update_counter() {
+  find ~/Private/Mail/ -type f -regex '.*inbox\/new.*' \
+    | wc -l > "$MAIL_COUNTER"
+}
+
+while update_counter; do
+  mail_watcher
+  if readlink -e "$MAILDIR" > /dev/null; then
+    sleep 0.5
+  else
+    sleep 60
+  fi
+done
