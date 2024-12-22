@@ -1,4 +1,17 @@
 ---
+- name: Install goimapnotify package
+  ansible.builtin.apt:
+    deb: '{{ "https://github.com/heldner/goimapnotify-deb/releases/download/" +
+      goimapnotify_version | string + "/goimapnotify_" +
+      goimapnotify_deb_version | string + "_amd64.deb" }}'
+  become: true
+  when: >
+    (ansible_facts.packages['goimapnotify'] is defined and
+    ansible_facts.packages['goimapnotify'][0]['version'] !=
+    goimapnotify_deb_version) or
+    ansible_facts.packages['goimapnotify'] is not defined
+  tags: goimapnotify
+
 - name: Create goimapnotify config dir
   ansible.builtin.file:
     state: directory
@@ -10,4 +23,12 @@
     src: goimapnotify.yaml.j2
     dest: '{{ ansible_user_dir }}/.config/goimapnotify/goimapnotify.yaml'
     mode: "0640"
+  tags: goimapnotify
+
+- name: Start goimapnotify service
+  ansible.builtin.systemd:
+    scope: user
+    name: 'goimapnotify'
+    enabled: true
+    state: started
   tags: goimapnotify

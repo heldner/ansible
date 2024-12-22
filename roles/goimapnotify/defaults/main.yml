@@ -1,0 +1,4 @@
+---
+goimapnotify_version: 2.4
+goimapnotify_deb_version: '{{ goimapnotify_version }}-2'
+# @var goimapnotify_mboxes:description: hashmap with configuration

@@ -1,0 +1,18 @@
+---
+configurations:
+{% for mailbox in goimapnotify_mboxes %}
+    - host: {{ mailbox.imap_server }}
+      port: 993
+      tls: true
+      tlsOptions:
+          rejectUnauthorized: true
+          starttls: false
+      username: {{ mailbox.address }}
+      alias: {{ mailbox.name }}
+      passwordCMD: "{{ mailbox.pass_cmd }}"
+      xoAuth2: false
+      boxes:
+          - mailbox: INBOX
+            onNewMail: 'mbsync {{ mailbox.name }} >/dev/null'
+            onNewMailPost: SKIP
+{% endfor %}
