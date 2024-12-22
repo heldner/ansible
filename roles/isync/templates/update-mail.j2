@@ -5,6 +5,7 @@ USER_ID=$(id -u $USER)
 export HOME=/home/$USER
 MBSYNC=/usr/bin/mbsync
 TIMEOUT='45s'
+MAIL_COUNTER="$HOME/.new_mail_counter"
 
 run_mbsync() {
     if [ -d "/run/user/$USER_ID" ]; then
@@ -12,7 +13,13 @@ run_mbsync() {
     fi
 }
 
+update_counter() {
+    find ~/Private/Mail/ -type f -regex '.*inbox\/new.*' \
+        | wc -l > "$MAIL_COUNTER"
+}
+
 run_mbsync
+update_counter
 
 exit 0
 

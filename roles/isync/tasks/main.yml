@@ -46,6 +46,7 @@
 
 - name: Add cron update mail
   ansible.builtin.cron:
+    state: absent
     name: update mail
     job: '{{ ansible_user_dir }}/.local/bin/update-mail'
     minute: '*/15'
@@ -54,8 +55,10 @@
 - name: Fill mailcap
   ansible.builtin.copy:
     dest: '{{ ansible_user_dir }}/Private/Mail/.mailcap'
-    content:
-      text/html; w3m -I %{charset} -T text/html; copiousoutput;
+    content: >
+      text/html; w3m -I %{charset} -T text/html -graph -F -no-cookie
+      -o confirm_qq=FALSE -o use_wide=TRUE -o display_link=TRUE
+      -o color=TRUE %s; copiousoutput;
   tags: isync
 
 - name: Add cronjob mbsync
