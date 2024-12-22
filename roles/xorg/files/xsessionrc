@@ -1,6 +1,9 @@
 # nobeep
 xset -b
 
+# language
+export LC_ALL=en_US.UTF-8
+
 # screensaver
 xautolock &
 screensaver_disabler
@@ -26,16 +29,13 @@ amixer set Capture nocap >/dev/null
 
 # key combiantions
 if command -v sxhkd >/dev/null; then
-    SXHKD_SHELL=/bin/sh setsid -f sxhkd
+    SXHKD_SHELL=/bin/sh sxhkd &
 fi
 
 # dwm status
 if command -v slstatus >/dev/null; then
     slstatus &
 fi
-
-# language
-export LC_ALL=en_US.UTF-8
 
 # goimapnotify
 if command -v goimapnotify >/dev/null; then
@@ -47,10 +47,7 @@ if [ -f "${HOME}/.dwm/actions/update-wallpaper" ]; then
     "${HOME}/.dwm/actions/update-wallpaper"
 fi
 
-# run isync when local dirs changed
-watch_mail_dir
-
 # run tool for corsair mouse
 if command -v ckb-next >/dev/null; then
-    setsid -f ckb-next -b >/dev/null 2>&1
+    ckb-next -b >/dev/null 2>&1 &
 fi

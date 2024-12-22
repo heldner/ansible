@@ -6,8 +6,8 @@ if [ ! -f "$DWM" ]; then
     exit 1
 fi
 
-if [ ! -d "~/.dwm" ]; then
-    mkdir ~/.dwm
+if [ ! -d "${HOME}/.dwm" ]; then
+    mkdir "${HOME}/.dwm"
 fi
 
 while true; do
