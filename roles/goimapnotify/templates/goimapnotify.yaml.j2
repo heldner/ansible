@@ -14,5 +14,5 @@ configurations:
       boxes:
           - mailbox: INBOX
             onNewMail: 'mbsync {{ mailbox.name }} >/dev/null'
-            onNewMailPost: SKIP
+            onNewMailPost: 'update-mail-counter'
 {% endfor %}

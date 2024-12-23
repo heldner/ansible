@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# update mail counter file
+
+MAIL_COUNTER="$HOME/.new_mail_counter"
+MAILDIR=${HOME}/Private/Mail
+
+update_counter() {
+  find "$MAILDIR" -type f -regex '.*inbox\/new.*' \
+    | wc -l > "$MAIL_COUNTER"
+}
+
+update_counter

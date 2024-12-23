@@ -1,2 +1,7 @@
 ---
-# handlers file for goimapnotify
+- name: Restart goimapnotify
+  ansible.builtin.systemd:
+    scope: user
+    name: goimapnotify
+    state: restarted
+  tags: goimapnotify

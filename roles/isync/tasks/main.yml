@@ -37,20 +37,6 @@
       path: '{{ ansible_user_dir }}/.mbsyncrc'
   tags: isync
 
-- name: Copy update-mail script
-  ansible.builtin.file:
-    state: absent
-    dest: '{{ ansible_user_dir }}/.local/bin/update-mail'
-  tags: isync
-
-- name: Add cron update mail
-  ansible.builtin.cron:
-    state: absent
-    name: update mail
-    job: '{{ ansible_user_dir }}/.local/bin/update-mail'
-    minute: '*/15'
-  tags: isync
-
 - name: Fill mailcap
   ansible.builtin.copy:
     dest: '{{ ansible_user_dir }}/Private/Mail/.mailcap'
@@ -60,8 +46,12 @@
       -o color=TRUE %s; copiousoutput;
   tags: isync
 
-- name: Fill mailcap
+- name: Copy update scripts
   ansible.builtin.copy:
-    src: watch_mail_dir
-    dest: '{{ ansible_user_dir }}/.local/bin/watch_mail_dir'
+    src: '{{ item }}'
+    dest: '{{ ansible_user_dir }}/.local/bin/{{ item }}'
+    mode: '0755'
+  loop:
+    - watch_mail_dir
+    - update-mail-counter
   tags: isync
