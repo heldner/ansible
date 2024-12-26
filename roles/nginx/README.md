@@ -6,7 +6,7 @@ Install and configure nginx with ssl support
 
 - [Requirements](#requirements)
 - [Default Variables](#default-variables)
-  - [webdav_directory](#webdav_directory)
+  - [nginx_webdav_directory](#nginx_webdav_directory)
 - [Discovered Tags](#discovered-tags)
 - [Dependencies](#dependencies)
 - [License](#license)
@@ -20,14 +20,14 @@ Install and configure nginx with ssl support
 
 ## Default Variables
 
-### webdav_directory
+### nginx_webdav_directory
 
 directory for webdav storage
 
 #### Default value
 
 ```YAML
-webdav_directory: /var/www/dav
+nginx_webdav_directory: /var/www/dav
 ```
 
 ## Discovered Tags

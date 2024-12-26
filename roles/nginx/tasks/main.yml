@@ -15,13 +15,23 @@
   become: true
   tags: nginx
 
-- name: Allow ssh
+- name: Drop portsentry ipset
+  ansible.builtin.iptables:
+    action: insert
+    table: raw
+    chain: PREROUTING
+    protocol: tcp
+    destination_ports: [80, 443]
+    jump: NOTRACK
+  become: true
+  tags: portsentry
+
+- name: "Iptables: allow http and https"
   ansible.builtin.iptables:
     action: insert
     chain: INPUT
     protocol: tcp
-    destination_ports: [80,443]
-    ctstate: NEW
+    destination_ports: [80, 443]
     jump: ACCEPT
   become: true
   tags: nginx
@@ -30,7 +40,7 @@
   ansible.builtin.file:
     state: directory
     path: "/etc/nginx/ssl"
-    mode: '0755'
+    mode: "0755"
   become: true
   tags: nginx
 
@@ -68,7 +78,7 @@
   ansible.builtin.template:
     src: "nginx.conf.j2"
     dest: "/etc/nginx/nginx.conf"
-    mode: 0644
+    mode: "0644"
   become: true
   notify: Restart nginx
   tags: nginx
@@ -76,7 +86,7 @@
 - name: Create webdav dir
   ansible.builtin.file:
     state: directory
-    path: "{{ webdav_directory }}"
+    path: "{{ nginx_webdav_directory }}"
     owner: www-data
     mode: "0750"
   become: true
