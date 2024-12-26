@@ -5,3 +5,9 @@
     name: goimapnotify
     state: restarted
   tags: goimapnotify
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    scope: user
+    daemon_reload: true
+  tags: goimapnotify

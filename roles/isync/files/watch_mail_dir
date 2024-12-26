@@ -3,13 +3,13 @@
 # watch mail directory and update mail counter file
 
 MAIL_COUNTER="$HOME/.new_mail_counter"
-MAILDIR=${HOME}/Private/Mail
+MAILDIR="${HOME}/Private/Mail"
 
 mail_watcher () {
   inotifywait \
     --recursive "$MAILDIR" \
-    --event create,delete \
-    --include ".*new" >/dev/null 2>&1
+    --event DELETE,create \
+    --include ".*cur" >/dev/null 2>&1
 }
 
 update_counter() {
@@ -17,7 +17,12 @@ update_counter() {
     | wc -l > "$MAIL_COUNTER"
 }
 
-while update_counter; do
+sync_mail() {
+  mbsync -a >/dev/null 2>&1
+}
+
+while sync_mail; do
+  update_counter
   mail_watcher
   if readlink -e "$MAILDIR" > /dev/null; then
     sleep 0.5
