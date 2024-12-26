@@ -97,7 +97,7 @@ server {
 
   location /dav {
     autoindex             on;
-    root                  {{ webdav_directory.split('/')[0:-1]|join('/') }};
+    root                  {{ nginx_webdav_directory.split('/')[0:-1]|join('/') }};
     client_body_temp_path /tmp;
     dav_methods PUT DELETE MKCOL COPY MOVE;
     dav_ext_methods PROPFIND OPTIONS;
