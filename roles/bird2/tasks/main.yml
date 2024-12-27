@@ -1,0 +1,30 @@
+---
+- name: Install bird2 package
+  ansible.builtin.package:
+    state: present
+    name: bird2
+  tags: bird2
+  become: true
+
+- name: Setup bird2 config
+  template:
+    src: bird.conf.j2
+    dest: /etc/bird/bird.conf
+    mode: "0644"
+    owner: root
+    group: root
+  notify: Restart bird
+  tags: bird2
+  become: true
+
+- name: Restart bird
+  ansible.builtin.service:
+    name: bird
+    state: started
+    enabled: true
+  tags: bird2
+  become: true
+
+- name: Flush bird2 handlers
+  ansible.builtin.meta: flush_handlers
+  tags: bird2

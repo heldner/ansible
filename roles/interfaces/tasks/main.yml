@@ -3,12 +3,12 @@
   template:
     src: interfaces.j2
     dest: /etc/network/interfaces
-    mode: "0644"
+    mode: "0640"
     owner: root
     group: root
   when: interfaces is defined
   tags: interfaces
-  become: yes
+  become: true
 
     #- name: "Check if resolvconf is installed"
     #  stat:

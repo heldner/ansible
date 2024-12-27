@@ -1,0 +1,60 @@
+log syslog all;
+#debug protocols all;
+
+router id {{ ansible_host }};
+
+protocol device {
+  scan time 300;
+};
+
+protocol kernel kernel4 {
+  ipv4 {
+    export all;
+    import none;
+  };
+}
+
+filter simple_bgp_in_antifilter {
+  ifname = "dummy0";
+  accept;
+}
+filter bgp_in_antifilter {
+  if net ~ [ 161.35.84.0/22+, 8.8.8.0/24+, 1.1.1.0/24+ ] then reject;
+  if (65432, 400) ~ bgp_community then {
+    ifname = "dummy0";
+    accept;
+  }
+  reject;
+}
+
+filter bgp_in_antifilter_network {
+    if net ~ [ 161.35.84.0/22+, 8.8.8.0/24+, 1.1.1.0/24+ ] then reject;
+    if ((65444, 700) ~ bgp_community,
+        (65444, 710) ~ bgp_community) then {
+       ifname = "dummy0";
+       accept;
+    }
+    reject;
+}
+
+protocol bgp antifilter {
+  local as 65430;
+  neighbor 45.154.73.71 as 65432;
+  multihop;
+  hold time 240;
+  ipv4 {
+    import filter simple_bgp_in_antifilter;
+    export none;
+  };
+}
+
+protocol bgp antifilter_network {
+  local as 64999;
+  neighbor 45.148.244.55 as 65444;
+  multihop;
+  hold time 240;
+  ipv4 {
+    import all; #filter bgp_in_antifilter_network;
+    export none;
+  };
+}

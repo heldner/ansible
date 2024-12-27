@@ -7,6 +7,7 @@
   roles:
     - apt
     - acpi
+    - bird2
     - bluetooth
     - byedpi
     - common
@@ -29,6 +30,7 @@
       when: enable_gocryptfs | default('false') | bool
     - hardending
     - htop
+    - interfaces
     - iptables
     - isync
     - iwd
