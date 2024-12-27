@@ -15,6 +15,18 @@
       "port": "{{ v2ray_http_port }}",
       "protocol": "http",
       "settings": {}
+    },
+    {
+      "port": 1082,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "network": "tcp,udp",
+        "followRedirect": true
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": ["http", "tls"]
+      }
     }
   ],
   "outbounds": [
