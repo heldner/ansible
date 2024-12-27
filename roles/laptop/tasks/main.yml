@@ -24,21 +24,3 @@
     minute: '*/5'
   become: true
   tags: laptop
-
-- name: Locker service machine before suspend
-  ansible.builtin.template:
-    src: slock.service.j2
-    dest: /lib/systemd/system/slock.service
-    owner: 'root'
-    group: 'root'
-    mode: '0644'
-  become: true
-  tags: laptop
-
-- name: Enable slock unit
-  ansible.builtin.service:
-    name: slock
-    enabled: true
-    daemon_reload: true
-  become: true
-  tags: laptop
