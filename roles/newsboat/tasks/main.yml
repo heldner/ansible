@@ -22,11 +22,14 @@
     mode: "0644"
   tags: newsboat
 
-- name: Copy newsboat_browser script
+- name: Copy newsboat additianal scripts
   ansible.builtin.copy:
-    src: "newsboat_browser"
-    dest: '{{ ansible_user_dir }}/.local/bin/newsboat_browser'
-    mode: '0755'
+    src: "{{ item }}"
+    dest: "{{ ansible_user_dir }}/.local/bin/{{ item }}"
+    mode: "0755"
+  loop:
+    - newsboat_browser
+    - newsboat_mpv
   tags: newsboat
 
 - name: Copy newsboat urls
