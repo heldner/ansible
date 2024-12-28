@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Feh
+GenericName=Feh image viewer
+Comment=image viewer and cataloguer
+Icon=image-x-generic-symbolic
+Exec=feh
+Terminal=false
+Categories=Graphics;Photography;
+Keywords=album,image

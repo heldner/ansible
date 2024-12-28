@@ -1,0 +1,9 @@
+---
+- name: Set default picture viewer feh
+  ansible.builtin.command: 'xdg-mime default feh.desktop {{ item }}'
+  loop:
+    - image/jpeg
+    - image/tiff
+    - image/bmp
+    - image/png
+  tags: feh
