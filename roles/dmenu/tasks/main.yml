@@ -3,5 +3,8 @@
   ansible.builtin.apt:
     deb: https://github.com/heldner/dmenu-deb/releases/download/{{ dmenu_version }}/dmenu_{{ dmenu_deb_version }}_amd64.deb
   become: true
-  when: ansible_facts.packages['dmenu'][0]['version'] != dmenu_deb_version
+  when: >
+    (ansible_facts.packages['dmenu'] is defined and
+    ansible_facts.packages['dmenu'][0]['version'] != dmenu_deb_version) or
+    ansible_facts.packages['dmenu'] is not defined
   tags: dmenu
