@@ -18,6 +18,7 @@
       - gsfonts-x11
       - imagemagick
       - inotify-tools
+      - libjpeg-turbo-progs
       - libpam-gnome-keyring
       - pcmanfm
       - pinentry-gnome3
