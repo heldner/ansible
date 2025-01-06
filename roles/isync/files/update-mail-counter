@@ -14,5 +14,7 @@ num=$(update_counter)
 if [ "$num" -ne 0 ]; then
   echo "$num" > "$MAIL_COUNTER"
 else
-  [ -f "$MAIL_COUNTER" ] && rm "$MAIL_COUNTER"
+  if [ -f "$MAIL_COUNTER" ]; then
+    rm "$MAIL_COUNTER"
+  fi
 fi
