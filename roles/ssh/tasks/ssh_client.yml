@@ -46,5 +46,5 @@
     tasks_from: copy_action
   vars:
     dwm_actions:
-      - action/ssh
+      - actions/ssh
   tags: ssh

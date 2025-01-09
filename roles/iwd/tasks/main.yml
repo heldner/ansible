@@ -1,4 +1,5 @@
 ---
+# TODO: remove wpasupplicant
 - name: Install iwd package
   ansible.builtin.package:
     state: present
@@ -24,6 +25,7 @@
     name: iwd
     enabled: true
     state: started
+  become: true
   tags: iwd
 
 - name: Copy iwctl desktopfile

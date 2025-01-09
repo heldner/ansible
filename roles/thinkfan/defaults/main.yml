@@ -1,2 +1,0 @@
----
-thinkfan_hwmon_path: /sys/devices/platform/coretemp.0/hwmon/hwmon4

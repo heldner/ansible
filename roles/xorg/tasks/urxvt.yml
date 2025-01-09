@@ -11,5 +11,5 @@
     src: 'urxvt-vtwheel'
     dest: '{{ ansible_user_dir }}/.urxvt/ext/vtwheel'
     mode: '0644'
-  notify: set x-terminal-emulator urxvt
+  notify: Set x-terminal-emulator urxvt
   tags: [xorg, urxvt]

@@ -42,7 +42,7 @@
 - name: Install librewolf package
   ansible.builtin.apt:
     state: present
-    name: extrepo
+    name: librewolf
   become: true
   notify: Update alternatives, install librewolf
   tags:

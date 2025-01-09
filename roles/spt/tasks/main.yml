@@ -2,7 +2,10 @@
 - name: Install spt package
   ansible.builtin.apt:
     deb: https://github.com/heldner/spt-deb/releases/download/{{ spt_version }}/spt_{{ spt_deb_version }}_amd64.deb
-  when: ansible_facts.packages['spt'][0]['version'] != spt_deb_version
+  when: >
+    (ansible_facts.packages['spt'] is defined and
+    ansible_facts.packages['spt'][0]['version'] != spt_deb_version) or
+    ansible_facts.packages['spt'] is not defined
   become: true
   tags: spt
 

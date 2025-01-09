@@ -25,7 +25,7 @@
   ansible.builtin.systemd:
     name: mpris-proxy
     state: stopped
-    enabled: disabled
+    enabled: false
     scope: user
   tags: bluetooth
 

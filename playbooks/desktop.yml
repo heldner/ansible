@@ -7,7 +7,6 @@
   roles:
     - apt
     - acpi
-    - bird2
     - bluetooth
     - byedpi
     - common
@@ -58,7 +57,8 @@
     - tmux
     - udev
     - unbound
-    - v2ray
+    - role: v2ray
+      when: v2ray_id is defined
     - xorg
     - role: xfce
       when: enable_xfce | default('false') | bool
@@ -72,4 +72,3 @@
   roles:
     - laptop
     - logind
-    - thinkfan
