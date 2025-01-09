@@ -2,7 +2,7 @@
 galaxy_info:
   author: Stanislav Korolev
   namespace: things
-  description: Install rofi menu with theme
+  description: Install and configure bluetooth service
   company: RootIT
   license: ISC
   min_ansible_version: '2.12'

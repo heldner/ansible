@@ -4,3 +4,10 @@
     daemon_reload: true
   become: true
   tags: bluetooth
+
+- name: Restart bluetooth
+  ansible.builtin.service:
+    name: bluetooth
+    state: restarted
+  become: true
+  tags: bluetooth

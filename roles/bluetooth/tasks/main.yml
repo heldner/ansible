@@ -8,6 +8,15 @@
   become: true
   tags: bluetooth
 
+- name: Copy bluetooth main.conf
+  ansible.builtin.template:
+    src: main.conf.j2
+    dest: /etc/bluetooth/main.conf
+    mode: '0644'
+  notify: Restart bluetooth
+  become: true
+  tags: bluetooth
+
 - name: Copy mpris-proxy service file
   ansible.builtin.copy:
     src: mpris-proxy.service
