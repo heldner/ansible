@@ -1,2 +1,3 @@
 ---
 slock_version: 1.5
+slock_deb_version: '{{ slock_version }}-2'

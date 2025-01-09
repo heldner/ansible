@@ -19,6 +19,8 @@
 
 # Set the default feh options to be recursive and verbose
 feh \
+    --edit \
+    --hide-pointer \
     --recursive \
     --fullscreen \
     --slideshow-delay -3 \

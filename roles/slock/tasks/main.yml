@@ -1,16 +1,11 @@
 ---
 - name: Download slock package
-  ansible.builtin.get_url:
-    url: https://github.com/heldner/slock-deb/releases/download/{{ slock_version }}/slock_{{ slock_version }}-2_amd64.deb
-    dest: /tmp/slock.deb
-    mode: '0644'
-  become: true
-  tags: slock
-
-- name: Install slock package
   ansible.builtin.apt:
-    state: present
-    deb: /tmp/slock.deb
+    deb: https://github.com/heldner/slock-deb/releases/download/{{ slock_version }}/slock_{{ slock_deb_version }}_amd64.deb
+  when: >
+    (ansible_facts.packages['slock'] is defined and
+    ansible_facts.packages['slock'][0]['version'] != slock_deb_version) or
+    ansible_facts.packages['slock'] is not defined
   become: true
   tags: slock
 
@@ -22,7 +17,7 @@
     group: 'root'
     mode: '0644'
   become: true
-  tags: laptop
+  tags: slock
 
 - name: Enable slock unit
   ansible.builtin.service:
@@ -30,4 +25,4 @@
     enabled: true
     daemon_reload: true
   become: true
-  tags: laptop
+  tags: slock

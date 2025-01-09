@@ -14,5 +14,5 @@ configurations:
       boxes:
           - mailbox: INBOX
             onNewMail: 'mbsync {{ mailbox.name }} >/dev/null'
-            onNewMailPost: 'update-mail-counter'
+            onNewMailPost: '~/.local/bin/update-mail-counter'
 {% endfor %}

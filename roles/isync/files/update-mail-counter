@@ -7,7 +7,14 @@ MAILDIR=${HOME}/Private/Mail
 
 update_counter() {
   find "$MAILDIR" -type f -regex '.*inbox\/new.*' \
-    | wc -l > "$MAIL_COUNTER"
+    | wc -l
 }
 
-update_counter
+num=$(update_counter)
+if [ "$num" -ne 0 ]; then
+  echo "$num" > "$MAIL_COUNTER"
+else
+  if [ -f "$MAIL_COUNTER" ]; then
+    rm "$MAIL_COUNTER"
+  fi
+fi

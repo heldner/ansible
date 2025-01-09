@@ -8,8 +8,8 @@ MAILDIR="${HOME}/Private/Mail"
 mail_watcher () {
   inotifywait \
     --recursive "$MAILDIR" \
-    --event DELETE,create \
-    --include ".*cur" >/dev/null 2>&1
+    --exclude "(inbox/new|tmp|.mbsyncstate.*)" \
+    >/dev/null 2>&1
 }
 
 update_counter() {
