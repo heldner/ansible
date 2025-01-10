@@ -1,6 +1,6 @@
 ---
 - name: Save iptables rules
-  ansible.builtin.shell: iptables-save > /etc/iptables.up.rules
+  ansible.builtin.shell: iptables-save > /etc/iptables/rules.v4
   become: true
   tags: iptables
 
