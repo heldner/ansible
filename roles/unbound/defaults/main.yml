@@ -5,9 +5,6 @@ access_control:
   - 127.0.0.1/32 allow_snoop
   - ::1 allow_snoop
 default_forward_addresses:
-  ## Cloudflare DNS
+  - 8.8.8.8@853
   - 1.1.1.1@853
   - 1.0.0.1@853
-  ## Also add IBM IPv6 Quad9 over TLS
-  - 9.9.9.9@853
-  - 149.112.112.112@853
