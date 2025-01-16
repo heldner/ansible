@@ -19,14 +19,15 @@
 
 # Set the default feh options to be recursive and verbose
 feh \
-    --edit \
-    --hide-pointer \
-    --recursive \
-    --fullscreen \
-    --slideshow-delay -3 \
     --action1 "[mpv]mpv %f" \
     --action2 "[gimp]gimp '%f' 2>/dev/null &" \
-    --action3 "[convert2bg]convert2bg %f"
+    --action3 "[convert2bg]convert2bg %f" \
+    --edit \
+    --fullscreen \
+    --hide-pointer \
+    --quiet \
+    --recursive \
+    --slideshow-delay -3
 
 # Multiple options can of course be used. If they are not in one line,
 # the lines after the theme name must start with a tab character. Like:
