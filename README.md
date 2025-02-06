@@ -21,6 +21,11 @@ pip3 install -r requirements.txt
 
 ```
 
+Install ansible-galaxy requirements
+```shell
+ansible-galaxy install -r requirements-galaxy.yml
+```
+
 ## vault
 
 You can use a script to provide vault password.

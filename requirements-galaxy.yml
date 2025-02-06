@@ -1,4 +1,7 @@
 ---
+roles:
+  - name: gekmihesg.openwrt
+
 collections:
   - name: community.general
     version: ">=7.0.0"
