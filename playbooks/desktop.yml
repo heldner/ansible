@@ -14,6 +14,7 @@
     - console-setup
     - desktop
     - dmenu
+    - docker
     - dunst
     - dwm
     - editorconfig
@@ -45,7 +46,6 @@
     - newsboat
     - openntpd
     - playerctl
-    - podman
     - proxychains
     - rofi
     - slock
