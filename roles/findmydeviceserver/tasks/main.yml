@@ -12,6 +12,7 @@
     state: present
     deb: /tmp/findmydeviceserver.deb
   become: true
+  notify: Restart fmd
   tags: findmydeviceserver
 
 - name: Setup fmd.conf
