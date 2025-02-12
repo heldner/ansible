@@ -6,6 +6,7 @@ Configure openwrt device
 
 - [Requirements](#requirements)
 - [Discovered Tags](#discovered-tags)
+- [Open Tasks](#open-tasks)
 - [Dependencies](#dependencies)
 - [License](#license)
 - [Author](#author)
@@ -27,6 +28,9 @@ Configure openwrt device
 
 **_theme_**
 
+## Open Tasks
+
+- (improvement): update dns forum.openwrt.org/t/udhcpc-user-script-documentation-and-how-to-hotplug-for-dhcp-events/47952/10j
 
 ## Dependencies
 
