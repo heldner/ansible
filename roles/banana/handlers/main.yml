@@ -1,0 +1,24 @@
+---
+- name: Commit pending changes
+  uci:
+    command: commit
+
+- name: Restart network
+  service:
+    name: network
+    state: restarted
+
+- name: Restart uhttpd
+  service:
+    name: uhttpd
+    state: restarted
+
+- name: Restart firewall
+  service:
+    name: firewall
+    state: restarted
+
+- name: Restart fwknopd
+  service:
+    name: fwknopd
+    state: restarted

@@ -5,3 +5,4 @@ ansible.log
 ansible_collections
 ssl_certificates
 plugins/*/__pycache__/
+roles/gekmihesg.openwrt

@@ -1,0 +1,31 @@
+---
+- name: Install luci theme
+  opkg:
+    name: '{{ item }}'
+    update_cache: true
+  loop:
+    - luci-compat
+    - luci-lib-ipkg
+  tags: theme
+
+- name: Get installed argon theme package
+  ansible.builtin.shell:
+    opkg list-installed | grep luci-theme-argon
+  register: _installed_argon
+  failed_when: false
+  tags: theme
+
+- name: Download theme
+  command:
+    cmd: |
+      wget -O luci-theme-argon.ipk --no-check-certificate
+      https://github.com/jerrykuku/luci-theme-argon/releases/download/v2.3.1/luci-theme-argon_2.3.1_all.ipk
+    creates: luci-theme-argon.ipk
+  when: _installed_argon.stdout | regex_search('luci-theme-argon') == None
+  tags: theme
+
+- name: Install luci theme
+  opkg:
+    name: luci-theme-argon.ipk
+  when: _installed_argon.stdout | regex_search('luci-theme-argon') == None
+  tags: theme

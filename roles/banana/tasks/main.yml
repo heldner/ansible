@@ -1,0 +1,56 @@
+---
+- name: Set drop on wan
+  uci:
+    command: set
+    key: firewall.@zone[1]
+    value:
+      input: DROP
+      forward: DROP
+  notify:
+    - Commit pending changes
+    - Restart firewall
+  tags: firewall
+
+- name: Set ipaddr from 24 net
+  uci:
+    command: set
+    key: network.lan
+    value:
+      ipaddr: 192.168.24.1
+  notify:
+    - Commit pending changes
+    - Restart network
+
+- name: Set ipaddr from 4 net for onu stick
+  uci:
+    command: set
+    key: network.wan
+    value:
+      proto: static
+      ipaddr: 192.168.4.2
+      netmask: 255.255.255.0
+  notify:
+    - Commit pending changes
+    - Restart network
+
+- name: Set redirect to https
+  uci:
+    command: set
+    key: uhttpd.main
+    value:
+      redirect_https: 1
+  notify:
+    - Commit pending changes
+    - Restart uhttpd
+
+- name: Include rostelecom tasks
+  ansible.builtin.include_tasks: rt.yml
+  tags: rt
+
+- name: Include argon theme tasks
+  ansible.builtin.include_tasks: argon.yml
+  tags: theme
+
+- name: Include fwknopd tasks
+  ansible.builtin.include_tasks: fwknopd.yml
+  tags: fwknopd

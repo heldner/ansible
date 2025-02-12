@@ -1,0 +1,67 @@
+---
+- name: Add vlan for rostelecom
+  uci:
+    command: set
+    key: network.eth1_10
+    value: device
+  notify:
+    - Commit pending changes
+  tags: rt
+
+- name: Configure vlan for rostelecom
+  uci:
+    command: set
+    key: network.eth1_10
+    value:
+      type: 8021q
+      ifname: eth1
+      vid: '10'
+      name: eth1.10
+      macaddr: 10:A3:B8:F1:EF:21
+  notify:
+    - Commit pending changes
+    - Restart network
+  tags: rt
+
+- name: Add rostelecom interface
+  uci:
+    command: set
+    key: network.rt
+    value: interface
+  notify:
+    - Commit pending changes
+  tags: rt
+
+- name: Configure rostelecom pppoe
+  uci:
+    command: set
+    key: network.rt
+    value:
+      proto: pppoe
+      username: '{{ pppoe_username_encrypted }}'
+      password: '{{ pppoe_password_encrypted }}'
+      device: eth1.10
+      keepalive: '4 5'
+  notify:
+    - Commit pending changes
+    - Restart network
+  tags: rt
+
+- name: Get current wan ifaces
+  uci:
+    command: show
+    key: firewall.@zone[1].network
+  register: _firewall_wan
+  tags: rt
+
+- name: Add rt interface to wan zone
+  uci:
+    command: add_list
+    key: firewall.@zone[1].network
+    value: rt
+  notify:
+    - Commit pending changes
+    - Restart firewall
+  when: _firewall_wan.result | regex_search('rt') == None
+  tags: rt
+

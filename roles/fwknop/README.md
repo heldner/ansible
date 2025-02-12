@@ -1,17 +1,59 @@
 # fwknop
 
-Secure port knoking https://www.cipherdyne.org/fwknop/
+Install single packet auth client/server fwknop
 
-## usage
+## Table of content
 
-send spa packet
+- [Requirements](#requirements)
+- [Default Variables](#default-variables)
+  - [fwknop_port](#fwknop_port)
+  - [fwknop_proto](#fwknop_proto)
+- [Discovered Tags](#discovered-tags)
+- [Dependencies](#dependencies)
+- [License](#license)
+- [Author](#author)
 
-```shell
-fwknop -R -n $servername
+---
+
+## Requirements
+
+- Minimum Ansible version: `2.12`
+
+## Default Variables
+
+### fwknop_port
+
+#### Default value
+
+```YAML
+fwknop_port: 62201
 ```
 
-generate key pair
+### fwknop_proto
 
-```shell
-fwknop -k
+#### Default value
+
+```YAML
+fwknop_proto: udp
 ```
+
+## Discovered Tags
+
+**_fwknop_**
+
+**_fwknop-client_**
+
+**_fwknop-server_**
+
+
+## Dependencies
+
+None.
+
+## License
+
+ISC
+
+## Author
+
+Stanislav Korolev

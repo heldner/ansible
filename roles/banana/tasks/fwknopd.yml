@@ -1,0 +1,50 @@
+---
+- name: Install fwknop
+  opkg:
+    name: luci-app-fwknopd
+  tags: fwknopd
+
+# @todo improvement: install https://github.com/sfgets/fwknop-nft
+- name: Setup fwknopd uci enabled
+  uci:
+    command: set
+    key: fwknopd.@global[0].uci_enabled
+    value: 1
+  notify: Commit pending changes
+  tags: fwknopd
+
+- name: Copy command scripts
+  ansible.builtin.copy:
+    src: 'cmd-{{ item }}.sh'
+    dest: '/etc/fwknop/cmd-{{ item }}.sh'
+    mode: '0755'
+  loop:
+    - open
+    - close
+  tags: fwknopd
+
+- name: Setup fwknopd network
+  uci:
+    command: set
+    key: fwknopd.@network[0]
+    value:
+      network: lan
+  notify: Commit pending changes
+  tags: fwknopd
+
+- name: Setup fwknopd access
+  uci:
+    command: set
+    key: fwknopd.@access[0]
+    value:
+      HMAC_KEY_BASE64: '{{ fwknopd_hmac_key_base64_encryped }}'
+      KEY_BASE64: '{{ fwknopd_key_base64_encryped }}'
+      DESTINATION: 'ANY'
+      CMD_CYCLE_OPEN: /etc/fwknop/cmd-open.sh
+      CMD_CYCLE_CLOSE: /etc/fwknop/cmd-close.sh
+      CMD_CYCLE_TIMER: 30
+  notify:
+    - Commit pending changes
+    - Restart fwknopd
+  no_log: "{{ nolog | default('true') | bool }}"
+  tags: fwknopd
