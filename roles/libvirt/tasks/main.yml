@@ -75,3 +75,7 @@
 - name: Flush libvirt handlers
   meta: flush_handlers
   tags: libvirt
+
+- name: Include start machines
+  ansible.builtin.include_tasks: machines.yml
+  tags: libvirt

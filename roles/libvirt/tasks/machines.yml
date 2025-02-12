@@ -1,0 +1,22 @@
+---
+# @todo improvement: Define in inventory machine list
+- name: Create qcow2 image
+  ansible.builtin.shell:
+    cmd: qemu-img create -f qcow2 "{{ libvirt_vms_dir }}/{{ name }}.qcow2" 20G
+    creates: "{{ libvirt_vms_dir }}/{{ name }}.qcow2"
+  vars:
+    name: Win7
+  tags: libvirt
+
+- name: Create windows 7 machine
+  community.libvirt.virt:
+    command: define
+    xml: "{{ lookup('template', 'machine.xml.j2') }}"
+    autostart: true
+  vars:
+    name: Win7
+    memory: 2097152
+    cpu: 2
+    iso: "{{ '/home/sunday/Packages/ISO/' +
+      'Windows 7 SP1 26in1 (x86-x64) by Eagle123 (01.2024).iso' }}"
+  tags: libvirt
