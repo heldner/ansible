@@ -11,7 +11,7 @@ OUT_DIR="${HOME}/Pictures/Boost"
 
 run() {
   sub="$1"
-  echo "Fetch imgaes from $sub"
+  echo "Fetch images from $sub"
   curl -H "Accept: application/json" -s \
     --retry 2 --retry-delay 4 \
     "${BASE_URL}/${sub}.json" \
