@@ -17,6 +17,7 @@
         --issue
         --server https://acme-v02.api.letsencrypt.org/directory
         --webroot {{ www_root | default('/var/www/html') }}
+        --reloadcmd 'systemctl reload nginx'
         --domain {{ cert_domain }}
         --log /var/log/acme.sh.log
     creates: "{{ certs_dir + '/ca.key' }}"
