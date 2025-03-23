@@ -2,7 +2,9 @@
 galaxy_info:
   author: Stanislav Korolev
   namespace: things
-  description: Install rofi menu with theme
+  description:
+    Install [rofi](https://davatorium.github.io/rofi/) - A window switcher,
+    application launcher, ssh dialog, dmenu replacement and more
   company: RootIT
   license: ISC
   min_ansible_version: '2.12'

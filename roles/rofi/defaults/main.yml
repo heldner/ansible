@@ -1,0 +1,8 @@
+---
+rofi_font: 'DejaVu Sans 12'
+rofi_window_width: '700px'
+rofi_window_height: '360px'
+rofi_window_border: '2px'
+rofi_inputbar_padding: '2px'
+rofi_element_padding: '5px'
+rofi_element_icon_size: '26px'

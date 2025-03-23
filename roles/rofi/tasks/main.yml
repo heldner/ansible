@@ -4,29 +4,25 @@
     state: present
     name: rofi
   become: true
-  tags:
-    - rofi
-    - xorg
+  tags: [rofi, xorg]
 
 - name: Create themes directory
   ansible.builtin.file:
     state: directory
     path: '{{ ansible_user_dir }}/.config/rofi/themes'
     mode: '0755'
-  tags:
-    - rofi
-    - xorg
+  tags: [rofi, xorg]
 
 - name: Copy rofi config
-  ansible.builtin.copy:
-    src: '{{ item.src }}'
-    dest: '{{ ansible_user_dir }}/.config/rofi/{{ item.dest }}'
+  ansible.builtin.template:
+    src: 'config.rasi.j2'
+    dest: '{{ ansible_user_dir }}/.config/rofi/config.rasi'
     mode: '0644'
-  with_items:
-    - src: 'config.rasi'
-      dest: 'config.rasi'
-    - src: 'dwmblush.rasi'
-      dest: 'themes/dwmblush.rasi'
-  tags:
-    - rofi
-    - xorg
+  tags: [rofi, xorg]
+
+- name: Copy rofi theme
+  ansible.builtin.copy:
+    src: 'dwmblush.rasi'
+    dest: '{{ ansible_user_dir }}/.config/rofi/themes/dwmblush.rasi'
+    mode: '0644'
+  tags: [rofi, xorg]
