@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Terminal=false
+Type=Application
+Name=Google Meet
+Exec=/usr/bin/chromium-bubblewrap --profile-directory=Default --force-dark-mode --app=https://meet.google.com/
+Icon=google-meet
+Actions=Explore;Subscriptions

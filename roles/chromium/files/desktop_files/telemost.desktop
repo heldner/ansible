@@ -3,6 +3,6 @@ Version=1.0
 Terminal=false
 Type=Application
 Name=Telemost
-Exec=/usr/bin/chromium-bubblewrap --profile-directory=Default --video --force-dark-mode --app=https://telemost.yandex.ru/
+Exec=/usr/bin/chromium-bubblewrap --profile-directory=Default --force-dark-mode --app=https://telemost.yandex.ru/
 Icon=telemost
 Actions=Explore;Subscriptions

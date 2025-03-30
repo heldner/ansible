@@ -10,7 +10,7 @@
 - name: Download chromium repo gpg key
   ansible.builtin.get_url:
     url: "https://download.opensuse.org/repositories/home:\
-          iskunk:ungoogled-chromium-test/Debian_12/Release.key"
+          iskunk/Debian_12/Release.key"
     dest: /tmp/home-ungoogled_chromium.gpg
     mode: '0644'
   when: not _chromium_gpg_key.stat.exists
@@ -33,7 +33,7 @@
   ansible.builtin.apt_repository:
     state: present
     filename: home-ungoogled_chromium.list
-    repo: "deb http://download.opensuse.org/repositories/home:\
+    repo: "deb [allow-insecure=yes] http://download.opensuse.org/repositories/home:\
            /iskunk:/ungoogled-chromium-test/Debian_12/ /"
   become: true
   tags:
