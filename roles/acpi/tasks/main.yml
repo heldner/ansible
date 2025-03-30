@@ -5,8 +5,7 @@
       - acpi
       - acpid
     state: present
-  tags:
-    - acpi
+  tags: acpi
   become: true
 
 - name: add dir for scripts
@@ -17,8 +16,7 @@
   loop:
     - '{{ scripts_dir }}'
     - '{{ events_dir }}'
-  tags:
-    - acpi
+  tags: acpi
   become: true
 
 - name: generate events
@@ -29,6 +27,7 @@
   notify: restart acpi
   with_fileglob:
     - ../templates/events/*
+  tags: acpi
   become: true
 
 - name: copy scripts
@@ -38,4 +37,5 @@
     mode: "0755"
   with_fileglob:
     - ../files/actions/*
+  tags: acpi
   become: true
