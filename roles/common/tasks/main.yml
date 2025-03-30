@@ -26,6 +26,7 @@
       - python3-pip
       - ripgrep
       - rsync
+      - shellcheck
       - strace
       - tcpdump
       - w3m
