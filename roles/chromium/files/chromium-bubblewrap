@@ -1,14 +1,14 @@
 #!/bin/sh
 
 if [ "$1" = '--video' ]; then
-  VIDEO_OPT="--dev-bind /dev/video1 /dev/video1
-  --dev-bind /dev/video0 /dev/video0"
+  VIDEO_OPT="--dev-bind-try /dev/video1 /dev/video1
+  --dev-bind-try /dev/video0 /dev/video0"
   shift
 fi
 
-VIDEO_OPT="--dev-bind /dev/video0 /dev/video0
-  --dev-bind /dev/video1 /dev/video1
-  --dev-bind /dev/video2 /dev/video2"
+VIDEO_OPT="--dev-bind-try /dev/video0 /dev/video0
+  --dev-bind-try /dev/video1 /dev/video1
+  --dev-bind-try /dev/video2 /dev/video2"
 
 exec bwrap \
      --ro-bind /usr/lib/ungoogled-chromium /usr/lib/ungoogled-chromium \
