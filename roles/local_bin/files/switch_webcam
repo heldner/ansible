@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if lsmod | grep -q uvcvideo; then
+  sudo rmmod uvcvideo
+  notify-send "Webcam" "disabled"
+else
+  sudo modprobe uvcvideo
+  notify-send "Webcam" "enabled"
+fi
