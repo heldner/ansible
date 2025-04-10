@@ -1,0 +1,13 @@
+#!/bin/sh
+
+usage() {
+  printf "%s" "Usage: $(basename $0) <pause> <any command>"
+}
+[ -z "$1" ] && usage
+
+case "$1" in
+  pause)
+    playerctl play-pause;;
+  *)
+    playerctl $1;;
+esac

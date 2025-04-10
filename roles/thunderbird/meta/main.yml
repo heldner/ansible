@@ -1,8 +1,9 @@
 ---
 galaxy_info:
-  role_name: mpd
+  role_name: thunderbird
   author: Stanislav Korolev
-  description: install mpd as user systemd service
+  namespace: things
+  description: Mail client
   company: RootIT
   license: ISC
   min_ansible_version: '2.12'

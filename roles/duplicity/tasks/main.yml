@@ -13,4 +13,21 @@
     src: duplicity_backup.sh.j2
     dest: '{{ ansible_user_dir }}/.local/bin/duplicity_backup.sh'
     mode: '0755'
+  notify: Run backup
+  tags: duplicity
+
+- name: Flush duplicity handlers
+  ansible.builtin.meta: flush_handlers
+  tags: duplicity
+
+- name: Add cronjob for encrypted backup
+  ansible.builtin.cron:
+    name: Start encrypted backup
+    job: '{{ ansible_user_dir }}/.local/bin/duplicity_backup.sh'
+    user: '{{ ansible_user_id }}'
+    minute: "{{ duplicity_update_min|default('20') }}"
+    hour: "{{ duplicity_update_hour|default('1') }}"
+    day: "{{ duplicity_update_day_of_month|default('*') }}"
+    month: "{{ duplicity_update_month|default('*') }}"
+    weekday: "{{ duplicity_update_day_of_week|default('*') }}"
   tags: duplicity

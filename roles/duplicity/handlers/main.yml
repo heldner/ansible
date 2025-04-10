@@ -1,0 +1,5 @@
+---
+- name: Run backup
+  ansible.builtin.command:
+    cmd: '{{ ansible_user_dir }}/.local/bin/duplicity_backup.sh'
+  tags: always

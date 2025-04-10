@@ -30,6 +30,7 @@
       - strace
       - tcpdump
       - w3m
+      - quilt
       - xkcdpass
       - zbar-tools
   become: true
@@ -51,4 +52,10 @@
   tags: common
 
 - ansible.builtin.include_tasks: 'lsd.yml'
+  tags: common
+
+- name: Setup sudo
+  ansible.builtin.include_role:
+    name: sudo
+    tasks_from: 'sudo_edit.yml'
   tags: common

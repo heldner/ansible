@@ -1,0 +1,3 @@
+---
+# @var duplicity_targets:description: hosts list with item.src item.dest
+# @var duplicity_gpg_key:description: public gpg key

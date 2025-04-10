@@ -2,6 +2,7 @@
 - hosts: desktop
   become_method: sudo
   gather_facts: true
+  connection: local
   collections:
     - heldner.things
   roles:
@@ -16,6 +17,7 @@
     - dmenu
     - docker
     - dunst
+    - duplicity
     - dwm
     - editorconfig
     - feh
@@ -55,6 +57,7 @@
     - sxhkd
     - syncthing
     - tmux
+    - thunderbird
     - udev
     - unbound
     - role: v2ray
@@ -67,6 +70,7 @@
 - hosts: laptop
   become_method: sudo
   gather_facts: true
+  connection: local
   collections:
     - heldner.things
   roles:

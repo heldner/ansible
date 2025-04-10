@@ -2,7 +2,9 @@
 galaxy_info:
   author: Stanislav Korolev
   namespace: things
-  description: Encrypted backups
+  description: |
+    Encrypted backups with duplicity
+    with usage of gpg-agent
   company: RootIT
   license: ISC
   min_ansible_version: '2.12'

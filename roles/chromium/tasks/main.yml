@@ -29,16 +29,16 @@
     - browser
     - chromium
 
-- name: Add apt repository
-  ansible.builtin.apt_repository:
-    state: present
-    filename: home-ungoogled_chromium.list
-    repo: "deb [allow-insecure=yes] http://download.opensuse.org/repositories/home:\
-           /iskunk:/ungoogled-chromium-test/Debian_12/ /"
-  become: true
-  tags:
-    - browser
-    - chromium
+      #- name: Add apt repository
+      #  ansible.builtin.copy:
+      #    dest: /etc/apt/sources.list.d/home-ungoogled_chromium.list
+      #    content:
+      #      "deb [allow-insecure=yes] http://download.opensuse.org/repositories/home:\
+      #         /iskunk:/ungoogled-chromium-test/Debian_12/ /"
+      #  become: true
+      #  tags:
+      #    - browser
+      #    - chromium
 
 - name: Apt update
   ansible.builtin.apt:

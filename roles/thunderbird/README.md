@@ -1,15 +1,12 @@
-# duplicity
+# thunderbird
 
-Encrypted backups with duplicity
-with usage of gpg-agent
-
+Mail client
 
 ## Table of content
 
 - [Requirements](#requirements)
 - [Default Variables](#default-variables)
-  - [duplicity_gpg_key](#duplicity_gpg_key)
-  - [duplicity_targets](#duplicity_targets)
+  - [thunderbird_bwrap_path](#thunderbird_bwrap_path)
 - [Discovered Tags](#discovered-tags)
 - [Dependencies](#dependencies)
 - [License](#license)
@@ -23,17 +20,17 @@ with usage of gpg-agent
 
 ## Default Variables
 
-### duplicity_gpg_key
+### thunderbird_bwrap_path
 
-public gpg key
+#### Default value
 
-### duplicity_targets
-
-hosts list with item.src item.dest
+```YAML
+thunderbird_bwrap_path: /usr/bin/thunderbird-bubblewrap
+```
 
 ## Discovered Tags
 
-**_duplicity_**
+**_thunderbird_**
 
 
 ## Dependencies

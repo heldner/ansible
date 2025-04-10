@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: mpd
+  role_name: sudo
   author: Stanislav Korolev
   description: install mpd as user systemd service
   company: RootIT

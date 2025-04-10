@@ -1,0 +1,10 @@
+---
+- name: Copy bubblewrap thunderbird
+  ansible.builtin.copy:
+    src: thunderbird-bubblewrap
+    dest: '{{ thunderbird_bwrap_path }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+  become: true
+  tags: thunderbird
