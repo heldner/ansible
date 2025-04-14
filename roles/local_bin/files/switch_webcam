@@ -1,9 +1,13 @@
 #!/bin/sh
 
 if lsmod | grep -q uvcvideo; then
-  sudo rmmod uvcvideo
-  notify-send "Webcam" "disabled"
+  notify-send "Webcam" "currently enabled"
+  if sudo rmmod uvcvideo; then
+    notify-send "Webcam" "disabled"
+  fi
 else
-  sudo modprobe uvcvideo
-  notify-send "Webcam" "enabled"
+  notify-send "Webcam" "currently disabled"
+  if sudo modprobe uvcvideo; then
+    notify-send "Webcam" "enabled"
+  fi
 fi

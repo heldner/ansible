@@ -8,3 +8,11 @@
     mode: '0755'
   become: true
   tags: thunderbird
+
+- name: Copy desktopfile
+  ansible.builtin.copy:
+    src: 'thunderbird.desktop'
+    dest: "{{ ansible_user_dir +
+      '/.local/share/applications/thunderbird.desktop' }}"
+    mode: '0644'
+  tags: thunderbird
