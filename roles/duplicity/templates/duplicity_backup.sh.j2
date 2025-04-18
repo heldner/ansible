@@ -4,5 +4,5 @@
 duplicity backup \
     --use-agent \
     --encrypt-key {{ duplicity_gpg_key }} \
-    {{ backup.src }} file://{{ backup.dest }}
+    {{ backup.src }} {{ backup.dest }}
 {% endfor %}

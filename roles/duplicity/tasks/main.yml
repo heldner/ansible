@@ -13,7 +13,7 @@
     src: duplicity_backup.sh.j2
     dest: '{{ ansible_user_dir }}/.local/bin/duplicity_backup.sh'
     mode: '0755'
-  notify: Run backup
+  when: duplicity_targets is defined
   tags: duplicity
 
 - name: Flush duplicity handlers
@@ -30,4 +30,5 @@
     day: "{{ duplicity_update_day_of_month|default('*') }}"
     month: "{{ duplicity_update_month|default('*') }}"
     weekday: "{{ duplicity_update_day_of_week|default('*') }}"
+  when: duplicity_targets is defined
   tags: duplicity
