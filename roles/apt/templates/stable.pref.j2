@@ -10,6 +10,14 @@ Package: linux-headers-amd64
 Pin: release n={{ ansible_lsb.codename }}-backports
 Pin-Priority: 900
 
+Package: linux-libc-dev
+Pin: release n={{ ansible_lsb.codename }}-backports
+Pin-Priority: 900
+
+Package: tp-smapi-dkms
+Pin: release n={{ ansible_lsb.codename }}-backports
+Pin-Priority: 900
+
 Package: *
 Pin: release n={{ ansible_lsb.codename }}-security
 Pin-Priority: 850
