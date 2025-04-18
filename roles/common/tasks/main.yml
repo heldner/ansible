@@ -21,6 +21,7 @@
       - jnettop
       - keychain
       - man
+      - nmap
       - ncdu
       - p7zip-full
       - python3-pip

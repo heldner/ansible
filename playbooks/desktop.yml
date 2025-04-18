@@ -26,7 +26,6 @@
       vars:
         client: true
     - git
-    - goimapnotify
     - gpg
     - role: gocryptfs
       when: enable_gocryptfs | default('false') | bool
@@ -34,7 +33,6 @@
     - htop
     - interfaces
     - iptables
-    - isync
     - iwd
     - role: libvirt
       when: enable_libvirt | default('false') | bool
@@ -43,7 +41,6 @@
     - modprobe
     - mpd
     - mpv
-    - neomutt
     - neovim
     - newsboat
     - openntpd
