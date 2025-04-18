@@ -6,6 +6,10 @@ Package: linux-image-amd64
 Pin: release n={{ ansible_lsb.codename }}-backports
 Pin-Priority: 900
 
+Package: linux-headers-amd64
+Pin: release n={{ ansible_lsb.codename }}-backports
+Pin-Priority: 900
+
 Package: *
 Pin: release n={{ ansible_lsb.codename }}-security
 Pin-Priority: 850
