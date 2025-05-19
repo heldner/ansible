@@ -23,7 +23,7 @@ colorss() {
 }
 
 shots_today() {
-  feh ~/Pictures/shots/*`date +%Y-%m-%d`*
+  feh ~/Pictures/Screenshots/*`date +%Y-%m-%d`*
 }
 
 myip() {
