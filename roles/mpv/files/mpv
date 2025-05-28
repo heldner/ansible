@@ -52,10 +52,7 @@ start_video() {
     file="$*"
     [ -z "$file" ] && read -r file
     playerctl pause > /dev/null 2>&1|| true
-    if echo "$file" | grep -q youtube; then
-        proxy=proxychains
-    fi
-    setsid -f $proxy mpv "$file" >/dev/null 2>&1
+    mpv --loop-playlist='inf' "$file" >/dev/null 2>&1
 }
 
 choose_target() {
