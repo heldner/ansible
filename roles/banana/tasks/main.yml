@@ -55,3 +55,9 @@
 - name: Include fwknopd tasks
   ansible.builtin.include_tasks: fwknopd.yml
   tags: fwknopd
+
+- name: Install syncthing
+  opkg:
+    name: 'syncthing'
+    update_cache: true
+  tags: files
