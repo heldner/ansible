@@ -21,17 +21,18 @@
       - jnettop
       - keychain
       - man
-      - nmap
       - ncdu
+      - nmap
       - p7zip-full
       - python3-pip
+      - qbittorrent
+      - quilt
       - ripgrep
       - rsync
       - shellcheck
       - strace
       - tcpdump
       - w3m
-      - quilt
       - xkcdpass
       - zbar-tools
   become: true
