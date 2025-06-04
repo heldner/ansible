@@ -1,0 +1,16 @@
+---
+- name: Install syncthing
+  opkg:
+    name: 'syncthing'
+    update_cache: true
+  tags: syncthing
+
+    #- name: Setup fwknopd uci enabled
+    #  uci:
+    #    command: set
+    #    key: fwknopd.@global[0].uci_enabled
+    #    value: 1
+    #  notify:
+    #    - Commit pending changes
+    #    - Restart fwknopd
+    #  tags: fwknopd
