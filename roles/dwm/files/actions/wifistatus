@@ -17,4 +17,9 @@ status_msg () {
   echo "$msg"
 }
 
+ping_google () {
+  ping -c 1 8.8.8.8
+}
+
 status_msg
+ping_google
