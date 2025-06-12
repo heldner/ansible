@@ -4,5 +4,8 @@
 duplicity backup \
     --use-agent \
     --encrypt-key {{ duplicity_gpg_key }} \
+{% if backup.full_if_older_than is defined %}
+    --full-if-older-than {{ backup.full_if_older_than }} \
+{% endif %}
     {{ backup.src }} {{ backup.dest }}
 {% endfor %}

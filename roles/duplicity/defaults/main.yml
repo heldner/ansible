@@ -1,3 +1,11 @@
 ---
 # @var duplicity_targets:description: hosts list with item.src item.dest
 # @var duplicity_gpg_key:description: public gpg key
+# @var duplicity_targets:example: >
+# duplicity_targets:
+#   - dest: file:///home/$USER/Backups/thunerbird.duplicity
+#     src: /home/$USER/.thunderbird
+#   - dest: sftp:///rootit/home/$USER/Backups/thunerbird.duplicity
+#     src: /home/$USER/.thunderbird
+#     full_if_older_than: 1M
+# @end
