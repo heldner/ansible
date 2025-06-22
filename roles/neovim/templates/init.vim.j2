@@ -61,6 +61,8 @@ Plug 'Sjd-Risca-salt/salt-vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'aklt/plantuml-syntax'
 Plug 'bling/vim-airline'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'dense-analysis/ale'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'ervandew/supertab'
@@ -68,7 +70,6 @@ Plug 'exafunction/codeium.vim'
 Plug 'fatih/vim-go'
 Plug 'jceb/vim-orgmode'
 Plug 'jremmen/vim-ripgrep'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mzlogin/vim-markdown-toc'
 Plug 'nanotech/jellybeans.vim', { 'as': 'jellybeans' }
 Plug 'pearofducks/ansible-vim'
@@ -76,7 +77,8 @@ Plug 'plasticboy/vim-markdown'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'dense-analysis/ale'
+Plug 'powerman/vim-plugin-AnsiEsc'
+Plug 'vimsence/vimsence'
 call plug#end()
 
 " Цветовая схема
@@ -155,3 +157,9 @@ let g:airline_mode_map = {
   \ 'S'  : ' S ',
   \ '' : ' S ',
   \ }
+
+" vimsence settings
+let g:vimsence_small_text = 'NeoVim'
+let g:vimsence_small_image = 'neovim'
+let g:vimsence_editing_details = 'Editing: {}'
+let g:vimsence_editing_state = 'Working on: {}'

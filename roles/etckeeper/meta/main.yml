@@ -2,10 +2,10 @@
 galaxy_info:
   author: Stanislav Korolev
   namespace: things
-  description: Install dmenu, dynamic menu for X
+  description: etckeeper - store /etc in git, mercurial, bazaar, or darcs
   company: RootIT
   license: ISC
-  min_ansible_version: 2.12
+  min_ansible_version: '2.16'
   platforms:
     - name: Debian
       versions:

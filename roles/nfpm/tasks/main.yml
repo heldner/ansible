@@ -1,0 +1,21 @@
+---
+- name: Add nfpm apt repository
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/goreleaser.list
+    content:
+      deb [trusted=yes] https://repo.goreleaser.com/apt/ /
+  become: true
+  tags: [apt, nfpm]
+
+- name: Apt update
+  ansible.builtin.apt:
+    update_cache: true
+  become: true
+  tags: [apt, nfpm]
+
+- name: Install nfpm
+  ansible.builtin.package:
+    state: present
+    name: nfpm
+  become: true
+  tags: [apt, nfpm]

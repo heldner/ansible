@@ -31,6 +31,17 @@ public gpg key
 
 hosts list with item.src item.dest
 
+#### Example usage
+
+```YAML
+duplicity_targets:
+  - dest: file:///home/$USER/Backups/thunerbird.duplicity
+    src: /home/$USER/.thunderbird
+  - dest: sftp:///rootit/home/$USER/Backups/thunerbird.duplicity
+    src: /home/$USER/.thunderbird
+    full_if_older_than: 1M
+```
+
 ## Discovered Tags
 
 **_duplicity_**

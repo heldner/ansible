@@ -1,0 +1,14 @@
+---
+- name: Ensure etckeeper installed
+  ansible.builtin.package:
+    state: present
+    name: etckeeper
+  tags: etckeeper
+  become: true
+
+- name: Init in /etc
+  ansible.builtin.command:
+    cmd: etckeeper init
+    creates: /etc/.git
+  tags: etckeeper
+  become: true

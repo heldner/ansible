@@ -1,5 +1,6 @@
 ansible==9.2.0
 ansible-lint
+ara==1.7.2
 mitogen==0.3.19
 ansible-merge-vars==5.0.0
 

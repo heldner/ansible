@@ -72,3 +72,17 @@ to_ttf() {
 }
 
 erase_history () { local HISTSIZE=0; }
+
+update_spec() {
+  regex="$1"
+  if [ -z "$regex" ]; then
+    echo "regex undefined"
+    return 2
+  fi
+  if [ "$2" = "printonly" ]; then
+    rc=$(find .. -name spec.yml)
+    echo "lines: $($rc| wc -l)"
+  else
+    find .. -name spec.yml -print0 | xargs -0 rg -l "$regex" # % sed 's,INTERNAL_PORT,MONITORING_PORT,' %
+  fi
+}
