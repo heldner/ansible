@@ -7,13 +7,8 @@ while [ $# -gt 0 ]; do
     shift
     case "$opt" in
         off)  ACTION="disconnect" ;;
-        jbl)  DEVICE_ADDRESS='FC:A8:9A:99:61:00' ;;
-        fio)  DEVICE_ADDRESS='20:18:12:00:08:FA' ;;
+        dx3)  DEVICE_ADDRESS='00:02:5B:00:FF:05' ;;
         hk)   DEVICE_ADDRESS='98:52:3D:CC:29:18' ;;
-        up4)  DEVICE_ADDRESS='4C:BC:98:80:06:0D' ;;
-        hiby) DEVICE_ADDRESS='4C:BC:98:B0:2F:2B' ;;
-        sony) DEVICE_ADDRESS='90:48:9A:E6:6E:6E' ;;
-        flip) DEVICE_ADDRESS='D8:37:3B:15:FA:04' ;;
     esac
 done
 
