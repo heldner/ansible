@@ -106,7 +106,10 @@ let g:autotagTagsFile=".tags"
 
 " F-keys
 set pastetoggle=<F2>    "Режим вставки
-nmap <F3> :G add %<CR>
+" insert datetime in debian way format
+map <F3> :put =strftime('%a, %d %b %Y %T %z')<CR>
+" run interactive python with current file
+map <F5> :!ipython3 -i -c '\%load %'
 
 " cyrilic support
 set langmap=ёйцукенгшщзхъфывапролджэячсмитьбюЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ;`qwertyuiop[]asdfghjkl\\;'zxcvbnm\\,.~QWERTYUIOP{}ASDFGHJKL:\\"ZXCVBNM<>
@@ -114,11 +117,6 @@ set langmap=ёйцукенгшщзхъфывапролджэячсмитьбюЁ
 " fast buffers navigaion
 nmap <S-k> :bnext<CR>
 nmap <S-j> :bprev<CR>
-
-" insert datetime in debian way format
-map <F3> :put =strftime('%a, %d %b %Y %T %z')<CR>
-" run interactive python with current file
-map <F5> :!ipython3 -i -c '\%load %'
 
 " codeium settings
 let g:codeium_enabled = v:false
