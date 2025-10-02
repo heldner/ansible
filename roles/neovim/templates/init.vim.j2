@@ -60,6 +60,7 @@ call plug#begin('{{ neovim_home }}/plugged')
 Plug 'airblade/vim-gitgutter'
 Plug 'aklt/plantuml-syntax'
 Plug 'bling/vim-airline'
+Plug 'chr4/nginx.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'dense-analysis/ale'
 Plug 'editorconfig/editorconfig-vim'
@@ -88,6 +89,9 @@ let g:syntastic_ansible_checkers = ['yamllint']
 
 " enable yaml linter
 let g:syntastic_yaml_checkers = ['yamllint']
+
+" autoremove spaces endof line
+autocmd BufNewFile,BufRead *.conf.j2 :set filetype=nginx
 
 " autoremove spaces endof line
 autocmd FileType cpp,py,yaml.ansible autocmd BufWritePre <buffer> %s/\s\+$//e
