@@ -1,13 +1,11 @@
 ansible==9.2.0
 ansible-lint
 ara==1.7.2
-mitogen==0.3.19
+mitogen==0.3.29
 ansible-merge-vars==5.0.0
 
 # molecule
 molecule==24.2.0
-molecule-libvirt==0.0.6
-libvirt-python==10.0.0
 
 # for manage docker
 docker
