@@ -34,7 +34,7 @@
 # us. For BR/EDR this option is really only needed for qualification since the
 # BITE tester doesn't like us doing reverse SDP for some test cases, for LE
 # this disables the GATT client functionally so it can be used in system which
-# can only operate as peripheral.
+# can only operate as peripheral (see also GATT Client option).
 # Defaults to 'true'.
 #ReverseServiceDiscovery = true
 
@@ -112,9 +112,24 @@
 # profile is connected. Defaults to true.
 #RefreshDiscovery = true
 
+# Default Secure Connections setting.
+# Enables the Secure Connections setting for adapters that support it. It
+# provides better crypto algorithms for BT links and also enables CTKD (cross
+# transport key derivation) during pairing on any link.
+# Possible values: "off", "on", "only"
+# - "off": Secure Connections are disabled
+# - "on": Secure Connections are enabled when peer device supports them
+# - "only": we allow only Secure Connections
+# Defaults to "on"
+#SecureConnections = on
+
 # Enables D-Bus experimental interfaces
 # Possible values: true or false
-Experimental = {{ bluetooth_experimental | lower }}
+#Experimental = false
+
+# Enables D-Bus testing interfaces
+# Possible values: true or false
+#Testing = false
 
 # Enables kernel experimental features, alternatively a list of UUIDs
 # can be given.
@@ -164,6 +179,12 @@ Experimental = {{ bluetooth_experimental | lower }}
 #MaxSniffInterval=
 
 [LE]
+# Enable/Disable Central Address Resolution.
+# 0: disable
+# 1: enable
+# Defaults to 1
+#CentralAddressResolution = 1
+
 # The following values are used to load default adapter parameters for LE.
 # BlueZ loads the values into the kernel before the adapter is powered if the
 # kernel supports the MGMT_LOAD_DEFAULT_PARAMETERS command. If a value isn't
@@ -243,10 +264,46 @@ Experimental = {{ bluetooth_experimental | lower }}
 # Defaults to 517
 #ExchangeMTU = 517
 
-# Number of ATT channels
-# Possible values: 1-5 (1 disables EATT)
-# Default to 3
-#Channels = 3
+# Number of ATT channels, 1 is mandatory since it is used for ATT fixed channel
+# index 2-6 are used for EATT which is optional.
+# Possible values: 1-6 (1 disables EATT)
+# Default to 1
+#Channels = 1
+
+# Export claimed services by plugins
+# Possible values: no, read-only, read-write
+# Default: read-only
+#ExportClaimedServices = read-only
+
+[CSIS]
+# SIRK - Set Identification Resolution Key which is common for all the
+# sets. They SIRK key is used to identify its sets. This can be any
+# 128 bit value or a string value (e.g. product name) which is then hashed.
+# Possible Values:
+# 16 byte hexadecimal value: 861FAE703ED681F0C50B34155B6434FB
+# String value: "My Product Name"
+# Defaults to none
+#SIRK =
+
+# SIRK Encryption
+# Possible values:
+# true: Encrypt SIRK when read
+# false: Do not encrypt SIRK when read. (plaintext)
+# Defaults to true
+#Encryption = true
+
+# Total no of sets belongs to this Profile
+# Defaults to 0
+#Size = 0
+
+# Rank for the device
+# Defaults to 0
+#Rank = 0
+
+# This enables the GATT client functionally, so it can be disabled in system
+# which can only operate as a peripheral.
+# Defaults to 'true'.
+#Client = true
 
 [AVDTP]
 # AVDTP L2CAP Signalling Channel Mode.
@@ -260,6 +317,17 @@ Experimental = {{ bluetooth_experimental | lower }}
 # basic: Use L2CAP Basic Mode
 # streaming: Use L2CAP Streaming Mode
 #StreamMode = basic
+
+[AVRCP]
+# Allow SetAbsoluteVolume calls to a peer device that does not advertise the
+# AVRCP remote control target profile.  If it does advertise this profile, the
+# version is ignored.
+#VolumeWithoutTarget = false
+
+# Validate that remote AVRCP profiles advertise the category-2 bit before
+# allowing SetAbsoluteVolume calls or registering for EVENT_VOLUME_CHANGED
+# notifications.
+#VolumeCategory = true
 
 [Policy]
 #
@@ -283,7 +351,7 @@ Experimental = {{ bluetooth_experimental | lower }}
 # AutoEnable defines option to enable all controllers when they are found.
 # This includes adapters present on start as well as adapters that are plugged
 # in later on. Defaults to 'true'.
-AutoEnable=true
+#AutoEnable=true
 
 # Audio devices that were disconnected due to suspend will be reconnected on
 # resume. ResumeDelay determines the delay between when the controller
