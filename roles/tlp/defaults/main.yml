@@ -1,0 +1,4 @@
+---
+tlp_start_charge_thresh: 85
+tlp_stop_charge_thresh: 97
+...
