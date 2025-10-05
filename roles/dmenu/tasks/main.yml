@@ -2,9 +2,18 @@
 - name: Install dmenu package
   ansible.builtin.apt:
     deb: https://github.com/heldner/dmenu-deb/releases/download/{{ dmenu_version }}/dmenu_{{ dmenu_deb_version }}_amd64.deb
+    force: true
   become: true
   when: >
     (ansible_facts.packages['dmenu'] is defined and
     ansible_facts.packages['dmenu'][0]['version'] != dmenu_deb_version) or
     ansible_facts.packages['dmenu'] is not defined
   tags: dmenu
+
+- name: Pin dmenu package
+  ansible.builtin.dpkg_selections:
+    name: dmenu
+    selection: hold
+  changed_when: false
+  become: true
+  tags: [dmenu, pin]

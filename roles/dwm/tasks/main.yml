@@ -3,12 +3,21 @@
   ansible.builtin.apt:
     deb: "{{ 'https://github.com/heldner/dwm-deb/releases/download/' +
       dwm_version + '/dwm_' + dwm_deb_version + '_amd64.deb' }}"
+    force: true
   when: >
     (ansible_facts.packages['dwm'] is defined and
     ansible_facts.packages['dwm'][0]['version'] != dwm_deb_version) or
     ansible_facts.packages['dwm'] is not defined
   become: true
   tags: dwm
+
+- name: Pin dwm package
+  ansible.builtin.dpkg_selections:
+    name: dwm
+    selection: hold
+  changed_when: false
+  become: true
+  tags: [dwm, pin]
 
 - name: Create dwm actions dir
   ansible.builtin.file:
