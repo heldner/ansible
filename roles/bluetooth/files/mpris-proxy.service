@@ -1,5 +1,10 @@
 [Unit]
-Description=Forward bluetooth media controls to MPRIS
+Description=Bluetooth mpris proxy
+Documentation=man:mpris-proxy(1)
+
+Wants=dbus.socket
+After=dbus.socket dbus.service
+ConditionUser=!@system
 
 [Service]
 Type=simple
