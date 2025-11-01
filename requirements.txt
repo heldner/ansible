@@ -6,8 +6,6 @@ ansible-merge-vars==5.0.0
 
 # molecule
 molecule==24.2.0
-molecule-libvirt==0.0.6
-libvirt-python==10.0.0
 
 # for manage docker
 docker
