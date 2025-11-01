@@ -9,3 +9,11 @@
     ansible_facts.packages['dmenu'][0]['version'] != dmenu_deb_version) or
     ansible_facts.packages['dmenu'] is not defined
   tags: dmenu
+
+- name: Pin dmenu package
+  ansible.builtin.dpkg_selections:
+    name: dmenu
+    selection: hold
+  changed_when: false
+  become: true
+  tags: [dmenu, pin]

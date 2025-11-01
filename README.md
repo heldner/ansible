@@ -6,7 +6,8 @@ Collection for the freedom
 
 Create and activate virtual env:
 ```shell
-python3 -m venv .venv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv venv .venv -p 3.13
 source .venv/bin/activate
 ```
 
@@ -17,7 +18,7 @@ apt install libvirt-dev libpython3.11-dev
 
 Install requirements:
 ```shell
-pip3 install -r requirements.txt
+uv pip install -r requirements.txt
 
 ```
 

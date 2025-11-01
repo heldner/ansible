@@ -1,10 +1,6 @@
 # multishell settings
 PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin
 
-if [ -d "$HOME/.local/share/platformtools" ]; then
-    PATH="$HOME/.local/share/platformtools:$PATH"
-fi
-
 [ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
 
 CARGO_PATH="$HOME/.cargo"

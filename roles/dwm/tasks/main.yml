@@ -11,6 +11,14 @@
   become: true
   tags: dwm
 
+- name: Pin dwm package
+  ansible.builtin.dpkg_selections:
+    name: dwm
+    selection: hold
+  changed_when: false
+  become: true
+  tags: [dwm, pin]
+
 - name: Create dwm actions dir
   ansible.builtin.file:
     state: 'directory'

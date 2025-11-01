@@ -41,13 +41,3 @@ fi
 if [ -f "${HOME}/.dwm/actions/update-wallpaper" ]; then
     "${HOME}/.dwm/actions/update-wallpaper"
 fi
-
-# run tool for corsair mouse
-if command -v ckb-next >/dev/null; then
-    ckb-next -b >/dev/null 2>&1 &
-fi
-
-# update new mail counter
-if command -v watch_mail_dir >/dev/null; then
-    watch_mail_dir &
-fi

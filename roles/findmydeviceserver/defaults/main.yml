@@ -1,6 +1,6 @@
 ---
 # @var findmydeviceserver_version:description: version of fmd
-findmydeviceserver_version: 0.9.0
+findmydeviceserver_version: 0.11.0
 # @var findmydeviceserver_socket:description: >
 # unix socket path where fmd listen
 # @end

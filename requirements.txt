@@ -1,7 +1,7 @@
 ansible==9.2.0
 ansible-lint
 ara==1.7.2
-mitogen==0.3.19
+mitogen==0.3.29
 ansible-merge-vars==5.0.0
 
 # molecule
