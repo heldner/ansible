@@ -16,6 +16,7 @@
       - duf
       - exfatprogs
       - fonts-hermit
+      - fonts-noto-color-emoji
       - fonts-powerline
       - ipython3
       - jnettop
