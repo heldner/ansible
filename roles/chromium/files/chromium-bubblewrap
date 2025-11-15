@@ -1,8 +1,8 @@
 #!/bin/sh
 
 if [ "$1" = '--video' ]; then
-  VIDEO_OPT="--dev-bind-try /dev/video1 /dev/video1
-  --dev-bind-try /dev/video0 /dev/video0"
+  VIDEO_OPT="--dev-bind /dev/video1 /dev/video1
+  --dev-bind /dev/video0 /dev/video0"
   shift
 fi
 
@@ -11,8 +11,6 @@ VIDEO_OPT="--dev-bind-try /dev/video0 /dev/video0
   --dev-bind-try /dev/video2 /dev/video2"
 
 exec bwrap \
-     --ro-bind /usr/lib/ungoogled-chromium /usr/lib/ungoogled-chromium \
-     --ro-bind /usr/bin/ungoogled-chromium /usr/bin/ungoogled-chromium \
      --ro-bind /usr/bin/sh /usr/bin/sh \
      --ro-bind /usr/share /usr/share \
      --ro-bind /usr/lib /usr/lib \
@@ -58,4 +56,4 @@ exec bwrap \
      --share-net \
      --new-session \
      --hostname mypc \
-     /usr/lib/ungoogled-chromium/chromium "$@" > /dev/null 2>&1
+     /usr/share/cromite/chrome "$@" > /dev/null 2>&1
