@@ -13,19 +13,18 @@ check_url() {
   fi
 }
 
-run_chromium() {
-  uri=$(echo "$1" | sed 's,watch?v=,embed/,')
-  exec setsid -f /usr/bin/chromium-bubblewrap \
-    --force-dark-mode \
-    --app="$uri" >/dev/null 2>&1
-}
-
 run_librewolf() {
   exec setsid -f librewolf "$URL" >/dev/null 2>&1
 }
 
+run_mpv() {
+  export http_proxy="http://127.0.0.1:1081"
+  export https_proxy="http://127.0.0.1:1081"
+  setsid -f mpv --load-select=yes --really-quiet --no-terminal -- "$1" > /dev/null 2>&1
+}
+
 if check_url "$URL" "$YOUTUBE_URL"; then
-  run_chromium "$URL"
+  run_mpv "$URL"
 elif check_url "$URL" "\.(png|jpeg)"; then
   exec setsid -f feh "$URL"
 else
