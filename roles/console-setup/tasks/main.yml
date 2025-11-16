@@ -4,10 +4,12 @@
     state: present
     name: console-cyrillic
   become: true
+  tags: console_setup
 
 - name: Copy console config
-  ansible.builtin.copy:
-    src: etc_default_console-setup
+  ansible.builtin.template:
+    src: etc_default_console-setup.j2
     dest: /etc/default/console-setup
     mode: "0644"
   become: true
+  tags: console_setup

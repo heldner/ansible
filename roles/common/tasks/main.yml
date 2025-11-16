@@ -15,6 +15,7 @@
       - dosfstools
       - duf
       - exfatprogs
+      - f2fs-tools
       - fonts-hermit
       - fonts-noto-color-emoji
       - fonts-powerline

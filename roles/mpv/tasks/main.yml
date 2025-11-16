@@ -6,7 +6,7 @@
       - mplayer
       - mpv
       - mpv-mpris
-      - youtube-dl
+      - yt-dlp
   tags: mpv
   become: true
 

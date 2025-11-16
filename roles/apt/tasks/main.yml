@@ -51,7 +51,6 @@
     state: present
     name:
       - apt-file
-      - software-properties-common
       - python3-launchpadlib
     update_cache: true
   become: true

@@ -1,45 +1,4 @@
 ---
-- name: Get stats of gpg key
-  ansible.builtin.stat:
-    path: /etc/apt/trusted.gpg.d/home-ungoogled_chromium.gpg
-  register: _chromium_gpg_key
-  tags:
-    - browser
-    - chromium
-
-- name: Download chromium repo gpg key
-  ansible.builtin.get_url:
-    url: "https://download.opensuse.org/repositories/home:\
-          iskunk/Debian_12/Release.key"
-    dest: /tmp/home-ungoogled_chromium.gpg
-    mode: '0644'
-  when: not _chromium_gpg_key.stat.exists
-  become: true
-  tags:
-    - browser
-    - chromium
-
-- name: Add gpg repo key
-  ansible.builtin.command: >
-    gpg --output /etc/apt/trusted.gpg.d/home-ungoogled_chromium.gpg
-      --dearmor /tmp/home-ungoogled_chromium.gpg
-  when: not _chromium_gpg_key.stat.exists
-  become: true
-  tags:
-    - browser
-    - chromium
-
-      #- name: Add apt repository
-      #  ansible.builtin.copy:
-      #    dest: /etc/apt/sources.list.d/home-ungoogled_chromium.list
-      #    content:
-      #      "deb [allow-insecure=yes] http://download.opensuse.org/repositories/home:\
-      #         /iskunk:/ungoogled-chromium-test/Debian_12/ /"
-      #  become: true
-      #  tags:
-      #    - browser
-      #    - chromium
-
 - name: Apt update
   ansible.builtin.apt:
     update_cache: true
@@ -51,7 +10,7 @@
 - name: Install ungoogled chromium
   ansible.builtin.package:
     state: present
-    name: ungoogled-chromium
+    name: cromite
   become: true
   tags:
     - browser

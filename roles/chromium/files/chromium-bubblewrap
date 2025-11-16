@@ -50,7 +50,6 @@ exec bwrap \
      --ro-bind-try "${XDG_RUNTIME_DIR}/pipewire-0.lock" "${XDG_RUNTIME_DIR}/pipewire-0.lock" \
      --ro-bind-try "${XDG_RUNTIME_DIR}/pulse" "${XDG_RUNTIME_DIR}/pulse" \
      --bind-try ~/Downloads ~/Downloads \
-     --bind-try ~/.cache/chromium ~/.cache/chromium \
      --bind ~/.config/chromium ~/.config/chromium \
      --unshare-all \
      --share-net \
