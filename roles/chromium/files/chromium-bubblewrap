@@ -43,6 +43,10 @@ exec bwrap \
      --ro-bind-try /etc/mime.types /etc/mime.types \
      --ro-bind-try /etc/alsa /etc/alsa \
      --ro-bind-try ~/Pictures/Screenshots ~/Pictures/Screenshots \
+     --ro-bind-try ~/.cache/chromium ~/.cache/chromium \
+     --ro-bind-try ~/.cache/fontconfig ~/fontconfig \
+     --ro-bind-try ~/.cache/mesa_shader_cache ~/.cache/mesa_shader_cache \
+     --ro-bind-try ~/.cache/mesa_shader_cache_db ~/.cache/mesa_shader_cache_db \
      --tmpfs /tmp \
      --bind-try "$TEMPDIR" "$TEMPDIR" \
      --dir "$XDG_RUNTIME_DIR" \
@@ -55,4 +59,4 @@ exec bwrap \
      --share-net \
      --new-session \
      --hostname mypc \
-     /usr/share/cromite/chrome "$@" > /dev/null 2>&1
+     /usr/share/ungoogled-chromium/chrome "$@" > /dev/null 2>&1

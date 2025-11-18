@@ -1,16 +1,8 @@
 ---
-- name: Apt update
-  ansible.builtin.apt:
-    update_cache: true
-  become: true
-  tags:
-    - browser
-    - chromium
-
 - name: Install ungoogled chromium
   ansible.builtin.package:
     state: present
-    name: cromite
+    name: ungoogled-chromium
   become: true
   tags:
     - browser

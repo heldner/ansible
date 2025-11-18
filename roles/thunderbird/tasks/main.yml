@@ -1,4 +1,10 @@
 ---
+- name: Install thunderbird
+  ansible.builtin.apt:
+    name: thunderbird
+  become: true
+  tags: thunderbird
+
 - name: Copy bubblewrap thunderbird
   ansible.builtin.copy:
     src: thunderbird-bubblewrap

@@ -28,5 +28,7 @@
       - docker-ce-cli
       - docker-ce-rootless-extras
       - docker-compose-plugin
+      - slirp4netns
+      - uidmap
   become: true
   tags: docker
