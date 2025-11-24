@@ -49,6 +49,7 @@
     - playerctl
     - proxychains
     - rofi
+    - slim
     - slock
     - slstatus
     - spt

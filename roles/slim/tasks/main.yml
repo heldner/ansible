@@ -29,18 +29,23 @@
     dest: '{{ item.dst }}'
     mode: "0644"
   loop:
-    - src: slim/slim.service
+    - src: slim.service
       dst: /etc/systemd/system/slim.service.d/override.conf
-    - src: slim/slim.conf
-      dst: /etc/slim.conf
-    - src: slim/theme_random/panel.png
+    - src: theme_random/panel.png
       dst: /usr/share/slim/themes/random/panel.png
-    - src: slim/slim-background.sh
+    - src: slim-background.sh
       dst: /etc/X11/Xreset.d/02slim-background
-    - src: slim/theme_random/slim.theme
+    - src: theme_random/slim.theme
       dst: /usr/share/slim/themes/random/slim.theme
   become: true
   register: _slim_config
+  tags: slim
+
+- name: Copy slim.conf
+  ansible.builtin.template:
+    src: slim.conf.j2
+    dest: /etc/slim.conf
+    mode: "0644"
   tags: slim
 
 - name: Run systemctl daemon-reload

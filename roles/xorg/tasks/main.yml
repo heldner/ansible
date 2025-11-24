@@ -51,12 +51,6 @@
     - urxvt
     - xorg
 
-- name: Install slim
-  ansible.builtin.include_tasks: slim.yml
-  tags:
-    - slim
-    - xorg
-
 - name: Include fonts tasks
   ansible.builtin.include_tasks: fonts.yml
   tags:
