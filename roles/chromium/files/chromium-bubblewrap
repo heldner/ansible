@@ -44,7 +44,7 @@ exec bwrap \
      --ro-bind-try /etc/alsa /etc/alsa \
      --ro-bind-try ~/Pictures/Screenshots ~/Pictures/Screenshots \
      --ro-bind-try ~/.cache/chromium ~/.cache/chromium \
-     --ro-bind-try ~/.cache/fontconfig ~/fontconfig \
+     --ro-bind-try ~/.cache/fontconfig ~/.cache/fontconfig \
      --ro-bind-try ~/.cache/mesa_shader_cache ~/.cache/mesa_shader_cache \
      --ro-bind-try ~/.cache/mesa_shader_cache_db ~/.cache/mesa_shader_cache_db \
      --tmpfs /tmp \
@@ -53,6 +53,8 @@ exec bwrap \
      --ro-bind-try "${XDG_RUNTIME_DIR}/pipewire-0" "${XDG_RUNTIME_DIR}/pipewire-0" \
      --ro-bind-try "${XDG_RUNTIME_DIR}/pipewire-0.lock" "${XDG_RUNTIME_DIR}/pipewire-0.lock" \
      --ro-bind-try "${XDG_RUNTIME_DIR}/pulse" "${XDG_RUNTIME_DIR}/pulse" \
+     --ro-bind-try "${XDG_RUNTIME_DIR}/pipewire-0-manager" "${XDG_RUNTIME_DIR}/pipewire-0-manager" \
+     --ro-bind-try "${XDG_RUNTIME_DIR}/pipewire-0-manager.lock" "${XDG_RUNTIME_DIR}/pipewire-0-manager.lock" \
      --bind-try ~/Downloads ~/Downloads \
      --bind ~/.config/chromium ~/.config/chromium \
      --unshare-all \
