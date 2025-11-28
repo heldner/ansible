@@ -1,0 +1,9 @@
+---
+- name: Restart Chatwoot services
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: restarted
+  become: true
+  loop: "{{ chatwoot_services }}"
+  when: chatwoot_services | length > 0
+  tags: chatwoot
