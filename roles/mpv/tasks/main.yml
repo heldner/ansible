@@ -6,7 +6,6 @@
       - mplayer
       - mpv
       - mpv-mpris
-      - yt-dlp
   tags: mpv
   become: true
 
@@ -47,4 +46,11 @@
   vars:
     dwm_actions:
       - mpv
+  tags: mpv
+
+- name: Link yt-dlp
+  ansible.builtin.file:
+    state: link
+    src: '{{ ansible_user_dir }}/Projects/yt-dlp/.venv/bin/yt-dlp'
+    dest: '{{ ansible_user_dir }}/.local/bin/yt-dlp'
   tags: mpv
