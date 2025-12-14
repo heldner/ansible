@@ -11,6 +11,8 @@ exec bwrap \
      --dev-bind-try /dev/dri /dev/dri \
      --dev-bind-try /dev/video0 /dev/video0 \
      --dev-bind-try /dev/video1 /dev/video1 \
+     --dev-bind-try /dev/video2 /dev/video2 \
+     --dev-bind-try /dev/video3 /dev/video3 \
      --ro-bind /etc/passwd /etc/passwd \
      --ro-bind /etc/group /etc/group \
      --ro-bind /etc/hostname /etc/hostname \
