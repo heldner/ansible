@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Terminal=false
+Type=Application
+Name=Pachka
+Exec=/usr/bin/chromium-bubblewrap --profile-directory=Default --force-dark-mode --app=https://app.pachca.com
+Icon=pachka
+Actions=Explore;Subscriptions

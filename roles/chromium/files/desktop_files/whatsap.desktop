@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Terminal=false
+Type=Application
+Name=Whatsapp
+Exec=/usr/bin/chromium-bubblewrap --profile-directory=Default --force-dark-mode --app=https://web.whatsapp.com/
+Icon=whatsapp
+Actions=Explore;Subscriptions
