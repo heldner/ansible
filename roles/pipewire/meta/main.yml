@@ -2,7 +2,9 @@
 galaxy_info:
   author: Stanislav Korolev
   namespace: things
-  description: Install and configure pipewire
+  description: |
+    Install and configure pipewire
+    `wpctl status` - show wireplumber info
   company: RootIT
   license: ISC
   min_ansible_version: '2.12'

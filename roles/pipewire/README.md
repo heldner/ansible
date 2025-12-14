@@ -1,6 +1,8 @@
 # pipewire
 
 Install and configure pipewire
+`wpctl status` - show wireplumber info
+
 
 ## Table of contents
 
