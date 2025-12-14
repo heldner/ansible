@@ -1,4 +1,14 @@
 ---
+- name: Install Font Awesome font
+  ansible.builtin.package:
+    state: present
+    name:
+      - fonts-font-awesome
+      - fonts-fork-awesome
+      - fonts-elusive-icons
+  become: true
+  tags: [rofi, xorg]
+
 - name: Install rofi
   ansible.builtin.package:
     state: present
