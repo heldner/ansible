@@ -15,8 +15,6 @@
       - pass-extension-otp
       - pavucontrol
       - pinentry-curses
-      - pipewire-audio
-      - pipewire-pulse
       - pulsemixer
   become: true
   tags: desktop

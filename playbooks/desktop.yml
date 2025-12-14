@@ -46,6 +46,7 @@
     - newsboat
     - nfpm
     - openntpd
+    - pipewire
     - playerctl
     - proxychains
     - rofi
