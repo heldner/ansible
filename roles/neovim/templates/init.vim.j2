@@ -85,6 +85,12 @@ call plug#end()
 " Цветовая схема
 colorscheme jellybeans
 
+" disable go update
+"let g:go_get_update = 1
+let g:go_auto_type_info = 0
+let g:go_use_gopls = 0
+let GO111MODULE = 'off'
+
 " disable auto linter for ansible
 let g:syntastic_ansible_checkers = ['yamllint']
 
