@@ -1,0 +1,461 @@
+# Ansible Role Organization Rules
+
+## When to Apply
+
+**Always apply** - These rules should be used in all Ansible code. Cursor should follow these rules whenever creating or modifying Ansible playbooks, roles, tasks, and related files.
+
+## Role Structure
+
+### Required Directory Structure
+
+Each role MUST follow the standard Ansible role structure:
+
+```
+roles/
+  role_name/
+    defaults/
+      main.yml          # Default variables with documentation
+    handlers/
+      main.yml          # Handlers for notifications
+    meta/
+      main.yml          # Role metadata and dependencies
+    tasks/
+      main.yml          # Main tasks file
+      [other_tasks].yml # Additional task files if needed
+    templates/
+      *.j2              # Jinja2 templates
+    files/
+      *                 # Static files to copy
+    vars/
+      main.yml          # Role variables (if needed)
+```
+
+### File Order
+
+1. **defaults/main.yml** - Default variables with documentation
+2. **meta/main.yml** - Role metadata
+3. **tasks/main.yml** - Main tasks
+4. **handlers/main.yml** - Handlers
+5. **templates/** - Jinja2 templates
+6. **files/** - Static files
+
+## Variable Documentation
+
+### Format
+
+All variables in `defaults/main.yml` MUST be documented using the `@var` annotation format:
+
+```yaml
+---
+# @var variable_name:description: Описание переменной на русском или английском
+variable_name: "{{ ansible_user_dir }}/.config/app"
+
+# @var variable_name:description: Описание
+# @var variable_name:example: Пример использования
+variable_name:
+  - item1
+  - item2
+
+# @var variable_name:description: Описание
+# @var variable_name:value: Значение по умолчанию
+variable_name: "default_value"
+```
+
+### Rules
+
+1. **Always document variables** - Every variable in `defaults/main.yml` MUST have a `@var` comment
+2. **Use description** - Always include `:description:` field
+3. **Add examples** - For complex variables (lists, dicts), include `:example:` field
+4. **Add value hints** - For variables with specific formats, include `:value:` field
+5. **Language** - Use Russian or English consistently (prefer Russian for this repository)
+
+### Examples
+
+```yaml
+---
+# @var neovim_home:description: директория с конфигами neovim
+neovim_home: "{{ ansible_user_dir + '/.config/nvim' }}"
+
+# @var zplug_plugins:description: список плагинов для zplug
+# @var zplug_plugins:example: >
+#   - name: zsh-users/zsh-syntax-highlighting
+#     opts: "defer:2"
+zplug_plugins:
+  - name: zsh-users/zsh-syntax-highlighting
+    opts: "defer:2"
+
+# @var portsentry_tcp_ports:description: список TCP портов через запятую
+portsentry_tcp_ports: "22,80,443"
+```
+
+## Task Structure
+
+### Required Fields
+
+Every task MUST include:
+
+1. **name** - Descriptive name in Russian or English
+2. **tags** - At least one tag matching the role name
+3. **become** - Set to `true` if task requires privileges
+
+### Format
+
+```yaml
+---
+- name: Descriptive task name
+  ansible.builtin.module:
+    param: value
+  become: true
+  tags:
+    - role_name
+    - specific_tag
+  when: condition | default('false') | bool
+  notify: Handler name
+  register: result_var
+```
+
+### Rules
+
+1. **Always use tags** - Every task MUST have at least the role name as a tag
+2. **Use become** - Set `become: true` for tasks requiring root/sudo
+3. **Use FQCN** - Always use fully qualified collection names (FQCN): `ansible.builtin.module`
+4. **Use when conditions** - For optional features, use: `when: enable_feature | default('false') | bool`
+5. **Group related tasks** - Use `block:` for grouping related tasks
+6. **Use loop** - For multiple items, use `loop:` instead of `with_*`
+7. **Register results** - Use `register:` for results that need to be checked later
+
+### Examples
+
+```yaml
+---
+- name: Install neovim
+  ansible.builtin.package:
+    state: present
+    name: neovim
+    update_cache: true
+  become: true
+  tags: neovim
+
+- name: Create directories
+  ansible.builtin.file:
+    state: directory
+    path: "{{ item }}"
+    mode: "0755"
+  loop:
+    - "{{ neovim_home }}/autoload"
+    - "{{ neovim_home }}/plugged"
+  tags: neovim
+
+- name: Configure apt
+  ansible.builtin.template:
+    src: '{{ item.name }}'
+    dest: '{{ item.dest }}'
+    mode: "0644"
+    owner: root
+  loop:
+    - name: config.j2
+      dest: /etc/app/config
+  become: true
+  tags: apt
+  register: apt_config
+```
+
+## Playbook Structure
+
+### Required Fields
+
+Every playbook MUST include:
+
+1. **hosts** - Target hosts or group
+2. **gather_facts** - Set to `true` (explicit)
+3. **become_method** - Set to `sudo` if needed
+4. **connection** - Set to `local` for localhost plays
+5. **collections** - List of collections used
+
+### Format
+
+```yaml
+---
+- hosts: target_group
+  become_method: sudo
+  gather_facts: true
+  connection: local
+  collections:
+    - heldner.things
+  roles:
+    - role_name
+    - role: role_name
+      vars:
+        custom_var: value
+      when: condition | default('false') | bool
+```
+
+### Rules
+
+1. **Always gather facts** - Set `gather_facts: true` explicitly
+2. **Specify connection** - Use `connection: local` for localhost plays
+3. **Use collections** - Always specify `collections:` section
+4. **Conditional roles** - Use `when:` for optional roles
+5. **Role variables** - Use `vars:` section for role-specific variables
+6. **Group roles** - Group related roles logically
+
+### Examples
+
+```yaml
+---
+- hosts: desktop
+  become_method: sudo
+  gather_facts: true
+  connection: local
+  collections:
+    - heldner.things
+  roles:
+    - apt
+    - neovim
+    - role: libvirt
+      when: enable_libvirt | default('false') | bool
+    - role: v2ray
+      when: v2ray_id is defined
+```
+
+## Meta File Structure
+
+### Required Fields
+
+Every `meta/main.yml` MUST include:
+
+1. **galaxy_info** - Galaxy metadata
+2. **dependencies** - Role dependencies (if any)
+
+### Format
+
+```yaml
+---
+galaxy_info:
+  author: Stanislav Korolev
+  namespace: things
+  description: Brief description of the role
+  company: RootIT
+  license: ISC
+  min_ansible_version: '2.12'
+  platforms:
+    - name: Debian
+      versions:
+        - 11
+        - 12
+  galaxy_tags: [tag1, tag2, tag3]
+
+dependencies:
+  - role: dependency_role
+```
+
+### Rules
+
+1. **Always include galaxy_info** - Required for Ansible Galaxy
+2. **Specify platforms** - List supported OS and versions
+3. **Add tags** - Include relevant `galaxy_tags`
+4. **List dependencies** - Include all role dependencies
+5. **Set min version** - Specify minimum Ansible version
+
+## Handler Structure
+
+### Format
+
+```yaml
+---
+- name: Restart service
+  ansible.builtin.systemd:
+    name: service_name
+    state: restarted
+  become: true
+```
+
+### Rules
+
+1. **Use descriptive names** - Handler names should clearly indicate action
+2. **Use become** - Set `become: true` for system services
+3. **Use FQCN** - Always use `ansible.builtin.*` modules
+4. **Notify handlers** - Use `notify:` in tasks that modify service configs
+5. **Flush handlers** - Use `meta: flush_handlers` when immediate restart is needed
+
+## Template Files
+
+### Rules
+
+1. **Use .j2 extension** - All Jinja2 templates MUST have `.j2` extension
+2. **Use ansible_managed** - Include `ansible_managed` comment in templates
+3. **Escape properly** - Use `{% raw %}` for literal Jinja2 syntax
+4. **Use filters** - Leverage Jinja2 filters for data transformation
+
+### Example
+
+```jinja2
+{# Ansible managed: {{ ansible_managed }} #}
+# Configuration file
+setting = {{ variable_name | default('default_value') }}
+```
+
+## File Permissions
+
+### Standard Permissions
+
+- **Directories**: `0755` (drwxr-xr-x)
+- **Config files**: `0644` (-rw-r--r--)
+- **Executable scripts**: `0755` (-rwxr-xr-x)
+- **SSH keys**: `0600` (-rw-------)
+- **SSH directories**: `0700` (drwx------)
+- **Config directories**: `0755` (drwxr-xr-x)
+
+### Rules
+
+1. **Always set mode** - Explicitly set `mode:` for all files and directories
+2. **Set owner** - Use `owner:` for files requiring specific ownership
+3. **Use octal** - Use octal format: `"0644"` or `'0755'`
+
+## Task Organization
+
+### Splitting Large Task Files
+
+If `tasks/main.yml` becomes large, split into multiple files:
+
+```
+tasks/
+  main.yml          # Main entry point, includes other files
+  install.yml       # Installation tasks
+  configure.yml     # Configuration tasks
+  service.yml       # Service management tasks
+```
+
+### Main Task File Pattern
+
+```yaml
+---
+- name: Include installation tasks
+  ansible.builtin.include_tasks: install.yml
+  tags:
+    - role_name
+    - install
+
+- name: Include configuration tasks
+  ansible.builtin.include_tasks: configure.yml
+  tags:
+    - role_name
+    - configure
+```
+
+## Best Practices
+
+1. **Idempotency** - All tasks MUST be idempotent
+2. **Use check mode** - Tasks should work in `--check` mode
+3. **Error handling** - Use `failed_when:` and `changed_when:` appropriately
+4. **Variable defaults** - Always provide defaults: `variable | default('value')`
+5. **Conditional execution** - Use `when:` for OS-specific or optional tasks
+6. **Register variables** - Use `register:` for results that affect later tasks
+7. **Use blocks** - Group related tasks with `block:` for better error handling
+8. **Template over copy** - Prefer `template:` over `copy:` for configurable files
+9. **Use handlers** - Use handlers for service restarts instead of direct commands
+10. **Tag everything** - Every task MUST have appropriate tags
+
+## Naming Conventions
+
+1. **Role names** - Use lowercase with underscores: `role_name`
+2. **Variable names** - Use lowercase with underscores: `variable_name`
+3. **Task names** - Use descriptive names in Russian or English
+4. **File names** - Use lowercase with underscores: `file_name.j2`
+5. **Tag names** - Use lowercase with underscores: `tag_name`
+
+## Examples
+
+### Complete Role Example
+
+**defaults/main.yml:**
+```yaml
+---
+# @var app_home:description: директория с конфигами приложения
+app_home: "{{ ansible_user_dir }}/.config/app"
+
+# @var app_enable_feature:description: включить дополнительную функцию
+app_enable_feature: false
+```
+
+**meta/main.yml:**
+```yaml
+---
+galaxy_info:
+  author: Stanislav Korolev
+  namespace: things
+  description: Configure application
+  company: RootIT
+  license: ISC
+  min_ansible_version: '2.12'
+  platforms:
+    - name: Debian
+      versions:
+        - 11
+        - 12
+  galaxy_tags: [app, config]
+
+dependencies: []
+```
+
+**tasks/main.yml:**
+```yaml
+---
+- name: Install application
+  ansible.builtin.package:
+    state: present
+    name: app_name
+    update_cache: true
+  become: true
+  tags: app
+
+- name: Create config directory
+  ansible.builtin.file:
+    state: directory
+    path: "{{ app_home }}"
+    mode: "0755"
+  tags: app
+
+- name: Configure application
+  ansible.builtin.template:
+    src: config.j2
+    dest: "{{ app_home }}/config"
+    mode: "0644"
+  notify: Restart app
+  tags: app
+
+- name: Enable feature
+  ansible.builtin.template:
+    src: feature.j2
+    dest: "{{ app_home }}/feature.conf"
+    mode: "0644"
+  when: app_enable_feature | default('false') | bool
+  notify: Restart app
+  tags: app
+```
+
+**handlers/main.yml:**
+```yaml
+---
+- name: Restart app
+  ansible.builtin.systemd:
+    name: app_name
+    state: restarted
+  become: true
+```
+
+## Summary Checklist
+
+When creating or modifying Ansible code, ensure:
+
+- [ ] Role follows standard directory structure
+- [ ] All variables in `defaults/main.yml` are documented with `@var`
+- [ ] All tasks have `name`, `tags`, and `become` (if needed)
+- [ ] All tasks use FQCN (`ansible.builtin.*`)
+- [ ] Playbooks include `hosts`, `gather_facts`, `collections`
+- [ ] `meta/main.yml` includes complete `galaxy_info`
+- [ ] File permissions are explicitly set
+- [ ] Handlers are used for service restarts
+- [ ] Templates use `.j2` extension
+- [ ] All tasks are idempotent
+- [ ] Conditional execution uses `when:` with defaults
