@@ -1,5 +1,5 @@
 !! Urxvt
-URxvt.font:               -xos4-terminus-medium-*-*--18-*-*-*-*-*-iso10646-*, xft:Hack Nerd Font:style=Regular:size=11
+URxvt.font:               -xos4-terminus-medium-*-*--32-*-*-*-*-*-iso10646-*, xft:Hack Nerd Font Mono:style=Regular:size=16
 URxvt.scrollBar:          false
 URxvt.print-pipe:         cat >> $(date +"urxvt_%F")
 URxvt.foreground:         white
@@ -10,7 +10,7 @@ URxvt.perl-ext-common:    default,matcher,font-size,vtwheel
 URxvt.url-launcher:       /usr/bin/xdg-open
 URxvt.iconFile:           /usr/share/icons/gnome/48x48/apps/terminal.png
 URxvt.matcher.button:     1
-URxvt.termName:           xterm-256color
+URxvt.termName:           rxvt-unicode
 URxvt.keysym.Home:        \033[1~
 URxvt.keysym.End:         \033[4~
 URxvt.keysym.KP_Home:     \033[1~
