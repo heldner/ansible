@@ -3,7 +3,6 @@
   ansible.builtin.package:
     state: present
     name: kitty
-    update_cache: true
   become: true
   tags: kitty
 
@@ -24,5 +23,6 @@
 - name: Deploy kitty theme configuration
   ansible.builtin.template:
     src: current-theme.conf.j2
+    dest: "{{ kitty_home }}/current-theme.conf"
     mode: "0644"
   tags: kitty
