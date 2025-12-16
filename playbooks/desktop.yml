@@ -35,6 +35,7 @@
     - interfaces
     - iptables
     - iwd
+    - kitty
     - role: libvirt
       when: enable_libvirt | default('false') | bool
     - librewolf

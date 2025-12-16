@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  author: Stanislav Korolev
+  namespace: things
+  description: Install and configure kitty terminal emulator
+  company: RootIT
+  license: ISC
+  min_ansible_version: '2.12'
+  platforms:
+    - name: Debian
+      versions:
+        - 11
+        - 12
+  galaxy_tags: [kitty, terminal, emulator, config]
+
+dependencies: []
