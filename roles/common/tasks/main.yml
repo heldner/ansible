@@ -18,6 +18,7 @@
       - f2fs-tools
       - fbreader
       - fonts-hermit
+      - fonts-indic
       - fonts-noto-color-emoji
       - fonts-powerline
       - ipython3
