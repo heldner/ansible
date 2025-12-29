@@ -74,3 +74,6 @@ if [ -z "${WAYLAND_DISPLAY}" ] \
     exec sway
 fi
 
+if [ -e /run/user/1000/docker.sock ]; then
+    export DOCKER_HOST=unix:///run/user/1000/docker.sock
+fi

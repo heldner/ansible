@@ -25,6 +25,3 @@ AUTOENV_FILE_ENTER=.autoenv.sh
 AUTOENV_AUTH_FILE=~/.local/share/autoenv_auth
 # for debug autoenv plugin set > 0
 AUTOENV_DEBUG=0
-
-# disable underlines in paths
-ZSH_HIGHLIGHT_STYLES[path]='none'
