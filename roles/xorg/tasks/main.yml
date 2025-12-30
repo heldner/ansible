@@ -23,7 +23,6 @@
       - pcmanfm
       - pinentry-gnome3
       - rtkit
-      - rxvt-unicode
       - unclutter
       - unclutter-startup
       - x11-utils
@@ -44,12 +43,6 @@
       - zathura
   tags: xorg
   become: true
-
-- name: Install urxvt
-  ansible.builtin.include_tasks: urxvt.yml
-  tags:
-    - urxvt
-    - xorg
 
 - name: Include fonts tasks
   ansible.builtin.include_tasks: fonts.yml

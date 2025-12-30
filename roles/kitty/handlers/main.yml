@@ -1,0 +1,9 @@
+---
+- name: Set x-terminal-emulator kitty
+  ansible.builtin.command:
+    update-alternatives --set x-terminal-emulator /usr/bin/kitty
+  register: kitty_terminal
+  changed_when: kitty_terminal.stdout_lines | length > 0
+  become: true
+  tags: kitty
+...

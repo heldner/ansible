@@ -3,6 +3,7 @@
   ansible.builtin.package:
     state: present
     name: kitty
+  notify: Set x-terminal-emulator kitty
   become: true
   tags: kitty
 
@@ -26,3 +27,8 @@
     dest: "{{ kitty_home }}/current-theme.conf"
     mode: "0644"
   tags: kitty
+
+- name: Flush kitty handlers
+  ansible.builtin.meta: flush_handlers
+  tags: kitty
+...
