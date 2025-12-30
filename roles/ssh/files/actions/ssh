@@ -19,7 +19,5 @@ host=$(awk '$2 !~ /^\*/ && /^Host/ {sub(/\*$/,""); print $2}' ~/.ssh/config \
 if pgrep -lf "$(ssh_cmd).*${host}$"; then
   notify-send "SSH" "Already connected to $host"
 else
-  urxvtc -e $(ssh_cmd) $OPTS $host "$CMD"
+  kitty -1 $(ssh_cmd) $OPTS $host "$CMD"
 fi
-
-#eval urxvtc -title "ssh $host" -e "$(ssh_cmd)" "$OPTS" "$host" "$CMD"
