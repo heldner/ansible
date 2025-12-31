@@ -1,8 +1,0 @@
----
-- name: Reload udev input
-  ansible.builtin.command:
-    udevadm trigger --subsystem-match=input --action=change
-
-- name: Set x-terminal-emulator urxvt
-  ansible.builtin.command:
-    sudo update-alternatives --set x-terminal-emulator /usr/bin/urxvt

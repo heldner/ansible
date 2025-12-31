@@ -8,9 +8,6 @@ export LC_ALL=en_US.UTF-8
 xautolock &
 screensaver_disabler
 
-# terminal
-urxvtd -q -f -o
-
 # for gtk3 apps
 export GTK_THEME='Adwaita-dark'
 
