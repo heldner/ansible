@@ -69,7 +69,13 @@
     - gtkrc-2.0
     - xsession
     - xsessionrc
-    - Xresources
   tags:
     - xorg
     - script
+
+- name: Copy Xresources
+  ansible.builtin.template:
+    src: Xresources.j2
+    dest: '{{ ansible_user_dir }}/.Xresources'
+    mode: "0644"
+  tags: xorg

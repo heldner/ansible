@@ -1,0 +1,4 @@
+---
+# @var xorg_xft_dpi:description: размер dpi
+xorg_xft_dpi: 108
+...
