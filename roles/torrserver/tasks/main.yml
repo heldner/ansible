@@ -1,0 +1,32 @@
+---
+- name: Install torrserver package
+  ansible.builtin.apt:
+    deb: https://github.com/heldner/torrserver-deb/releases/download/{{ torrserver_version }}-2/torrserver_{{ torrserver_deb_version }}_amd64.deb
+    force: true
+  become: true
+  when: >
+    (ansible_facts.packages['torrserver'] is defined and
+    ansible_facts.packages['torrserver'][0]['version'] != torrserver_deb_version) or
+    ansible_facts.packages['torrserver'] is not defined
+  tags: torrserver
+
+- name: Pin torrserver package
+  ansible.builtin.dpkg_selections:
+    name: torrserver
+    selection: hold
+  changed_when: false
+  become: true
+  tags: [torrserver, pin]
+
+- name: Enable and start torrserver service
+  ansible.builtin.systemd:
+    name: torrserver
+    enabled: true
+    state: started
+  become: true
+  tags: torrserver
+
+- name: Flush torrserver handlers
+  ansible.builtin.meta: flush_handlers
+  tags: torrserver
+...
