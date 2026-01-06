@@ -46,6 +46,7 @@
     src: slim.conf.j2
     dest: /etc/slim.conf
     mode: "0644"
+  become: true
   tags: slim
 
 - name: Run systemctl daemon-reload
