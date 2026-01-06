@@ -1,5 +1,5 @@
 ---
-- when: ansible_facts['distribution_major_version'] <= "12"
+- name: Install nerd fonts
   tags: xorg
   block:
 
