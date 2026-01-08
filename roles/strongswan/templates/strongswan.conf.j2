@@ -1,7 +1,10 @@
-swanctl {
-  load = random openssl
+# {{ ansible_managed }}
+
+charon {
+	load_modular = yes
+	plugins {
+		include strongswan.d/charon/*.conf
+	}
 }
 
-charon-systemd {
-  load = random nonce openssl kernel-netlink socket-default updown vici
-}
+include strongswan.d/*.conf

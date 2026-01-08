@@ -1,0 +1,14 @@
+---
+- name: Restart strongswan-starter
+  ansible.builtin.systemd:
+    name: strongswan-starter
+    state: restarted
+  become: true
+  listen: reload strongswan
+
+- name: Load swanctl config
+  ansible.builtin.command:
+    cmd: swanctl --load-all
+  become: true
+  changed_when: false
+  listen: reload strongswan

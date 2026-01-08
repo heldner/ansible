@@ -57,6 +57,7 @@
     - ssh
     - sxhkd
     - syncthing
+    - strongswan
     - tmux
     - thunderbird
     - udev

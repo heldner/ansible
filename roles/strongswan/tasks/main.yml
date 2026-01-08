@@ -2,34 +2,69 @@
 - name: Install strongswan
   ansible.builtin.package:
     name:
-      - strongswan
-      - strongswan-swanctl
+      - libcharon-extauth-plugins
+      - libcharon-extra-plugins
+      - libstrongswan-extra-plugins
       - libstrongswan-standard-plugins
-        #- strongswan-pki
+      - strongswan
+      - strongswan-charon
+      - strongswan-swanctl
     state: present
+    update_cache: true
   become: true
   tags: strongswan
 
-- name: Copy swanctl config
-  ansible.builtin.template:
-    src: "swanctl_ikev2.conf.j2"
-    dest: "/etc/swanctl/swanctl.conf"
-      #owner: strongswan
-      #group: strongswan
-      #mode: "0640"
-  tags: strongswan
-  #notify: Restart strongswan-client
+- name: Create ipsec certificates directory
+  ansible.builtin.file:
+    state: directory
+    path: /etc/ipsec.d/cacerts
+    mode: "0755"
+    owner: root
+    group: root
   become: true
-  no_log: "{{ nolog | default('true') | bool }}"
+  tags: strongswan
+
+- name: Download Let's Encrypt ISRG Root X1 CA certificate for ipsec
+  ansible.builtin.get_url:
+    url: https://letsencrypt.org/certs/isrgrootx1.pem
+    dest: /etc/ipsec.d/cacerts/isrgrootx1.pem
+    mode: "0644"
+    owner: root
+    group: root
+  become: true
+  tags: strongswan
 
 - name: Copy strongswan config
   ansible.builtin.template:
-    src: "strongswan.conf.j2"
-    dest: "/etc/strongswan.conf"
-      #owner: strongswan
-      #group: strongswan
-      #mode: "0640"
-  tags: strongswan
-  #notify: Restart strongswan-client
+    src: strongswan.conf.j2
+    dest: /etc/strongswan.conf
+    mode: "0644"
+    owner: root
+    group: root
   become: true
+  tags: strongswan
+  notify: reload strongswan
+
+- name: Copy ipsec config
+  ansible.builtin.template:
+    src: ipsec.conf.j2
+    dest: /etc/ipsec.conf
+    mode: "0644"
+    owner: root
+    group: root
+  become: true
+  tags: strongswan
+  notify: reload strongswan
+
+- name: Copy ipsec secrets
+  ansible.builtin.template:
+    src: ipsec.secrets.j2
+    dest: /etc/ipsec.secrets
+    mode: "0600"
+    owner: root
+    group: root
+  become: true
+  tags: strongswan
   no_log: "{{ nolog | default('true') | bool }}"
+  notify: reload strongswan
+...

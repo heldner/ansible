@@ -1,0 +1,13 @@
+---
+# @var strongswan_server:description: адрес VPN сервера для подключения
+strongswan_server: "v.kinescope.io"
+
+# @var strongswan_password:description: пароль для подключения к VPN
+
+# @var strongswan_local_id:description: локальный идентификатор для подключения
+
+# @var strongswan_remote_id:description: удаленный идентификатор сервера
+strongswan_remote_id: "{{ strongswan_server }}"
+
+# @var strongswan_remote_ts:description: целевая сеть для маршрутизации через VPN
+strongswan_remote_ts: "10.0.0.0/8"

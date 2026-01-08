@@ -1,7 +1,15 @@
 ---
 galaxy_info:
   author: Stanislav Korolev
-  description: install ipsec vpn [strongswan](https://strongswan.org/)
+  description: |
+    Install and configure IPsec VPN [strongswan](https://strongswan.org/) with IKEv2 support.
+
+    ## Usage
+    - Connect: `sudo swanctl -i -c home`
+    - Disconnect: `sudo swanctl -t home` or `sudo swanctl -t --all`
+    - List connections: `sudo swanctl --list-conns` or `sudo swanctl -L`
+    - List active SAs: `sudo swanctl --list-sas` or `sudo swanctl -l`
+    - Load config: `sudo swanctl --load-all` or `sudo swanctl -q`
   company: RootIT
   license: ISC
   min_ansible_version: '2.12'

@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+
+conn home
+    left=%any
+    leftauth=eap-mschapv2
+    leftid={{ strongswan_local_id | quote }}
+    right={{ strongswan_server | quote }}
+    rightauth=pubkey
+    rightid={{ strongswan_remote_id | quote }}
+    rightca=/etc/ipsec.d/cacerts/isrgrootx1.pem
+    rightsubnet={{ strongswan_remote_ts | quote }}
+    keyexchange=ikev2
+    ike=aes256gcm16-prfsha256-ecp521
+    esp=aes128gcm16
+    auto=add
