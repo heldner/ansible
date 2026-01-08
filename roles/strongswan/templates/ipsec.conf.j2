@@ -2,6 +2,7 @@
 
 conn home
     left=%any
+    leftsourceip=%config
     leftauth=eap-mschapv2
     leftid={{ strongswan_local_id | quote }}
     right={{ strongswan_server | quote }}
