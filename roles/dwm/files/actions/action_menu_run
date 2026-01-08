@@ -2,9 +2,19 @@
 
 actiondir="${HOME}/.dwm/actions"
 
+trap 'wait' CHLD
+
 run_cmd=$(stest -flx "$actiondir" |
-  grep -vE "_common|$(basename $0)" | sort -u | dmenu)
+  grep -vE "_common|$(basename "$0")" |
+  sort -u |
+  dmenu)
 [ -z "$run_cmd" ] && exit 0
 
-res=$(${actiondir}/${run_cmd} 2>&1)
-[ -n "$res" ] && notify-send "$run_cmd" "$res"
+tmpfile=$(mktemp)
+${actiondir}/${run_cmd} >"$tmpfile" 2>&1
+res=$(cat "$tmpfile")
+rm -f "$tmpfile"
+
+if [ -n "$res" ]; then
+  notify-send "$run_cmd" "$res"
+fi
