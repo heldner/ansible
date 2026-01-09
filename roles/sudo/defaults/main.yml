@@ -1,2 +1,13 @@
 ---
-# defaults file for sudo
+# @var sudo_nopass_cmds:description: >
+# список пользователей и команд для выполнения без пароля
+# @end
+# @var sudo_nopass_cmds:example: >
+#   - user: myuser
+#     cmds:
+#       - /usr/bin/systemctl
+#       - /usr/bin/docker
+#   - user: anotheruser
+#     cmds:
+#       - /usr/bin/apt
+sudo_nopass_cmds: []

@@ -58,6 +58,7 @@
     - sxhkd
     - syncthing
     - strongswan
+    - sudo
     - tmux
     - thunderbird
     - udev

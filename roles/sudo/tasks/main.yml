@@ -1,0 +1,26 @@
+---
+- name: Create sudoers.d directory
+  ansible.builtin.file:
+    state: directory
+    path: /etc/sudoers.d
+    mode: "0755"
+    owner: root
+    group: root
+  become: true
+  tags: sudo
+
+- name: Create sudoers files for NOPASSWD commands
+  ansible.builtin.template:
+    src: nopass_cmds.j2
+    dest: "/etc/sudoers.d/{{ item.user }}"
+    mode: "0440"
+    owner: root
+    group: root
+    validate: "visudo -cf %s"
+  vars:
+    user: "{{ item.user }}"
+    cmds: "{{ item.cmds }}"
+  loop: "{{ sudo_nopass_cmds }}"
+  become: true
+  tags: [sudo, nopass_cmds]
+  when: sudo_nopass_cmds | length > 0

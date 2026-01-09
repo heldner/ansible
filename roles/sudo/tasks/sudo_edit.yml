@@ -1,9 +1,0 @@
----
-- name: Ensure the {{ username }} user is sudoer with no password required
-  ansible.builtin.lineinfile:
-    dest: /etc/sudoers
-    state: present
-    regexp: '^{{ item }}'
-    line: "{{ item }}"
-    validate: "visudo -cf %s"
-  loop: '{{ sudo_lines }}'
