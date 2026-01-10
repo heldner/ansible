@@ -32,6 +32,7 @@
 
 - name: Create cronfile
   ansible.builtin.cron:
+    state: absent
     name: unattended-upgrades
     minute: "0"
     hour: "19"
@@ -49,6 +50,7 @@
 
 - name: Create cronfile at reboot
   ansible.builtin.cron:
+    state: absent
     name: "unattended-upgrades at reboot"
     special_time: reboot
     cron_file: "/etc/cron.d/unattended-upgrades"

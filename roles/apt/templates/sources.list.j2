@@ -1,8 +1,8 @@
 deb {{ apt_mirror }} {{ ansible_lsb.codename }} main contrib non-free non-free-firmware
 deb-src {{ apt_mirror }} {{ ansible_lsb.codename }} main contrib non-free non-free-firmware
 
-deb https://deb.debian.org/debian-security {{ ansible_lsb.codename }}-security main contrib
-deb-src https://deb.debian.org/debian-security {{ ansible_lsb.codename }}-security main contrib
+deb https://deb.debian.org/debian-security {{ ansible_lsb.codename }}-security main contrib non-free non-free-firmware
+deb-src https://deb.debian.org/debian-security {{ ansible_lsb.codename }}-security main contrib non-free non-free-firmware
 
 # {{ ansible_lsb.codename }}-updates, previously known as 'volatile'
 deb {{ apt_mirror }} {{ ansible_lsb.codename }}-updates main contrib non-free non-free-firmware

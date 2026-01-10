@@ -40,6 +40,8 @@
       dest: /etc/apt/sources.list
     - name: apt_conf_norecommends.j2
       dest: /etc/apt/apt.conf.d/90aptnorecommends
+    - name: apt_periodic_unattended_upgrade.j2
+      dest: /etc/apt/apt.conf.d/70apt_periodic_unattended_upgrade
     - name: apt_conf_default_release.j2
       dest: /etc/apt/apt.conf.d/10apt_conf_default_release
   become: true
