@@ -29,7 +29,7 @@
     command: set
     key: fwknopd.@network[0]
     value:
-      network: wan
+      network: 'rt'
   notify:
     - Commit pending changes
     - Restart fwknopd
