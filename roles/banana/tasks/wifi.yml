@@ -1,0 +1,31 @@
+---
+- name: Configure wifi 2Ghz
+  uci:
+    command: set
+    key: wireless.default_radio0
+    value:
+      network: 'lan'
+      mode: 'ap'
+      ssid: 'banana2'
+      encryption: 'psk2'
+      key: '{{ banana_wifi_password }}'
+  notify:
+    - Commit pending changes
+    - Restart network
+  tags: wifi
+
+- name: Configure wifi 5Ghz
+  uci:
+    command: set
+    key: wireless.default_radio1
+    value:
+      network: 'lan'
+      mode: 'ap'
+      ssid: 'banana'
+      encryption: 'sae-mixed'
+      key: '{{ banana_wifi_password }}'
+  notify:
+    - Commit pending changes
+    - Restart network
+  tags: wifi
+...
