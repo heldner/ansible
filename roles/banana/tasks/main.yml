@@ -48,6 +48,10 @@
   ansible.builtin.include_tasks: wifi.yml
   tags: wifi
 
+- name: Include ddns tasks
+  ansible.builtin.include_tasks: ddns.yml
+  tags: ddns
+
 - name: Include rostelecom tasks
   ansible.builtin.include_tasks: rt.yml
   tags: rt

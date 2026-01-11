@@ -22,3 +22,8 @@
   service:
     name: fwknopd
     state: restarted
+
+- name: Restart ddns
+  service:
+    name: ddns
+    state: restarted

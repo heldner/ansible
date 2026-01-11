@@ -1,0 +1,39 @@
+---
+- name: Install syncthing
+  opkg:
+    name: '{{ item }}'
+    update_cache: true
+  loop:
+    - ddns-scripts
+    - ddns-scripts-services
+    - luci-app-ddns
+  tags: ddns
+
+- name: Configure ddns on dynu.com
+  uci:
+    command: set
+    key: ddns.myddns_ipv4
+    value:
+      service_name: 'dynu.com'
+      lookup_host: 'bpi-r3.mywire.org'
+      enabled: '1'
+      use_ipv6: '0'
+      domain: 'bpi-r3.mywire.org'
+      username: 'dtarantul'
+      password: "{{ lookup('community.general.passwordstore',
+        'hosting/dynu.com') }}"
+      ip_source: 'network'
+      ip_network: 'rt'
+      interface: 'rt'
+      use_syslog: '2'
+      check_unit: 'minutes'
+      force_unit: 'minutes'
+      retry_unit: 'seconds'
+      use_https: '1'
+      cacert: 'IGNORE'
+  notify:
+    - Commit pending changes
+    - Restart ddns
+  no_log: "{{ nolog | default('true') | bool }}"
+  tags: ddns
+...

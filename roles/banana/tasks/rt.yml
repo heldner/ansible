@@ -45,6 +45,7 @@
   notify:
     - Commit pending changes
     - Restart network
+  no_log: "{{ nolog | default('true') | bool }}"
   tags: rt
 
 - name: Get current wan ifaces
