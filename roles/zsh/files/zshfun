@@ -32,7 +32,7 @@ myip() {
 }
 
 genpass() {
-  xkcdpass -n 2 -C capitalize -R
+  xkcdpass -C first -R --numwords=3 --max=5 --min=5 -D '[]@#$0123456789' -c 3
 }
 
 genpass2() {

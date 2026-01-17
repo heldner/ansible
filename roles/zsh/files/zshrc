@@ -1,3 +1,7 @@
+if [ "$CURSOR_INVOKED_AS" = "cursor-agent" ]; then
+  return
+fi
+
 load_file () {
   file="$1"
   if [ -f "${ZDOTDIR:-${HOME}}/${file}" ]; then
