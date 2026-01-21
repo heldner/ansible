@@ -12,7 +12,8 @@
   ansible.builtin.template:
     src: fwknoprc.j2
     dest: "{{ ansible_user_dir + '/.fwknoprc' }}"
-    mode: 0600
+    mode: "0600"
+  no_log: "{{ nolog | default('true') | bool }}"
   tags:
     - fwknop
     - fwknop-client
