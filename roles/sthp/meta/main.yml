@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  author: Stanislav Korolev
+  namespace: things
+  description: Запуск sthp как пользовательский systemd юнит
+  company: RootIT
+  license: ISC
+  min_ansible_version: '2.12'
+  platforms:
+    - name: Debian
+      versions:
+        - all
+  galaxy_tags: [systemd, user, sthp]
+
+dependencies: []

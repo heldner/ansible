@@ -1,0 +1,12 @@
+{# Ansible managed: {{ ansible_managed }} #}
+[Unit]
+Description=sthp daemon
+After=network.target
+
+[Service]
+Type=simple
+ExecStart={{ sthp_bin }} --port {{ sthp_port }} --socks-address {{ sthp_socks_porxy }}
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

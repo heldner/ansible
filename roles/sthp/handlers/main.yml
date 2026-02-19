@@ -1,0 +1,13 @@
+---
+- name: Reload systemd
+  ansible.builtin.systemd:
+    scope: user
+    daemon_reload: true
+  tags: sthp
+
+- name: Restart sthp
+  ansible.builtin.systemd:
+    scope: user
+    name: sthp
+    state: restarted
+  tags: sthp
