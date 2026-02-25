@@ -1,0 +1,20 @@
+---
+# @var byedpi_bin_path:description: путь к исполняемому файлу byedpi
+byedpi_bin_path: "/usr/local/bin/byedpi"
+
+# @var byedpi_user:description: пользователь для запуска сервиса
+byedpi_user: "byedpi"
+
+# @var byedpi_group:description: группа для запуска сервиса
+byedpi_group: "byedpi"
+
+# @var byedpi_listen_ip:description: IP адрес для прослушивания
+byedpi_listen_ip: "127.0.0.1"
+
+# @var byedpi_listen_port:description: порт для прослушивания
+byedpi_listen_port: 2080
+
+# @var byedpi_options:description: дополнительные опции для byedpi
+# @var byedpi_options:example: "--disorder 3+s --mod-http=h,d --auto none --tlsrec 1+s"
+byedpi_options: "--disorder 1+s --tlsrec 1+s --round 1"
+...

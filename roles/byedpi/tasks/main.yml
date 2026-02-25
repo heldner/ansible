@@ -1,35 +1,49 @@
 ---
 - name: Add the user
   ansible.builtin.user:
-    name: byedpi
+    name: "{{ byedpi_user }}"
+    group: "{{ byedpi_group }}"
     shell: /usr/sbin/nologin
     create_home: false
+    system: true
   become: true
   tags: byedpi
 
 - name: Copy byedpi bin
   ansible.builtin.copy:
     src: 'byedpi'
-    dest: '/usr/local/bin/byedpi'
+    dest: "{{ byedpi_bin_path }}"
     mode: '0755'
   become: true
+  notify: Restart byedpi
   tags: byedpi
 
-- name: Copy byedpi defaults
-  ansible.builtin.copy:
-    src: 'default'
-    dest: '/etc/default/byedpi'
-    mode: '0644'
-  become: true
-  tags: byedpi
-
-- name: Create byedpi service
-  ansible.builtin.copy:
-    src: 'init.d.service'
-    dest: '/etc/init.d/byedpi'
-    mode: '0755'
+- name: Remove legacy init.d script
+  ansible.builtin.file:
+    path: /etc/init.d/byedpi
+    state: absent
   become: true
   notify: Run systemctl daemon-reload
+  tags: byedpi
+
+- name: Remove legacy defaults file
+  ansible.builtin.file:
+    path: /etc/default/byedpi
+    state: absent
+  become: true
+  tags: byedpi
+
+- name: Create byedpi systemd service
+  ansible.builtin.template:
+    src: byedpi.service.j2
+    dest: /etc/systemd/system/byedpi.service
+    mode: '0644'
+    owner: root
+    group: root
+  become: true
+  notify:
+    - Run systemctl daemon-reload
+    - Restart byedpi
   tags: byedpi
 
 - name: Enable and start service byedpi

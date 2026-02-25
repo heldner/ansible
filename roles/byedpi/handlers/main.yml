@@ -3,4 +3,9 @@
   ansible.builtin.systemd:
     daemon_reload: true
   become: true
-  tags: byedpi
+
+- name: Restart byedpi
+  ansible.builtin.systemd_service:
+    name: byedpi
+    state: restarted
+  become: true

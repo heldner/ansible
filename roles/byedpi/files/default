@@ -1,1 +1,0 @@
-DAEMON_OPTS="--disorder 3+s --mod-http=h,d --auto none --tlsrec 1+s --ip 127.0.0.1 --port 2080"

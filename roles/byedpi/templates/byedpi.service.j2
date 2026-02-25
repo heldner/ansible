@@ -1,0 +1,49 @@
+# {{ ansible_managed }}
+[Unit]
+Description=ByeDPI - DPI bypass SOCKS proxy
+Documentation=https://github.com/hufrea/byedpi
+After=network.target
+
+[Service]
+Type=simple
+User={{ byedpi_user }}
+Group={{ byedpi_group }}
+ExecStart={{ byedpi_bin_path }} --ip {{ byedpi_listen_ip }} --port {{ byedpi_listen_port }} {{ byedpi_options }}
+Restart=on-failure
+RestartSec=5
+
+# Hardening options
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+ProtectHostname=yes
+ProtectProc=invisible
+ProcSubset=pid
+
+RestrictAddressFamilies=AF_INET AF_INET6
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+
+MemoryDenyWriteExecute=yes
+LockPersonality=yes
+RemoveIPC=yes
+
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+SystemCallFilter=~@privileged @resources
+
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target
