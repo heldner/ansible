@@ -1,5 +1,9 @@
 ---
-# @todo improvement: update dns forum.openwrt.org/t/udhcpc-user-script-documentation-and-how-to-hotplug-for-dhcp-events/47952/10j
+- name: Install vnstat
+  opkg:
+    name: vnstat
+  tags: vnstat
+
 - name: Set drop on wan
   uci:
     command: set
