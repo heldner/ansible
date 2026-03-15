@@ -15,8 +15,11 @@ byedpi_listen_ip: "127.0.0.1"
 byedpi_listen_port: 2080
 
 # @var byedpi_options:description: дополнительные опции для byedpi
-# @var byedpi_options:example: "--disorder 3+s --mod-http=h,d --auto none --tlsrec 1+s"
-byedpi_options: "--disorder 1+s --tlsrec 1+s --round 1"
+# @var byedpi_options:example: "-H:\"googlevideo.com youtube.com\" --oob 1 -An"
+#byedpi_options: "--disorder 1+s --tlsrec 1+s --round 1"
+#byedpi_options: "--split 1 --oob 1 --auto redirect --oob 1 --auto torst --fake -1 --tlsrec 1+s --auto ssl_error"
 # byedpi_options: "--timeout 3 --auto torst --disorder 1+s --tlsrec 1+s"
 #byedpi_options: "--fake 1 --ttl 1"
+byedpi_options: "-H:\"googlevideo.com youtube.com\" --oob 1 -An"
+#byedpi_options: "--disoob 1"
 ...

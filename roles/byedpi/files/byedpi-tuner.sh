@@ -7,7 +7,8 @@
 BYEDPI_BIN="${BYEDPI_BIN:-/usr/local/bin/byedpi}"
 LISTEN_IP="${LISTEN_IP:-127.0.0.1}"
 LISTEN_PORT="${LISTEN_PORT:-2081}"
-TEST_URL="${TEST_URL:-https://facebook.com}"
+#TEST_URL="${TEST_URL:-https://facebook.com}"
+TEST_URL="${TEST_URL:-https://instagram.com}"
 CURL_TIMEOUT="${CURL_TIMEOUT:-10}"
 STARTUP_DELAY="${STARTUP_DELAY:-1}"
 
@@ -59,89 +60,66 @@ test_connection() {
     return 1
 }
 
-# Наборы параметров на основе https://github.com/hufrea/byedpi/discussions/224
+# Наборы параметров на основе https://github.com/hufrea/byedpi/discussions/184
+# и https://github.com/hufrea/byedpi/discussions/58
 # Позиции: +s = SNI offset, +h = HTTP host, +e = end, +m = middle
+# Краткие флаги: -s=--split, -q=--disoob, -o=--oob, -d=--disorder,
+#                -f=--fake, -r=--tlsrec, -A=--auto, -Y=--drop-sack
 declare -a PARAM_SETS=(
+    # === Самый популярный конфиг (#184, waptaxi) ===
+    # Работает: Ростелеком, Билайн, МГТС, мобильные операторы
+    "-s1 -q1 -Y -Ar -s5 -o1+s -At -f-1 -r1+s -As -s1 -o1+s -s-1 -An"
+
+    # === Вариации основного конфига (#184, sgt-cartman, Билайн) ===
+    "-s1 -o1 -Ar -o1 -At -f-1 -r1+s -As"
+    "-s1 -o1 -Ar -o3 -At -f-1 -r1+s -As"
+
+    # === Без -Y (для совместимости, -Y=--drop-sack только Linux) ===
+    "-s1 -q1 -Ar -s5 -o1+s -At -f-1 -r1+s -As -s1 -o1+s -s-1 -An"
+
+    # === Mihrutkin, сентябрь 2025 (#184) ===
+    "-Ku -a1 -An -o1 -At,r,s -d1 -a2 -o1 -o25+s -T3 -At --tlsrec 1+s -a2"
+    "-s1 -q1 -Y -a2 -Ar,t -f-1 -r1+s -a3"
+
+    # === disorder + auto (#184, denizzzka) ===
+    "--disorder 4 --auto torst,sid_inv,alert --timeout 2.5 --disorder 7"
+
+    # === oob + md5sig (#184, koshcheev713) ===
+    "--oob 1 --split 2 --mod-http h,d --auto torst --fake -1 --tlsrec 3+s --md5sig --auto none"
+
+    # === Билайн провод + DroidProger, без --hosts (#184) ===
+    "--oob 1 --tlsrec 5+s --auto none"
+    "--oob 2 --tlsrec 3+s --auto none"
+    "--split 5 --disoob 15 --drop-sack --auto none"
+
+    # === DenisIndenbom, МГТС, оригинал (#58) ===
+    "--split 1 --disorder 3+s --mod-http h,d --auto none --tlsrec 1+s"
+    "--split 1 --disorder 3+s --mod-http h,d --auto none --fake -1 --tlsrec 3+h"
+
+    # === DenisIndenbom, обновлённый октябрь 2024 (#58) ===
+    "--split 1 --disoob 3 --disorder 7 --fake -1 --auto none --tlsrec 3+h --mod-http h,d,r"
+    "--split 1 --disoob 3 --disorder 7 --fake -1 --auto-mode 1 --auto none --tlsrec 3+h --mod-http h,d,r"
+    "--split 1 --oob 1 --auto redirect --oob 1 --auto torst --fake -1 --tlsrec 1+s --auto ssl_error"
+
+    # === Ростелеком Новосибирск (#58, decide-you) ===
+    "--split 1 --oob 1 --mod-http h,d --auto none --fake -1 --tlsrec 3+h"
+
+    # === Ростелеком (#58, rezawq) ===
+    "--split 2 --disorder 3 --fake -1 --ttl 5"
+    "--split 2 --disorder 3 --ttl 5 --tlsrec 3+s --auto torst --timeout 3"
+
+    # === sakontwist, proto tls (#224) ===
+    "--proto tls --disorder 2 --split 7 --round 1"
+    "--proto tls --disorder +s --split 0+sm --round 1"
+
     # === Минималистичные базовые варианты ===
-    "--disorder 1"
-    "--disorder 1+s"
-    "--split 1+s"
-    "--tlsrec 1+s"
-
-    # === Рабочие конфиги из обсуждения ===
-    # Axa-Ru (Ростелеком)
-    "--disorder 1 --auto torst --tlsrec 1+s"
-
-    # sakontwist: proto tls
-    "--disorder 2 --split 7 --round 1"
-    "--disorder 0+se"
-    "--disorder +s --split 0+sm --round 1"
-
-    # === disorder + tlsrec (разрез SNI пополам) ===
-    "--disorder 1 --tlsrec 1+s"
-    "--disorder 2 --tlsrec 1+s"
-    "--disorder 1+s --tlsrec 1+s"
-
-    # === split + tlsrec ===
-    "--split 1 --tlsrec 1+s"
-    "--split 1+s --tlsrec 1+s"
-    "--split 2 --tlsrec 1+s"
-
-    # === С auto для переключения при блокировке ===
-    "--disorder 1 --auto torst --disorder 2 --split 7"
-    "--split 1+s --auto torst --disorder 1+s --tlsrec 1+s"
-    "--disorder 1+s --auto torst,ssl_err --disorder 2 --tlsrec 1+s"
-
-    # === fake с низким TTL (пакет не дойдёт до сервера) ===
-    "--fake 1 --ttl 1"
-    "--fake 1 --ttl 2"
-    "--fake 1+s --ttl 2"
-    "--fake 1 --ttl 3 --disorder 1"
-    "--fake 1+s --ttl 2 --tlsrec 1+s"
-
-    # === OOB data ===
     "--oob 1"
     "--oob 1+s"
-    "--oob 1+s --tlsrec 1+s"
-
-    # === disoob (disorder + oob) ===
     "--disoob 1"
     "--disoob 1+s"
-
-    # === HTTP modification (для HTTP трафика) ===
-    "--mod-http h,d"
-    "--disorder 1 --mod-http h,d"
-    "--split 1 --mod-http h,d"
-
-    # === Комбинации с --round 1 ===
-    "--disorder 1 --round 1"
-    "--split 1+s --round 1"
-    "--disorder 1+s --tlsrec 1+s --round 1"
-
-    # === Продвинутые комбинации ===
-    "--disorder 1 --split 3 --tlsrec 1+s"
-    "--split 1 --disorder 3 --tlsrec 1+s"
-    "--disorder 1+s --split 3+s --round 1"
-
-    # === С несколькими split позициями ===
-    "--split 1+s --split 3+s"
-    "--disorder 1 --split 1+s --split 5+s"
-
-    # === auto с timeout для проблемных соединений ===
-    "--timeout 3 --auto torst --disorder 1+s --tlsrec 1+s"
-    "--timeout 3 --auto torst,ssl_err --disorder 2 --split 7 --round 1"
-
-    # === md5sig для fake (может помочь ночью) ===
-    "--fake 1 --ttl 2 --md5sig"
-    "--fake 1+s --ttl 2 --md5sig --disorder 1"
-
-    # === Полные рабочие стратегии ===
-    # TLS: disorder + tlsrec
-    "--disorder 1 --tlsrec 1+s --auto torst --disorder 2 --tlsrec 1+s"
-    # TLS: split + disorder fallback
-    "--split 1+s --tlsrec 1+s --auto torst --disorder 1+s --tlsrec 1+s"
-    # Universal с HTTP fallback
-    "--disorder 1 --tlsrec 1+s --auto torst --mod-http h,d --disorder 2"
+    "--tlsrec 1+s"
+    "--disorder 1 --tlsrec 1+s"
+    "--split 1+s --tlsrec 1+s"
 )
 
 main() {
