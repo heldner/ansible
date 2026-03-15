@@ -47,8 +47,11 @@ exec bwrap \
      --bind-try ~/.cache/librewolf ~/.cache/librewolf \
      --ro-bind-try ~/Pictures/Screenshots ~/Pictures/Screenshots \
      --ro-bind-try /run/user/"${UID}"/bus /run/user/"${UID}"/bus \
+     --setenv GDK_DPI_SCALE 1 \
      --setenv MOZ_ENABLE_WAYLAND 0 \
      --setenv PATH /usr/bin \
+     --setenv XCURSOR_SIZE 36 \
+     --setenv XCURSOR_THEME Adwaita \
      --unshare-all \
      --share-net \
      --hostname mypc \
