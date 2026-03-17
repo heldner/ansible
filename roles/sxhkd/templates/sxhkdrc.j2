@@ -16,6 +16,18 @@ XF86Display
 XF86Tools
   switch_webcam
 
+XF86AudioRaiseVolume
+  vol_notify up
+
+XF86AudioLowerVolume
+  vol_notify down
+
+XF86AudioMicMute
+  wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+
+XF86AudioMute
+  vol_notify toggle
+
 Print
   flameshot gui --path {{ flameshot_dir }}
 
