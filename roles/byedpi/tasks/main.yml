@@ -1,4 +1,10 @@
 ---
+- name: Add group
+  ansible.builtin.group:
+    name: "{{ byedpi_group }}"
+  become: true
+  tags: byedpi
+
 - name: Add the user
   ansible.builtin.user:
     name: "{{ byedpi_user }}"
