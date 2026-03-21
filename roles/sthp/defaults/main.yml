@@ -6,4 +6,4 @@ sthp_bin: "{{ ansible_user_dir }}/.local/bin/sthp"
 sthp_port: 1085
 
 # @var sthp_socks_porxy:description: адрес socks5 прокси
-sthp_socks_porxy: '127.0.0.1:5832'
+sthp_socks_porxy: '127.0.0.1:2342'
