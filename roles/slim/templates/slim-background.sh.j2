@@ -1,5 +1,5 @@
 #!/bin/sh
-PICTURES=/home/dayton/Pictures/backgrounds
+PICTURES=/home/{{ ansible_user_id }}/Pictures
 SLIM_BACKGROUND=/usr/share/slim/themes/random/background.jpg
 
 picture=$(find $PICTURES -type f -name '*.jpg' | shuf -n1)

@@ -33,8 +33,6 @@
       dst: /etc/systemd/system/slim.service.d/override.conf
     - src: theme_random/panel.png
       dst: /usr/share/slim/themes/random/panel.png
-    - src: slim-background.sh
-      dst: /etc/X11/Xreset.d/02slim-background
     - src: theme_random/slim.theme
       dst: /usr/share/slim/themes/random/slim.theme
   become: true
@@ -43,9 +41,14 @@
 
 - name: Copy slim.conf
   ansible.builtin.template:
-    src: slim.conf.j2
-    dest: /etc/slim.conf
+    src: '{{ item.src }}'
+    dest: '{{ item.dst }}'
     mode: "0644"
+  loop:
+    - src: slim-background.sh.j2
+      dst: /etc/X11/Xreset.d/02slim-background
+    - src: slim.conf.j2
+      dst: /etc/slim.conf
   become: true
   tags: slim
 
