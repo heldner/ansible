@@ -8,6 +8,12 @@
   tags: duplicity
   become: true
 
+- name: Create local bin directory
+  ansible.builtin.file:
+    state: directory
+    path: '{{ ansible_user_dir }}/.local/bin'
+  tags: duplicity
+
 - name: Copy duplicity backup script
   ansible.builtin.template:
     src: duplicity_backup.sh.j2

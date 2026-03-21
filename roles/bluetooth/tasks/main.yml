@@ -33,8 +33,8 @@
 - name: Enable and start mpris-proxy
   ansible.builtin.systemd:
     name: mpris-proxy
-    state: stopped
-    enabled: false
+    state: started
+    enabled: true
     scope: user
   tags: bluetooth
 
@@ -42,9 +42,8 @@
   ansible.builtin.file:
     state: directory
     path: "{{ item }}"
-    mode: 0755
-    recurse: true
-  with_items:
+    mode: "0755"
+  loop:
     - "{{ ansible_user_dir +
       '/.local/share/applications' }}"
     - "{{ ansible_user_dir +

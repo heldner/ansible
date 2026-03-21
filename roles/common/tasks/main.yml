@@ -24,7 +24,7 @@
       - ipython3
       - jnettop
       - keychain
-      - man
+      - man-db
       - ncal
       - ncdu
       - nmap
