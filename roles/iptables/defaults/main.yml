@@ -1,11 +1,64 @@
 ---
-# @var ipset_tables:example: >
-# ipset_tables:
-#   - name: portsentry_tcp
-#     set_option: bitmap:port range 0-65535
-#     items:
-#       - 111
-#       - 123
+# @var iptables_ipset_tables:description: >
+# Used to add ipset tables via [ipset.yml](tasks/ipset.yml).
+# Each item must have attributes: name, set_option,
+# (items or src_groups).
+# If src_groups is used, dport can be specified.
+# Populated from ${uniq_prefix}_ipset_tables__to_merge variables
+# in group_vars or host_vars.
 # @end
-# @var ipset_config_dir:description: dir with all ipset instruction files
-ipset_config_dir: /etc/ipset
+# @var iptables_ipset_tables:example: >
+# - name: public_tcp
+#   set_option: bitmap:port range 0-65535
+#   items: [80, 443]
+# # allow all hosts from the ingress group to connect to port 3100
+# - name: loki
+#   set_option: hash:net,port comment
+#   src_groups: [ingress]
+#   dport: 3100
+# # allow all hosts from trusted and admins groups to connect to any port
+# - name: trusted
+#   set_option: hash:net comment
+#   src_groups: [trusted, admins]
+# # allow all hosts from the vpns group with public IPs to connect to any port
+# - name: private
+#   set_option: hash:net comment
+#   src_groups: [vpns]
+#   src_ip_type: public_ip
+# # allow hosts from the vpns group and the Dallas subnet to connect to port 8005
+# - name: http-emails
+#   set_option: hash:net,port
+#   src_groups: [vpns]
+#   dport: 8005
+#   items:
+#     - 10.2.0.0/24,8005 comment "net=private"
+# # log incoming connections from 10.1.0.0/24 network
+# # that did not match any allow rules
+# - name: log_my_networks
+#   set_option: hash:net
+#   jump: LOG
+#   items:
+#       - 10.1.0.0/24 comment "location=my"
+# @end
+iptables_ipset_tables: "{{ lookup('community.general.merge_variables',
+  'ipset_tables__to_merge', pattern_type='suffix') }}"
+# @var iptables_ipset_config_dir:description: Directory containing ipset lists.
+iptables_ipset_config_dir: /etc/ipset
+# @var iptables_rules_dir:description: >
+# Directory containing iptables rules.
+# @end
+iptables_rules_dir: /etc/iptables
+# @var iptables_v4_rules:description: >
+# Path to the IPv4 rules file for iptables-(save|persistent).
+# @end
+iptables_v4_rules: /etc/iptables/rules.v4
+# @var iptables_control_script:description: Path to the iptables configuration script.
+iptables_control_script: /usr/bin/iptables-ipset.sh
+# @var iptables_default_ipset_tables__to_merge:description: >
+# These rules are added by default.
+# @end
+iptables_default_ipset_tables__to_merge:
+  - name: public-ssh
+    set_option: bitmap:port range 0-65535
+    items: [22]
+...

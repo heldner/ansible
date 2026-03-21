@@ -1,0 +1,52 @@
+# {{ ansible_managed }}
+*filter
+:INPUT DROP [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+{% for line in iptables_save.stdout_lines %}
+{% if (line | regex_search('^:DOCKER')) or (line | regex_search('^:LIBVIRT')) %}
+{{ line }}
+{% endif %}
+{% endfor %}
+-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -m conntrack --ctstate INVALID -j DROP
+-A INPUT -i lo -j ACCEPT
+-A INPUT -p icmp -m icmp --icmp-type 0 -j ACCEPT
+-A INPUT -p icmp -m icmp --icmp-type 3 -j ACCEPT
+-A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
+-A INPUT -p icmp -m icmp --icmp-type 11 -j ACCEPT
+{% for list in iptables_ipset_tables %}
+{% if 'jump' in list %}
+{% if list['jump'] != 'LOG' %}
+-A {{ list.chain | default('INPUT') }} -p {{ list.protocol | default('tcp') }} -m set --match-set {{ list.name }} {{ list.set_flags | default(list.set_option | set_flags) }} -j {{ list.jump | default('ACCEPT') }}
+{% endif %}
+{% else %}
+-A {{ list.chain | default('INPUT') }} -p {{ list.protocol | default('tcp') }} -m set --match-set {{ list.name }} {{ list.set_flags | default(list.set_option | set_flags) }} -j {{ list.jump | default('ACCEPT') }}
+{% endif %}
+{% endfor %}
+-A INPUT -p udp -m udp --dport 33434:33523 -j REJECT --reject-with icmp-port-unreachable
+{% for list in iptables_ipset_tables %}
+{% if 'jump' in list %}
+{% if list['jump'] == 'LOG' %}
+-A {{ list.chain | default('INPUT') }} -m set --match-set {{ list.name }} src -m limit --limit 5/min -j LOG --log-prefix "{{ list.log_prefix | default('netfilter') }} "
+{% endif %}
+{% endif %}
+{% endfor %}
+{% for line in iptables_save.stdout_lines %}
+{% if (line | regex_search('^-A FORWARD.*DOCKER')) or
+   (line | regex_search('.*FORWARD -d 192.168.*')) or
+   (line | regex_search('^-A .*docker\d ')) or
+   (line | regex_search(' -i br-.*')) or
+   (line | regex_search(' -o br-.*')) or
+   (line | regex_search('^-A DOCKER')) or
+   (line | regex_search('.* LIBVIRT_'))
+%}
+{{ line }}
+{% endif %}
+{% endfor %}
+COMMIT
+{% for line in iptables_save_nat.stdout_lines %}
+{% if not line | regex_search('^#') %}
+{{ line | regex_replace(' \[\d+:\d+\]', ' [0:0]') }}
+{% endif %}
+{% endfor %}

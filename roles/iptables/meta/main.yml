@@ -1,9 +1,35 @@
 ---
 galaxy_info:
   author: Stanislav Korolev
-  description: >
-    Configure iptables and ipset
-    ![iptables default flow](iptables.svg)
+  role_name: iptables
+  description: |
+    Install and configure iptables and ipset.
+
+    iptables workflow diagram ![iptables_default_flow](iptables.svg)
+
+    ## Tips
+
+    ### Show current rules
+
+    ```
+    iptables-ipset.sh
+    ```
+    Or separately, list iptables rules:
+    ```
+    sudo iptables -nvL
+    sudo iptables -nvL -t nat
+    ```
+
+    Show ipset lists:
+    ```
+    sudo ipset list
+    ```
+
+    ### Additional iptables-ipset.sh options
+
+    ```
+    iptables-ipset.sh --help
+    ```
   company: RootIT
   license: ISC
   min_ansible_version: '2.16'
@@ -11,3 +37,4 @@ galaxy_info:
     - name: Debian
       versions:
         - all
+...

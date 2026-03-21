@@ -1,0 +1,52 @@
+---
+- name: Find remote ipset lists
+  ansible.builtin.find:
+    paths: '{{ iptables_ipset_config_dir }}'
+  register: iptables_ipset_remote_list
+  tags: [iptables, ipset, conf]
+
+- name: Set temporary remote ipsets
+  ansible.builtin.set_fact:
+    iptables_remote_ipsets: |
+      {{ iptables_ipset_remote_list.files
+      | map(attribute='path')
+      | list
+      | map('regex_replace', '.tables', '')
+      | map('regex_replace', iptables_ipset_config_dir + '/', '')
+      }}
+    iptables_work_tables: "{{ iptables_ipset_tables | map(attribute='name') }}"
+  tags: [iptables, ipset, conf]
+
+- name: Set remove ipsets
+  ansible.builtin.set_fact:
+    iptables_remove_groups: |
+      {{ iptables_remote_ipsets | reject('in', iptables_work_tables) | list }}
+  tags: [iptables, ipset, conf]
+
+- name: Cleanup iptables
+  ansible.builtin.command:
+    iptables-ipset.sh --clean {{ iptables_remove_groups | join(',') }}
+  become: true
+  changed_when: iptables_remove_groups | length > 0
+  when: iptables_remove_groups | length > 0
+  tags: [iptables, ipset, conf]
+
+- name: Generate ipset tables
+  ansible.builtin.template:
+    src: ipset.tables.j2
+    dest: "{{ iptables_ipset_config_dir }}/{{ rule.name }}.tables"
+    mode: "0644"
+  loop: '{{ iptables_ipset_tables }}'
+  loop_control:
+    loop_var: rule
+  when:
+    - iptables_ipset_tables is defined
+    - iptables_ipset_tables | length > 0
+  become: true
+  notify: Reload ipset tables
+  tags: [iptables, ipset, conf]
+
+- name: Flush ipset handlers
+  ansible.builtin.meta: flush_handlers
+  tags: [iptables, ipset, conf]
+...

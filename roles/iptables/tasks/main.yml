@@ -4,49 +4,88 @@
     name:
       - ipset
       - iptables-persistent
-    cache_valid_time: 600
   become: true
-  tags: iptables
+  tags: [iptables, ipset, package]
 
-- name: Copy ipset reload script
-  ansible.builtin.copy:
-    src: ipset-reload.sh
-    dest: "/usr/bin/ipset-reload.sh"
+- name: Copy control script
+  ansible.builtin.template:
+    src: 'iptables-ipset.sh'
+    dest: '{{ iptables_control_script }}'
     mode: "0755"
   become: true
-  tags: iptables
+  tags: [bin, iptables, ipset, conf]
 
-- name: Iptables rules
-  notify: Save iptables rules
+- name: Copy netfilter rule
+  ansible.builtin.copy:
+    dest: /usr/share/netfilter-persistent/plugins.d/10-ipset
+    content: |
+      #!/bin/sh
+      {{ iptables_control_script }} --reload
+    mode: "0755"
   become: true
-  tags: iptables
-  block:
-    - name: Set the policy for the INPUT chain to DROP
-      ansible.builtin.iptables:
-        chain: INPUT
-        policy: DROP
+  tags: [iptables, ipset, conf]
 
-    - name: Allow any traffic on lo
-      ansible.builtin.iptables:
-        chain: INPUT
-        in_interface: lo
-        jump: ACCEPT
+- name: Create iptables dir
+  ansible.builtin.file:
+    state: directory
+    path: "{{ iptables_rules_dir }}"
+    mode: "0755"
+  become: true
+  tags: [iptables, conf, dir]
 
-    - name: Allow echo replies
-      ansible.builtin.iptables:
-        chain: INPUT
-        protocol: icmp
-        icmp_type: '{{ item }}'
-        jump: ACCEPT
-      loop: [0, 8]
+- name: Block all ipv6
+  ansible.builtin.copy:
+    content: |
+      *filter
+      :INPUT DROP [0:0]
+      :FORWARD ACCEPT [0:0]
+      :OUTPUT ACCEPT [0:0]
+      COMMIT
+    dest: "{{ iptables_rules_dir }}/rules.v6"
+  become: true
+  tags: [iptables, conf, v6conf]
 
-    - name: Allow related and established connections
-      ansible.builtin.iptables:
-        action: insert
-        chain: INPUT
-        ctstate: ESTABLISHED,RELATED
-        jump: ACCEPT
+- name: Ensure ipset config directory exists
+  ansible.builtin.file:
+    path: "{{ iptables_ipset_config_dir }}"
+    state: directory
+    owner: root
+    mode: "0755"
+  tags: [iptables, ipset]
+  become: true
+
+- name: Import ipset tasks
+  ansible.builtin.import_role:
+    name: iptables
+    tasks_from: ipset
+  tags: [iptables, ipset]
+
+- name: Get iptables-save output
+  ansible.builtin.command: iptables-save -t filter
+  register: iptables_save
+  changed_when: false
+  check_mode: false
+  become: true
+  tags: [iptables, ipset]
+
+- name: Get iptables-save -t nat output
+  ansible.builtin.command: iptables-save -t nat
+  register: iptables_save_nat
+  changed_when: false
+  check_mode: false
+  become: true
+  tags: [iptables, ipset]
+
+- name: Add iptables rules
+  ansible.builtin.template:
+    src: rules.v4.j2
+    dest: /etc/iptables/rules.v4
+    mode: "0644"
+  notify: Restore iptables rules
+  become: true
+  tags: [iptables, conf]
 
 - name: Flush iptables handlers
-  meta: flush_handlers
-  tags: iptables
+  ansible.builtin.meta: flush_handlers
+  tags: [iptables, ipset, conf]
+...

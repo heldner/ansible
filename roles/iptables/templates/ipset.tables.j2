@@ -1,13 +1,21 @@
-{% if ipset_tables is defined %}
-{%   for rule in ipset_tables %}
-create {{ rule.name }}_tmp {{ rule.set_option }}
-{%     if 'items' in rule %}
-{%       for element in rule['items'] %}
-add {{ rule.name }}_tmp {{ element }}
-{%       endfor %}
-{%     endif %}
-swap {{ rule.name }}_tmp {{ rule.name }}
-destroy {{ rule.name }}_tmp
-
+create {{ rule.name }}_tmp {{ rule.set_option }} {{ 'range 0-65535' if rule.set_option == 'bitmap:port' else 'comment'}}
+{% if 'src_groups' in rule %}
+{%   for group in rule['src_groups'] %}
+{%     for server in groups[group] | list | sort %}
+{%       if server != 'localhost' %}
+add {{ rule.name }}_tmp {{ hostvars[server][rule.src_ip_type] if 'src_ip_type' in rule
+  else hostvars[server]['ansible_host'] }}{%
+  if rule.dport is defined %},{% if rule.protocol is defined %}{{ rule.protocol
+  }}:{% endif %}{{ rule.dport }}{% endif %} comment "host={{
+  hostvars[server]['inventory_hostname'] }}"
+{%       endif %}
+{%     endfor %}
 {%   endfor %}
 {% endif %}
+{% if 'items' in rule %}
+{%   for element in rule['items'] %}
+{{ 'add ' + rule.name + '_tmp ' + element | string }}
+{%   endfor %}
+{% endif %}
+swap {{ rule.name }}_tmp {{ rule.name }}
+destroy {{ rule.name }}_tmp
