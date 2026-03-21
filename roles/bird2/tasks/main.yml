@@ -28,3 +28,4 @@
 - name: Flush bird2 handlers
   ansible.builtin.meta: flush_handlers
   tags: bird2
+...

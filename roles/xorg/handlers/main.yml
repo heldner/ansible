@@ -2,4 +2,12 @@
 - name: Reload udev input
   ansible.builtin.command:
     udevadm trigger --subsystem-match=input --action=change
+
+- name: Create fonts.dir
+  ansible.builtin.command:
+    cmd: mkfontdir '{{ ansible_user_dir }}/.local/share/fonts'
+
+- name: Update font cache
+  ansible.builtin.command:
+    cmd: fc-cache -f
 ...
