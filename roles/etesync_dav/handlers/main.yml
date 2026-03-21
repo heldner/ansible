@@ -1,0 +1,11 @@
+---
+- name: Restart etesync-dav
+  ansible.builtin.systemd:
+    name: etesync-dav
+    scope: user
+    state: restarted
+    daemon_reload: true
+  become: false
+  when: etesync_dav_enable_service | default('true') | bool
+  tags:
+    - etesync_dav

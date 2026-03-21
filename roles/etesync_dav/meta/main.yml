@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  author: Stanislav Korolev
+  namespace: things
+  description: Install EteSync-DAV binary from GitHub releases and user systemd service
+  company: RootIT
+  license: ISC
+  min_ansible_version: '2.12'
+  platforms:
+    - name: Debian
+      versions:
+        - all
+  galaxy_tags: [etesync, caldav, carddav, dav, sync]
+
+dependencies: []

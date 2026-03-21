@@ -1,0 +1,11 @@
+---
+_etesync_dav_arch_map:
+  x86_64:
+    zip: dist-ubuntu-latest.zip
+    bin: linux-amd64-etesync-dav
+  aarch64:
+    zip: dist-ubuntu-22.04-arm.zip
+    bin: linux-arm64-etesync-dav
+
+_etesync_dav_current_arch: "{{ _etesync_dav_arch_map[ansible_architecture] }}"
+_etesync_dav_url: "https://github.com/etesync/etesync-dav/releases/download/v{{ etesync_dav_version }}/{{ _etesync_dav_current_arch.zip }}"

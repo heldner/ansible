@@ -1,0 +1,12 @@
+---
+# @var etesync_dav_version:description: release version without the v prefix (GitHub release tag, e.g. 0.35.1)
+etesync_dav_version: '0.35.1'
+
+# @var etesync_dav_binary_path:description: install path for the executable (same as upstream wiki, e.g. /usr/local/bin)
+etesync_dav_binary_path: /usr/local/bin/etesync-dav
+
+# @var etesync_dav_enable_service:description: enable and start the etesync-dav user systemd unit
+etesync_dav_enable_service: true
+
+# @var etesync_dav_enable_linger:description: enable systemd linger for the user so the service can start before graphical login
+etesync_dav_enable_linger: false

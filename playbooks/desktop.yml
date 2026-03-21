@@ -21,6 +21,7 @@
     - dwm
     - editorconfig
     - etckeeper
+    - etesync_dav
     - feh
     - flameshot
     - role: fwknop

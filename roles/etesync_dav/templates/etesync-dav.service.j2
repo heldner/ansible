@@ -1,0 +1,10 @@
+{# Ansible managed: {{ ansible_managed }} #}
+[Unit]
+Description=Cal/CardDAV frontend for EteSync
+
+[Service]
+Type=simple
+ExecStart={{ etesync_dav_binary_path }}
+
+[Install]
+WantedBy=default.target
