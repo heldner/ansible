@@ -11,7 +11,11 @@ VIDEO_OPT="--dev-bind-try /dev/video0 /dev/video0
   --dev-bind-try /dev/video2 /dev/video2"
 
 exec bwrap \
+     --ro-bind /usr/bin/grep /usr/bin/grep \
      --ro-bind /usr/bin/sh /usr/bin/sh \
+     --ro-bind /usr/bin/uname /usr/bin/uname \
+     --ro-bind /usr/bin/sed /usr/bin/sed \
+     --ro-bind /usr/bin/chromium /usr/bin/chromium \
      --ro-bind /usr/share /usr/share \
      --ro-bind /usr/lib /usr/lib \
      --ro-bind /usr/lib64 /usr/lib64 \
@@ -27,12 +31,16 @@ exec bwrap \
      --ro-bind-try /sys/bus/usb /sys/bus/usb \
      --ro-bind-try /sys/dev /sys/dev \
      --ro-bind-try /sys/devices /sys/devices \
+     --ro-bind /etc/os-release /etc/os-release \
      --ro-bind /etc/passwd /etc/passwd \
      --ro-bind /etc/group /etc/group \
      --ro-bind /etc/hostname /etc/hostname \
      --ro-bind /etc/hosts /etc/hosts \
      --ro-bind /etc/localtime /etc/localtime \
      --ro-bind /etc/nsswitch.conf /etc/nsswitch.conf \
+     --ro-bind /etc/ungoogled-chromium.d /etc/ungoogled-chromium.d \
+     --ro-bind /etc/chromium /etc/chromium \
+     --ro-bind /etc/chromium.d /etc/chromium.d \
      --ro-bind /run/dbus/system_bus_socket /run/dbus/system_bus_socket \
      --ro-bind /run/user/"$(id -u)"/bus /run/user/"$(id -u)"/bus \
      --ro-bind-try /etc/resolv.conf /etc/resolv.conf \
@@ -51,14 +59,14 @@ exec bwrap \
      --bind-try "$TEMPDIR" "$TEMPDIR" \
      --dir "$XDG_RUNTIME_DIR" \
      --bind-try "${XDG_RUNTIME_DIR}/pipewire-0" "${XDG_RUNTIME_DIR}/pipewire-0" \
-     --ro-bind-try "${XDG_RUNTIME_DIR}/pipewire-0.lock" "${XDG_RUNTIME_DIR}/pipewire-0.lock" \
+     --bind-try "${XDG_RUNTIME_DIR}/pipewire-0.lock" "${XDG_RUNTIME_DIR}/pipewire-0.lock" \
      --bind-try "${XDG_RUNTIME_DIR}/pulse" "${XDG_RUNTIME_DIR}/pulse" \
      --bind-try "${XDG_RUNTIME_DIR}/pipewire-0-manager" "${XDG_RUNTIME_DIR}/pipewire-0-manager" \
-     --ro-bind-try "${XDG_RUNTIME_DIR}/pipewire-0-manager.lock" "${XDG_RUNTIME_DIR}/pipewire-0-manager.lock" \
+     --bind-try "${XDG_RUNTIME_DIR}/pipewire-0-manager.lock" "${XDG_RUNTIME_DIR}/pipewire-0-manager.lock" \
      --bind-try ~/Downloads ~/Downloads \
      --bind ~/.config/chromium ~/.config/chromium \
      --unshare-all \
      --share-net \
      --new-session \
      --hostname mypc \
-     /usr/share/ungoogled-chromium/chrome "$@" > /dev/null 2>&1
+     /usr/bin/chromium "$@" > /dev/null 2>&1
