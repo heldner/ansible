@@ -25,7 +25,7 @@
   ansible.builtin.git:
     repo: https://github.com/zplug/zplug.git
     single_branch: true
-    version: master
+    version: main
     clone: true
     dest: '{{ ansible_env.HOME }}/.zplug'
   tags:
