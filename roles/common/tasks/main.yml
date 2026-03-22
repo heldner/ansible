@@ -43,10 +43,13 @@
   become: true
   tags: common
 
-- name: Remove avahi
+- name: Remove unwanted packages
   ansible.builtin.package:
     state: absent
-    pkg: avahi-autoipd
+    pkg:
+      - avahi-autoipd
+      - avahi-daemon
+      - ibus
   become: true
   tags: common
 
