@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  author: Stanislav Korolev
+  namespace: things
+  description: Installation GitHub CLI
+  company: RootIT
+  license: ISC
+  min_ansible_version: '2.12'
+  platforms:
+    - name: Debian
+      versions:
+        - 12
+        - 13
+  galaxy_tags: [gh, github-cli]
+
+dependencies: []

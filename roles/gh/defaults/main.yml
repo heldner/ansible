@@ -1,0 +1,4 @@
+---
+# @var gh_version:description: Package version gh
+# @var gh_version:example: 'present' or 'latest'
+gh_version: "present"
