@@ -66,6 +66,7 @@
     - thunderbird
     - udev
     - unbound
+    - uv
     - role: v2ray
       when: v2ray_id is defined
     - xorg

@@ -1,0 +1,41 @@
+---
+- name: Ensure apt keyrings directory exists
+  ansible.builtin.file:
+    state: directory
+    path: /etc/apt/keyrings
+    mode: "0755"
+    owner: root
+  become: true
+  tags: uv
+
+- name: Download debian.griffo.io GPG key
+  ansible.builtin.get_url:
+    url: "{{ uv_gpg_key_url }}"
+    dest: /tmp/debian-griffo-io.asc
+    mode: "0644"
+  tags: uv
+
+- name: Dearmor GPG key
+  ansible.builtin.command:
+    cmd: gpg --dearmor --yes -o /etc/apt/keyrings/debian-griffo-io.gpg /tmp/debian-griffo-io.asc
+    creates: /etc/apt/keyrings/debian-griffo-io.gpg
+  become: true
+  tags: uv
+
+- name: Add debian.griffo.io repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/debian-griffo-io.gpg] {{ uv_repo_url }} {{ ansible_distribution_release }} main"
+    state: present
+    filename: debian-griffo-io
+    update_cache: true
+  become: true
+  tags: uv
+
+- name: Install uv
+  ansible.builtin.package:
+    name: uv
+    state: "{{ uv_version | default('present') }}"
+    update_cache: true
+  become: true
+  tags: uv
+...
