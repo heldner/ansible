@@ -1,0 +1,10 @@
+---
+# @var yt_dlp_venv_dir:description: yt-dlp virtual environment directory
+yt_dlp_venv_dir: "{{ ansible_user_dir }}/.local/share/yt-dlp"
+
+# @var yt_dlp_bin_dir:description: directory for the yt-dlp symlink
+yt_dlp_bin_dir: "{{ ansible_user_dir }}/.local/bin"
+
+# @var yt_dlp_version:description: yt-dlp version to install
+# @var yt_dlp_version:example: '2025.3.31' or empty string for latest
+yt_dlp_version: ""

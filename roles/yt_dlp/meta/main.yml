@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: Stanislav Korolev
+  namespace: things
+  description: Install yt-dlp via uv into a virtual environment
+  company: RootIT
+  license: ISC
+  min_ansible_version: '2.12'
+  platforms:
+    - name: Debian
+      versions:
+        - 12
+        - 13
+  galaxy_tags: [yt_dlp, youtube, uv, python]
+
+dependencies:
+  - role: uv

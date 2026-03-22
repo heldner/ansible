@@ -1,0 +1,25 @@
+---
+- name: Create yt-dlp venv
+  ansible.builtin.command:
+    cmd: uv venv {{ yt_dlp_venv_dir }} --clear
+    creates: "{{ yt_dlp_venv_dir }}/bin/python"
+  tags: yt_dlp
+
+- name: Install yt-dlp into venv
+  ansible.builtin.command:
+    cmd: >-
+      uv pip install
+      --python {{ yt_dlp_venv_dir }}/bin/python
+      yt-dlp{{ (yt_dlp_version != '') | ternary('==' + yt_dlp_version, '') }}
+  register: yt_dlp_install
+  changed_when: "'Installed' in yt_dlp_install.stdout"
+  tags: yt_dlp
+
+- name: Create symlink for yt-dlp
+  ansible.builtin.file:
+    state: link
+    src: "{{ yt_dlp_venv_dir }}/bin/yt-dlp"
+    dest: "{{ yt_dlp_bin_dir }}/yt-dlp"
+    force: true
+  tags: yt_dlp
+...
