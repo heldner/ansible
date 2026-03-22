@@ -1,8 +1,13 @@
 ---
-- name: Install ungoogled chromium
-  ansible.builtin.package:
-    state: present
-    name: ungoogled-chromium
+- name: Install ungoogled-chromium package
+  ansible.builtin.apt:
+    deb: "{{ 'https://github.com/heldner/ungoogled-chromium-deb/releases/download/' +
+      chromium_version + '/ungoogled-chromium_' + chromium_deb_version + '_amd64.deb' }}"
+    force: true
+  when: >
+    (ansible_facts.packages['ungoogled-chromium'] is defined and
+    ansible_facts.packages['ungoogled-chromium'][0]['version'] != chromium_deb_version) or
+    ansible_facts.packages['ungoogled-chromium'] is not defined
   become: true
   tags:
     - browser
