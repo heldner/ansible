@@ -43,11 +43,11 @@ exec bwrap \
      --ro-bind-try "${XDG_RUNTIME_DIR}/pulse" "${XDG_RUNTIME_DIR}/pulse" \
      --bind-try ~/Downloads ~/Downloads \
      --bind-try ~/Documents/pages ~/Documents/pages \
-     --bind-try ~/.librewolf ~/.librewolf \
+     --bind-try ~/.config/librewolf ~/.config/librewolf \
      --bind-try ~/.cache/librewolf ~/.cache/librewolf \
      --ro-bind-try ~/Pictures/Screenshots ~/Pictures/Screenshots \
      --ro-bind-try /run/user/"${UID}"/bus /run/user/"${UID}"/bus \
-     --setenv GDK_DPI_SCALE 1 \
+     --setenv GDK_DPI_SCALE {{ librewolf_gdk_dpi_scale }} \
      --setenv MOZ_ENABLE_WAYLAND 0 \
      --setenv PATH /usr/bin \
      --setenv XCURSOR_SIZE 36 \

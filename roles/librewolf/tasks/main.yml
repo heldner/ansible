@@ -50,8 +50,8 @@
     - librewolf
 
 - name: Copy bubblewrap librewolf
-  ansible.builtin.copy:
-    src: librewolf-bubblewrap
+  ansible.builtin.template:
+    src: librewolf-bubblewrap.j2
     dest: '{{ librewolf_bwrap_path }}'
     owner: 'root'
     group: 'root'
@@ -75,7 +75,7 @@
     mode: '0750'
   loop:
     - "{{ ansible_user_dir }}/.cache/librewolf"
-    - "{{ ansible_user_dir }}/.librewolf"
+    - "{{ ansible_user_dir }}/.config/librewolf"
   tags: [browser, librewolf]
 
 - name: Flush librewolf handlers
