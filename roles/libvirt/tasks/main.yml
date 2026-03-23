@@ -10,6 +10,7 @@
       - python3-libvirt
       - python3-lxml
       - qemu-system
+      - qemu-system-modules-spice
       - qemu-utils
       - spice-client-gtk
       - virt-manager
@@ -73,9 +74,6 @@
   tags: libvirt
 
 - name: Flush libvirt handlers
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
   tags: libvirt
-
-- name: Include start machines
-  ansible.builtin.include_tasks: machines.yml
-  tags: libvirt
+...
