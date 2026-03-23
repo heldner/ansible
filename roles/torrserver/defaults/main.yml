@@ -3,4 +3,4 @@
 torrserver_version: 137
 
 # @var torrserver_deb_version:description: версия deb пакета
-torrserver_deb_version: '{{ torrserver_version }}-2'
+torrserver_deb_version: '{{ torrserver_version }}-3'
