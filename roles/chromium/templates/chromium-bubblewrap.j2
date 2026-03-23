@@ -6,6 +6,7 @@ if [ "$1" = '--video' ]; then
   shift
 fi
 
+DPI_SCALE=${DPI_SCALE:=1.2}
 VIDEO_OPT="--dev-bind-try /dev/video0 /dev/video0
   --dev-bind-try /dev/video1 /dev/video1
   --dev-bind-try /dev/video2 /dev/video2"
@@ -66,4 +67,4 @@ exec bwrap \
      --share-net \
      --new-session \
      --hostname mypc \
-     /usr/share/ungoogled-chromium/chrome "$@" > /dev/null 2>&1
+     /usr/share/ungoogled-chromium/chrome --high-dpi-support=1 --force-device-scale-factor=${DPI_SCALE} "$@" > /dev/null 2>&1

@@ -14,8 +14,8 @@
     - chromium
 
 - name: Copy bubblewrap chromium script
-  ansible.builtin.copy:
-    src: chromium-bubblewrap
+  ansible.builtin.template:
+    src: chromium-bubblewrap.j2
     dest: '/usr/bin/chromium-bubblewrap'
     owner: 'root'
     group: 'root'
