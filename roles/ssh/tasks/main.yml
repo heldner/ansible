@@ -1,12 +1,14 @@
 ---
 - name: Include sshd tasks
   ansible.builtin.include_tasks: ssh_server.yml
-  tags:
-    - ssh
-    - ssh_server
+  tags: [ssh, ssh_server]
 
 - name: Include ssh client tasks
   ansible.builtin.include_tasks: ssh_client.yml
-  tags:
-    - ssh
-    - ssh_client
+  tags: [ssh, ssh_client]
+
+- name: Include ssh proxy tasks
+  ansible.builtin.include_tasks: ssh_proxies.yml
+  when: ssh_proxies | default([]) | length > 0
+  tags: [ssh, ssh_proxies]
+...

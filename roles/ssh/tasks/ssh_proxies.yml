@@ -1,0 +1,30 @@
+---
+- name: Create systemd user directory
+  ansible.builtin.file:
+    state: directory
+    path: "{{ ansible_user_dir }}/.config/systemd/user"
+    mode: "0755"
+  tags: [ssh, ssh_proxies]
+
+- name: Create ssh proxy systemd units
+  ansible.builtin.template:
+    src: ssh_proxy.service.j2
+    dest: "{{ ansible_user_dir }}/.config/systemd/user/ssh_proxy_{{ item.name }}.service"
+    mode: "0644"
+  vars:
+    tunnel_name: "{{ item.name }}"
+    tunnel_port: "{{ item.port }}"
+  loop: "{{ ssh_proxies | selectattr('name', 'defined') | selectattr('port', 'defined') | list }}"
+  register: ssh_proxy_units
+  notify: Reload systemd user daemon
+  tags: [ssh, ssh_proxies]
+
+- name: Enable and start ssh proxy services
+  ansible.builtin.systemd:
+    name: "ssh_proxy_{{ item.name }}.service"
+    state: started
+    enabled: true
+    scope: user
+  loop: "{{ ssh_proxies | selectattr('name', 'defined') | selectattr('port', 'defined') | list }}"
+  when: not ansible_check_mode
+  tags: [ssh, ssh_proxies]

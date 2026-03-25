@@ -18,20 +18,6 @@
     - ssh
     - ssh_client
 
-- name: Merge ssh hosts
-  merge_vars:
-    suffix_to_merge: ssh_hosts__to_merge
-    merged_var_name: ssh_hosts
-    expected_type: 'dict'
-  tags: [ssh, ssh_client]
-
-- name: Copy ssh config
-  ansible.builtin.template:
-    src: 'ssh_config.j2'
-    dest: '{{ ansible_user_dir }}/.ssh/config'
-    mode: "0640"
-  tags: [ssh, ssh_client]
-
 - name: Copy ssh tunnel script
   ansible.builtin.template:
     src: 'tunnel'

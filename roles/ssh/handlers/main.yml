@@ -4,3 +4,8 @@
     name: 'ssh'
     state: restarted
   become: true
+
+- name: Reload systemd user daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
+    scope: user

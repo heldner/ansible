@@ -1,0 +1,4 @@
+---
+ssh_hosts: "{{ lookup('community.general.merge_variables',
+  '__ssh_hosts', pattern_type='suffix') }}"
+...

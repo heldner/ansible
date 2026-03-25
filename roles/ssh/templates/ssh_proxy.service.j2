@@ -1,0 +1,13 @@
+{{ ansible_managed | comment }}
+[Unit]
+Description=SSH SOCKS Proxy to {{ tunnel_name }}
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/usr/bin/autossh -M 0 -N -o ControlMaster=no -o ControlPath=none -D {{ tunnel_port }} {{ tunnel_name }}
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target
