@@ -1,7 +1,7 @@
 ---
 - name: Install torrserver package
   ansible.builtin.apt:
-    deb: https://github.com/heldner/torrserver-deb/releases/download/{{ torrserver_deb_version }}/torrserver_{{ torrserver_deb_version }}_amd64.deb
+    deb: https://github.com/heldner/deb-packages/releases/download/torrserver/{{ torrserver_version }}/torrserver_{{ torrserver_deb_version }}_amd64.deb
     force: true
   become: true
   when: >
