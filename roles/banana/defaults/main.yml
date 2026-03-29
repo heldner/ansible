@@ -1,2 +1,8 @@
 ---
-# defaults file for banana
+# @var banana_mount_points:description: список точек монтирования
+# @var banana_mount_points:example: >
+#   - uuid: 569C0E3B9C0E1661
+#     point: /mnt/sda1
+#     fstype: ntfs
+#     options: rw,noatime,force
+...

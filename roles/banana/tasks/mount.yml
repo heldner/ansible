@@ -1,0 +1,38 @@
+---
+- name: Configure mount by UUID
+  uci:
+    command: section
+    config: fstab
+    type: mount
+    find:
+      uuid: "{{ item.uuid }}"
+    value:
+      target: "{{ item.point }}"
+      fstype: "{{ item.fstype }}"
+      options: "{{ item.options }}"
+      enabled: 1
+    set_find: true
+  loop: "{{ banana_mount_points }}"
+  notify:
+    - Commit pending changes
+  tags: mount
+
+- name: Enable fstab service
+  service:
+    name: fstab
+    enabled: true
+  tags: mount
+
+- name: Create mount point directories
+  ansible.builtin.file:
+    state: directory
+    path: "{{ item.point }}"
+    mode: "0755"
+  loop: "{{ banana_mount_points }}"
+  tags: mount
+
+- name: Mount the devices
+  ansible.builtin.command:
+    cmd: block mount
+  changed_when: false
+  tags: mount

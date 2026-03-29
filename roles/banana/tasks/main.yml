@@ -1,8 +1,17 @@
 ---
-- name: Install vnstat
+- name: Install packages
   opkg:
-    name: vnstat
-  tags: vnstat
+    name: '{{ item }}'
+  loop:
+    - block-mount
+    - e2fsprogs
+    - kmod-fs-ext4
+    - kmod-fs-ntfs3
+    - kmod-usb-storage-uas
+    - kmod-usb3
+    - luci-app-hd-idle
+    - vnstat
+  tags: packages
 
 - name: Set drop on wan
   uci:
@@ -71,3 +80,7 @@
 - name: Include syncthing tasks
   ansible.builtin.include_tasks: syncthing.yml
   tags: syncthing
+
+- name: Include mount tasks
+  ansible.builtin.include_tasks: mount.yml
+  tags: mount
