@@ -13,6 +13,7 @@
       - debsums
       - dirmngr
       - dosfstools
+      - du-dust
       - duf
       - exfatprogs
       - f2fs-tools
