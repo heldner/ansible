@@ -27,3 +27,9 @@
   service:
     name: ddns
     state: restarted
+
+- name: Restart syncthing
+  service:
+    name: syncthing
+    state: restarted
+...
