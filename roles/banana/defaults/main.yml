@@ -5,4 +5,21 @@
 #     point: /mnt/sda1
 #     fstype: ntfs
 #     options: rw,noatime,force
-...
+
+# @var banana_dlna_name:description: отображаемое имя DLNA-сервера
+banana_dlna_name: OpenWrt DLNA Server
+
+# @var banana_dlna_interface:description: сетевой интерфейс для DLNA
+banana_dlna_interface: br-lan
+
+# @var banana_dlna_port:description: порт DLNA-сервера
+banana_dlna_port: 8200
+
+# @var banana_dlna_db_dir:description: директория для базы данных minidlna
+banana_dlna_db_dir: /var/run/minidlna
+
+# @var banana_dlna_media_dirs:description: список директорий с медиафайлами
+# @var banana_dlna_media_dirs:example: >
+#   - /mnt/sda1/Video
+#   - /mnt/sda1/Music
+#   - /mnt/sda1/Photo

@@ -32,4 +32,9 @@
   service:
     name: syncthing
     state: restarted
+
+- name: Restart minidlna
+  service:
+    name: minidlna
+    state: restarted
 ...

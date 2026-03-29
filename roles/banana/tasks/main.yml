@@ -84,3 +84,7 @@
 - name: Include mount tasks
   ansible.builtin.include_tasks: mount.yml
   tags: mount
+
+- name: Include dlna tasks
+  ansible.builtin.include_tasks: dlna.yml
+  tags: dlna

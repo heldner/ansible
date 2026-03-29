@@ -1,0 +1,42 @@
+---
+- name: Install minidlna
+  opkg:
+    name: '{{ item }}'
+  loop:
+    - minidlna
+    - luci-app-minidlna
+  tags: dlna
+
+- name: Configure minidlna
+  uci:
+    command: set
+    key: minidlna.config
+    value:
+      enabled: 1
+      friendly_name: "{{ banana_dlna_name }}"
+      interface: "{{ banana_dlna_interface }}"
+      port: "{{ banana_dlna_port }}"
+      db_dir: "{{ banana_dlna_db_dir }}"
+      inotify: 1
+  notify:
+    - Commit pending changes
+    - Restart minidlna
+  tags: dlna
+
+- name: Configure minidlna media dirs
+  uci:
+    command: set
+    key: minidlna.config
+    value:
+      media_dir: "{{ banana_dlna_media_dirs }}"
+  notify:
+    - Commit pending changes
+    - Restart minidlna
+  tags: dlna
+
+- name: Enable and start minidlna service
+  service:
+    name: minidlna
+    enabled: true
+    state: started
+  tags: dlna
