@@ -1,9 +1,8 @@
 ---
-# @var sthp_bin:description: путь к исполняемому файлу sthp
-sthp_bin: "{{ ansible_user_dir }}/.local/bin/sthp"
+sthp_version: '0.5.0'
+sthp_deb_revision: '1'
+sthp_deb_version: '{{ sthp_version }}-{{ sthp_deb_revision }}'
 
-# @var sthp_port:description: порт на котором слушает http прокси
 sthp_port: 1085
-
-# @var sthp_socks_porxy:description: адрес socks5 прокси
-sthp_socks_porxy: '127.0.0.1:2342'
+sthp_socks_proxy: '127.0.0.1:2342'
+...
