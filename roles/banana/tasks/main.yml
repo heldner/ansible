@@ -6,7 +6,6 @@
     - block-mount
     - e2fsprogs
     - kmod-fs-ext4
-    - kmod-fs-ntfs3
     - kmod-usb-storage-uas
     - kmod-usb3
     - luci-app-hd-idle
