@@ -1,3 +1,10 @@
 ---
-# @var kitty_home:description: директория с конфигами kitty
+# @var kitty_home:description: config directory
 kitty_home: "{{ ansible_user_dir }}/.config/kitty"
+
+# @var kitty_font_size:description: font size
+kitty_font_size: 15.0
+
+# @var kitty_scrollback_lines:description: scroll lines
+kitty_scrollback_lines: 10000
+...
