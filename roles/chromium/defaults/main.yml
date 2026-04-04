@@ -4,3 +4,6 @@ chromium_version: '146.0.7680.153'
 
 # @var chromium_deb_version:description: версия пакета в имени .deb файла
 chromium_deb_version: '{{ chromium_version }}-1'
+
+chromium_dpi_scale: '1.2'
+...

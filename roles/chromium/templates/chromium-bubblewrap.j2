@@ -6,7 +6,7 @@ if [ "$1" = '--video' ]; then
   shift
 fi
 
-DPI_SCALE=${DPI_SCALE:=1.2}
+DPI_SCALE={{ chromium_dpi_scale }}
 VIDEO_OPT="--dev-bind-try /dev/video0 /dev/video0
   --dev-bind-try /dev/video1 /dev/video1
   --dev-bind-try /dev/video2 /dev/video2"
