@@ -1,2 +1,11 @@
 ---
+# @var thunderbird_bwrap_path:description: >
+# path to bubblpewraped script
+# @end
 thunderbird_bwrap_path: /usr/bin/thunderbird-bubblewrap
+
+# @var thunderbird_gdk_dpi_scale:description: >
+# dpi scale
+# @end
+thunderbird_gdk_dpi_scale: '1.0'
+...

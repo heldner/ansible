@@ -46,8 +46,11 @@ exec bwrap \
      --bind-try ~/.cache/thunderbird ~/.cache/thunderbird \
      --ro-bind-try ~/Pictures/Screenshots ~/Pictures/Screenshots \
      --ro-bind-try /run/user/"${UID}"/bus /run/user/"${UID}"/bus \
+     --setenv GDK_DPI_SCALE {{ thunderbird_gdk_dpi_scale }} \
      --setenv MOZ_ENABLE_WAYLAND 0 \
      --setenv PATH /usr/bin \
+     --setenv XCURSOR_SIZE 36 \
+     --setenv XCURSOR_THEME Adwaita \
      --unshare-all \
      --share-net \
      --hostname thunder \
