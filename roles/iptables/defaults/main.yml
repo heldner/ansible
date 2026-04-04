@@ -4,7 +4,7 @@
 # Each item must have attributes: name, set_option,
 # (items or src_groups).
 # If src_groups is used, dport can be specified.
-# Populated from ${uniq_prefix}_ipset_tables__to_merge variables
+# Populated from ${uniq_prefix}__ipset_tables variables
 # in group_vars or host_vars.
 # @end
 # @var iptables_ipset_tables:example: >
@@ -41,7 +41,7 @@
 #       - 10.1.0.0/24 comment "location=my"
 # @end
 iptables_ipset_tables: "{{ lookup('community.general.merge_variables',
-  'ipset_tables__to_merge', pattern_type='suffix') }}"
+  '__ipset_tables', pattern_type='suffix') }}"
 # @var iptables_ipset_config_dir:description: Directory containing ipset lists.
 iptables_ipset_config_dir: /etc/ipset
 # @var iptables_rules_dir:description: >
@@ -54,10 +54,10 @@ iptables_rules_dir: /etc/iptables
 iptables_v4_rules: /etc/iptables/rules.v4
 # @var iptables_control_script:description: Path to the iptables configuration script.
 iptables_control_script: /usr/bin/iptables-ipset.sh
-# @var iptables_default_ipset_tables__to_merge:description: >
+# @var iptables_default__ipset_tables:description: >
 # These rules are added by default.
 # @end
-iptables_default_ipset_tables__to_merge:
+iptables_default__ipset_tables:
   - name: public-ssh
     set_option: bitmap:port range 0-65535
     items: [22]
