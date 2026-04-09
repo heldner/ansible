@@ -24,3 +24,11 @@
     minute: '*/5'
   become: true
   tags: laptop
+
+- name: Copy backlight script
+  ansible.builtin.copy:
+    src: backlight
+    dest: /usr/local/bin/backlight
+    mode: '0755'
+  become: true
+  tags: laptop

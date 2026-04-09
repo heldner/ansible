@@ -1,0 +1,30 @@
+#!/bin/sh
+
+BRIGHTNESS_FILE="/sys/class/backlight/intel_backlight/brightness"
+MAX_FILE="/sys/class/backlight/intel_backlight/max_brightness"
+STEP=10
+
+usage() {
+    echo "Usage: $(basename "$0") {up|down|help}"
+    echo "  up   - increase brightness by $STEP"
+    echo "  down - decrease brightness by $STEP"
+}
+
+current=$(cat "$BRIGHTNESS_FILE")
+max=$(cat "$MAX_FILE")
+
+case "$1" in
+    up)
+        new=$((current + STEP))
+        [ "$new" -gt "$max" ] && new="$max"
+        echo "$new" | sudo tee "$BRIGHTNESS_FILE" > /dev/null
+        ;;
+    down)
+        new=$((current - STEP))
+        [ "$new" -lt 0 ] && new=0
+        echo "$new" | sudo tee "$BRIGHTNESS_FILE" > /dev/null
+        ;;
+    *)
+        usage
+        ;;
+esac
