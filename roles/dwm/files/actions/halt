@@ -1,1 +1,4 @@
+#!/bin/sh
+set -e
+zenity  --question --title "Halt"  --text "Are you sure?" 2>/dev/null
 systemctl poweroff -i

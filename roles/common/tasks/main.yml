@@ -41,6 +41,7 @@
       - w3m
       - xkcdpass
       - zbar-tools
+      - zenity
   become: true
   tags: common
 
