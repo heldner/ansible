@@ -10,6 +10,7 @@ screensaver_disabler
 
 # for gtk3 apps
 export GTK_THEME='Adwaita-dark'
+export GDK_SCALE=2
 
 # use x11 ssh askpass
 if command -v dmenu_pass >/dev/null; then
