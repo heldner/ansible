@@ -10,4 +10,4 @@ ${HOME}/Pictures/Camera
 
 [ "$1" = "--cron" ] && sleep "$(date +"%H")m"
 # shellcheck disable=SC2086
-timeout 5 feh -z --no-fehbg --bg-max $wallpaper_dirs > /dev/null 2>&1
+timeout 5 feh -z --bg-scale --no-fehbg $wallpaper_dirs > /dev/null 2>&1
