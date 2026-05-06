@@ -11,7 +11,9 @@ ssh_cmd () {
     fi
 }
 
-host=$(awk '$2 !~ /^\*/ && /^Host/ {sub(/\*$/,""); print $2}' ~/.ssh/config \
+host=$(cat ~/.ssh/config ~/.ssh/config.d/* 2>/dev/null \
+    | awk '$2 !~ /^\*/ && /^Host/ {sub(/\*$/,""); print $2}' \
+    | sort -u \
     | dmenu -p ssh:)
 
 [ -z "$host" ] && exit
