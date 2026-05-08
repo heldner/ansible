@@ -1,6 +1,6 @@
 ---
 # @var chromium_version:description: версия ungoogled-chromium (тег релиза на GitHub)
-chromium_version: '146.0.7680.153'
+chromium_version: '147.0.7727.137'
 
 # @var chromium_deb_version:description: версия пакета в имени .deb файла
 chromium_deb_version: '{{ chromium_version }}-1'
