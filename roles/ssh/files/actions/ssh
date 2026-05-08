@@ -19,7 +19,7 @@ host=$(cat ~/.ssh/config ~/.ssh/config.d/* 2>/dev/null \
 [ -z "$host" ] && exit
 
 if pgrep -lf "$(ssh_cmd).*${host}$"; then
-  notify-send "SSH" "Already connected to $host"
+  kitty -1 ssh $OPTS $host "$CMD"
 else
   kitty -1 $(ssh_cmd) $OPTS $host "$CMD"
 fi
