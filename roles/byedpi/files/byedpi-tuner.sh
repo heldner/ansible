@@ -66,6 +66,8 @@ test_connection() {
 # Краткие флаги: -s=--split, -q=--disoob, -o=--oob, -d=--disorder,
 #                -f=--fake, -r=--tlsrec, -A=--auto, -Y=--drop-sack
 declare -a PARAM_SETS=(
+    # === Рабочий на Ростелекоме в Че
+    '-H:"googleapis.com" -s1 -r1+s -An -H:"ggpht.com googlevideo.com youtube.com youtu.be ytimg.com" -o1 -r-5+se'
     # === Самый популярный конфиг (#184, waptaxi) ===
     # Работает: Ростелеком, Билайн, МГТС, мобильные операторы
     "-s1 -q1 -Y -Ar -s5 -o1+s -At -f-1 -r1+s -As -s1 -o1+s -s-1 -An"
