@@ -1,0 +1,63 @@
+---
+# @var chatwoot_package_name:description: >
+# Debian package that provides Chatwoot.
+# @end
+chatwoot_package_name: chatwoot
+
+# @var chatwoot_package_state:value: $ "present"
+chatwoot_package_state: present
+
+# @var chatwoot_package_version:description: >
+# Optional package version (leave empty for latest from the repo).
+# @var chatwoot_package_version:value: $ ""
+chatwoot_package_version: ''
+
+# @var chatwoot_apt_repo:value: $ "https://apt.chatwoot.app/"
+chatwoot_apt_repo: https://apt.chatwoot.app/
+
+# @var chatwoot_apt_distribution:value: $ "./"
+chatwoot_apt_distribution: ./
+
+# @var chatwoot_apt_key_url:value: $ "https://apt.chatwoot.app/key.gpg"
+chatwoot_apt_key_url: https://apt.chatwoot.app/key.gpg
+
+# @var chatwoot_apt_keyring_path:value: $ "/usr/share/keyrings/chatwoot-archive-keyring.gpg"
+chatwoot_apt_keyring_path: /usr/share/keyrings/chatwoot-archive-keyring.gpg
+
+# @var chatwoot_apt_list_filename:value: $ "chatwoot"
+chatwoot_apt_list_filename: chatwoot
+
+# @var chatwoot_apt_prereq_packages:value: |
+#   - apt-transport-https
+#   - ca-certificates
+#   - gnupg
+#   - curl
+chatwoot_apt_prereq_packages:
+  - apt-transport-https
+  - ca-certificates
+  - gnupg
+  - curl
+
+# @var chatwoot_manage_env:value: $ true
+chatwoot_manage_env: true
+
+# @var chatwoot_env_file:value: $ "/opt/chatwoot/.env"
+chatwoot_env_file: /opt/chatwoot/.env
+
+# @var chatwoot_env_owner:value: $ "chatwoot"
+chatwoot_env_owner: chatwoot
+
+# @var chatwoot_env_group:value: $ "chatwoot"
+chatwoot_env_group: chatwoot
+
+# @var chatwoot_env_mode:value: $ "0640"
+chatwoot_env_mode: '0640'
+
+# @var chatwoot_env:description: >
+# Key/value pairs rendered into the Chatwoot .env file.
+chatwoot_env: {}
+
+# @var chatwoot_services:value: |
+#   - chatwoot.target
+chatwoot_services:
+  - chatwoot.target

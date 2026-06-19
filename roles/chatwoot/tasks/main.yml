@@ -1,0 +1,67 @@
+---
+- name: Install Chatwoot apt prerequisites
+  ansible.builtin.apt:
+    name: "{{ chatwoot_apt_prereq_packages }}"
+    state: present
+    update_cache: true
+  become: true
+  tags: chatwoot
+
+- name: Ensure Chatwoot keyring directory exists
+  ansible.builtin.file:
+    path: "{{ chatwoot_apt_keyring_path | dirname }}"
+    state: directory
+    mode: '0755'
+  become: true
+  tags: chatwoot
+
+- name: Download Chatwoot repository key
+  ansible.builtin.get_url:
+    url: "{{ chatwoot_apt_key_url }}"
+    dest: "{{ chatwoot_apt_keyring_path }}"
+    mode: '0644'
+  become: true
+  tags: chatwoot
+
+- name: Configure Chatwoot apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by={{ chatwoot_apt_keyring_path }}] {{ chatwoot_apt_repo }} {{ chatwoot_apt_distribution }}"
+    filename: "{{ chatwoot_apt_list_filename }}"
+    state: present
+    update_cache: true
+  become: true
+  tags: chatwoot
+
+- name: Install Chatwoot package
+  ansible.builtin.apt:
+    name: >-
+      {{ chatwoot_package_version | length
+         | ternary(chatwoot_package_name ~ '=' ~ chatwoot_package_version,
+                   chatwoot_package_name) }}
+    state: "{{ chatwoot_package_state }}"
+  become: true
+  tags: chatwoot
+  notify: Restart Chatwoot services
+
+- name: Ensure Chatwoot env directory exists
+  ansible.builtin.file:
+    path: "{{ chatwoot_env_file | dirname }}"
+    state: directory
+    owner: "{{ chatwoot_env_owner }}"
+    group: "{{ chatwoot_env_group }}"
+    mode: '0750'
+  become: true
+  when: chatwoot_manage_env
+  tags: chatwoot
+
+- name: Render Chatwoot environment file
+  ansible.builtin.template:
+    src: env.j2
+    dest: "{{ chatwoot_env_file }}"
+    owner: "{{ chatwoot_env_owner }}"
+    group: "{{ chatwoot_env_group }}"
+    mode: "{{ chatwoot_env_mode }}"
+  become: true
+  when: chatwoot_manage_env
+  tags: chatwoot
+  notify: Restart Chatwoot services
